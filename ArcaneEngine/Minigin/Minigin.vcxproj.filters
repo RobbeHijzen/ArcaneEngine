@@ -1,93 +1,118 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="MiniGin Files">
+      <UniqueIdentifier>{06a66bb5-9906-477b-848a-0706e190068b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine Files">
+      <UniqueIdentifier>{278d05d1-e7f5-4577-9a5c-24447c2b8fc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine Files\Components">
+      <UniqueIdentifier>{6799632e-18bd-4988-99ff-596906a84db7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Singleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Font.h">
+      <Filter>MiniGin Files</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>MiniGin Files</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="InputManager.h">
+      <Filter>MiniGin Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>MiniGin Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>MiniGin Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Header Files</Filter>
+      <Filter>MiniGin Files</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>MiniGin Files</Filter>
     </ClInclude>
-    <ClInclude Include="TextObject.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Singleton.h">
+      <Filter>MiniGin Files</Filter>
     </ClInclude>
-    <ClInclude Include="Font.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Texture2D.h">
+      <Filter>MiniGin Files</Filter>
     </ClInclude>
-    <ClInclude Include="Minigin.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Transform.h">
+      <Filter>MiniGin Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ArcaneEngine.h">
+      <Filter>ArcaneEngine Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>ArcaneEngine Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseComponent.h">
+      <Filter>ArcaneEngine Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TextComponent.h">
+      <Filter>ArcaneEngine Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="FpsComponent.h">
+      <Filter>ArcaneEngine Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageComponent.h">
+      <Filter>ArcaneEngine Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Font.cpp">
+      <Filter>MiniGin Files</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>MiniGin Files</Filter>
     </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>MiniGin Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>MiniGin Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>MiniGin Files</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>MiniGin Files</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>MiniGin Files</Filter>
     </ClCompile>
-    <ClCompile Include="TextObject.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>MiniGin Files</Filter>
     </ClCompile>
-    <ClCompile Include="Font.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Transform.cpp">
+      <Filter>MiniGin Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ArcaneEngine.cpp">
+      <Filter>ArcaneEngine Files</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>MiniGin Files</Filter>
     </ClCompile>
-    <ClCompile Include="Minigin.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Time.cpp">
+      <Filter>ArcaneEngine Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseComponent.cpp">
+      <Filter>ArcaneEngine Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TextComponent.cpp">
+      <Filter>ArcaneEngine Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="FpsComponent.cpp">
+      <Filter>ArcaneEngine Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageComponent.cpp">
+      <Filter>ArcaneEngine Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

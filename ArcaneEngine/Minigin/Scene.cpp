@@ -3,7 +3,6 @@
 
 #include <algorithm>
 
-using namespace dae;
 
 unsigned int Scene::m_idCounter = 0;
 
@@ -31,6 +30,14 @@ void Scene::Update()
 	for(auto& object : m_objects)
 	{
 		object->Update();
+	}
+}
+
+void Scene::FixedUpdate()
+{
+	for (auto& object : m_objects)
+	{
+		object->FixedUpdate();
 	}
 }
 

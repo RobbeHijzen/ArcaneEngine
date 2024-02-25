@@ -4,13 +4,18 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-#include "Minigin.h"
+#include <chrono>
+#include <thread>
+#include "ArcaneEngine.h"
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "Time.h"
 
 SDL_Window* g_window{};
+
+using namespace std::chrono;
 
 void PrintSDLVersion()
 {
@@ -40,7 +45,7 @@ void PrintSDLVersion()
 		version.major, version.minor, version.patch);
 }
 
-dae::Minigin::Minigin(const std::string &dataPath)
+ArcaneEngine::ArcaneEngine(const std::string &dataPath)
 {
 	PrintSDLVersion();
 	
@@ -67,7 +72,7 @@ dae::Minigin::Minigin(const std::string &dataPath)
 	ResourceManager::GetInstance().Init(dataPath);
 }
 
-dae::Minigin::~Minigin()
+ArcaneEngine::~ArcaneEngine()
 {
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(g_window);
@@ -75,20 +80,47 @@ dae::Minigin::~Minigin()
 	SDL_Quit();
 }
 
-void dae::Minigin::Run(const std::function<void()>& load)
+void ArcaneEngine::Run(const std::function<void()>& load)
 {
 	load();
 
-	auto& renderer = Renderer::GetInstance();
-	auto& sceneManager = SceneManager::GetInstance();
-	auto& input = InputManager::GetInstance();
+	Renderer& renderer = Renderer::GetInstance();
+	SceneManager& sceneManager = SceneManager::GetInstance();
+	InputManager& input = InputManager::GetInstance();
 
-	// todo: this update loop could use some work.
+	Time& time = Time::GetInstance();
+	time.SetMsPerFrame(16);
+	time.SetFixedTimeStep(0.02f);
+
 	bool doContinue = true;
+	auto lastTime{high_resolution_clock::now()};
+	float lag{};
+
 	while (doContinue)
 	{
+		// Time Management
+		const auto currentTime{high_resolution_clock::now()};
+		const float deltaTime{duration<float>(currentTime - lastTime).count()};
+		time.SetDeltaTime(deltaTime);
+		lastTime = currentTime;
+		lag += deltaTime;
+
+		// Input
 		doContinue = input.ProcessInput();
+
+		// Fixed Update
+		while (lag >= time.GetFixedTimeStep())
+		{
+			sceneManager.FixedUpdate();
+			lag -= time.GetFixedTimeStep();
+		}
+
+		// Update + Render
 		sceneManager.Update();
 		renderer.Render();
+
+		// Too fast? --> slow down
+		const auto sleepTime{ currentTime + milliseconds(time.GetMsPerFrame()) - high_resolution_clock::now()};
+		std::this_thread::sleep_for(sleepTime);
 	}
 }
