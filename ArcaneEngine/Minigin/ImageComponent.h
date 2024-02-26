@@ -10,7 +10,7 @@ class ImageComponent final : public BaseComponent
 {
 public:
 
-	ImageComponent(std::weak_ptr<GameObject> parentGameObject, const std::string& fileName);
+	ImageComponent(GameObject* parentGameObject, const std::string& fileName);
 
 	virtual ~ImageComponent() = default;
 	ImageComponent(const ImageComponent& other) = delete;

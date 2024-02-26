@@ -2,11 +2,13 @@
 #include <memory>
 #include "Transform.h"
 
+
 class GameObject;
+
 class BaseComponent
 {
 public:
-	BaseComponent(std::weak_ptr<GameObject> gameObject);
+	BaseComponent(GameObject* pParent);
 
 	virtual ~BaseComponent() = default;
 	BaseComponent(const BaseComponent& other) = delete;
@@ -17,14 +19,19 @@ public:
 
 	virtual void Update() {};
 	virtual void FixedUpdate() {};
+	virtual void LateUpdate() {};
 	virtual void Render() const {};
 
-	void SetRelativePosition(float x, float y, float z = 1.f) { m_RelativeTransform.SetPosition(x, y, z); }
+	inline void SetLocalPosition(float x, float y, float z = 0.f) { m_LocalTransform.SetPosition(x, y, z); }
 
 protected:
 
-	std::weak_ptr<GameObject> m_pParentGameObject;
-	Transform m_RelativeTransform{};
+	GameObject* GetParent() const { return m_pParent; }
 
+	Transform m_LocalTransform{};
+
+private:
+
+	GameObject* m_pParent;
 };
 

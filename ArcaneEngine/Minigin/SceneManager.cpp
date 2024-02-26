@@ -17,6 +17,14 @@ void SceneManager::FixedUpdate()
 	}
 }
 
+void SceneManager::LateUpdate()
+{
+	for (auto& scene : m_scenes)
+	{
+		scene->LateUpdate();
+	}
+}
+
 void SceneManager::Render()
 {
 	for (const auto& scene : m_scenes)

@@ -13,7 +13,7 @@ class TextComponent final : public BaseComponent
 {
 public:
 
-	TextComponent(std::weak_ptr<GameObject> parentGameObject, const std::string& text, std::shared_ptr<Font> font);
+	TextComponent(GameObject* parentGameObject, const std::string& text, std::shared_ptr<Font> font);
 	
 	virtual ~TextComponent() = default;
 	TextComponent(const TextComponent& other) = delete;

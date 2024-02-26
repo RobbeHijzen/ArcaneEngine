@@ -58,6 +58,14 @@ void GameObject::FixedUpdate()
 	}
 }
 
+void GameObject::LateUpdate()
+{
+	for (auto& component : m_Components)
+	{
+		component->LateUpdate();
+	}
+}
+
 void GameObject::Render() const
 {
 	for (auto& component : m_Components)

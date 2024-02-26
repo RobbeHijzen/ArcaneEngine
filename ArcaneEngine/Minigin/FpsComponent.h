@@ -2,18 +2,14 @@
 #include <string>
 #include <memory>
 #include "GameObject.h"
-#include "Transform.h"
 
-
-class Font;
-class Texture2D;
-
+class TextComponent;
 
 class FpsComponent final : public BaseComponent
 {
 public:
 
-	FpsComponent(std::weak_ptr<GameObject> parentGameObject, std::shared_ptr<Font> font);
+	FpsComponent(GameObject* const parentGameObject);
 
 	virtual ~FpsComponent() = default;
 	FpsComponent(const FpsComponent& other) = delete;
@@ -23,17 +19,13 @@ public:
 
 
 	virtual void Update() override;
-	virtual void Render() const override;
-
-	void SetText(const std::string& text);
-	void SetPosition(float x, float y);
-
 
 private:
 
-	bool m_NeedsUpdate;
-	std::string m_Text{};
-	std::shared_ptr<Font> m_Font;
-	std::shared_ptr<Texture2D> m_TextTexture;
+	int m_FrameCount{};
+	float m_CurrentDelay{};
+	const float m_MaxDelay{0.5f};
+
+	TextComponent* m_pTextComponent{};
 };
 

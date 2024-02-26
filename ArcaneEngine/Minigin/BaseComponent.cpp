@@ -1,6 +1,6 @@
 #include "BaseComponent.h"
 
-BaseComponent::BaseComponent(std::weak_ptr<GameObject> gameObject)
-	: m_pParentGameObject{ gameObject }
+BaseComponent::BaseComponent(GameObject* pParent)
+	: m_pParent{ pParent }
 {
 }

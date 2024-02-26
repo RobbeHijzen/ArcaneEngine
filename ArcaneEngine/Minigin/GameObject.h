@@ -14,7 +14,7 @@ public:
 
 	GameObject() = default;
 
-	virtual ~GameObject();
+	~GameObject();
 	GameObject(const GameObject& other) = delete;
 	GameObject(GameObject&& other) = delete;
 	GameObject& operator=(const GameObject& other) = delete;
@@ -30,9 +30,10 @@ public:
 
 	void ClearComponents() { m_Components.clear(); }
 
-	virtual void Update();
-	virtual void FixedUpdate();
-	virtual void Render() const;
+	void Update();
+	void FixedUpdate();
+	void LateUpdate();
+	void Render() const;
 
 	void SetPosition(float x, float y);
 	Transform GetTransform() { return m_Transform; }

@@ -91,8 +91,8 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 	Time& time = Time::GetInstance();
 
 	// Set Time Variables
-	time.msPerFrame = 16;
-	time.fixedTimeStep = 0.02f;
+	time.Initialize(0.02f, 16);
+
 
 	bool doContinue = true;
 	auto lastTime{high_resolution_clock::now()};
@@ -102,29 +102,28 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 	while (doContinue)
 	{
 		// Time Management
-		const auto currentTime{high_resolution_clock::now()};
-		const float deltaTime{duration<float>(currentTime - lastTime).count()};
-		time.deltaTime = deltaTime;
-		Time::GetInstance().fps = 1.f / deltaTime;
-		lastTime = currentTime;
-		lag += deltaTime;
+		time.Update();
+		
+		lag += time.GetDeltaTime();
 
 		// Input
 		doContinue = input.ProcessInput();
 
 		// Fixed Update
-		while (lag >= time.fixedTimeStep)
+		while (lag >= time.GetFixedTimeStep())
 		{
 			sceneManager.FixedUpdate();
-			lag -= time.fixedTimeStep;
+			lag -= time.GetFixedTimeStep();
 		}
 
 		// Update + Render
 		sceneManager.Update();
+		sceneManager.LateUpdate();
+
 		renderer.Render();
 
 		// Too fast? --> slow down
-		const auto sleepTime{ currentTime + milliseconds(time.msPerFrame) - high_resolution_clock::now()};
+		const auto sleepTime{ time.GetCurrentTime() + milliseconds(time.GetMsPerFrame()) - high_resolution_clock::now()};
 		std::this_thread::sleep_for(sleepTime);
 	}
 }

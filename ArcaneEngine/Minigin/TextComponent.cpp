@@ -6,7 +6,7 @@
 #include "Font.h"
 #include "Texture2D.h"
 
-TextComponent::TextComponent(std::weak_ptr<GameObject> parentGameObject, const std::string& text, std::shared_ptr<Font> font)
+TextComponent::TextComponent(GameObject* parentGameObject, const std::string& text, std::shared_ptr<Font> font)
 	: BaseComponent(parentGameObject)
 	, m_NeedsUpdate(true)
 	, m_Text(text)
@@ -39,11 +39,11 @@ void TextComponent::Render() const
 {
 	if (m_TextTexture != nullptr)
 	{
-		auto pParentGameObject{ m_pParentGameObject.lock() };
+		auto pParent{ GetParent()};
 
-		if (pParentGameObject.get())
+		if (pParent)
 		{
-			const auto& pos = m_RelativeTransform.GetPosition() + pParentGameObject->GetTransform().GetPosition();
+			const auto& pos = m_LocalTransform.GetPosition() + pParent->GetTransform().GetPosition();
 			Renderer::GetInstance().RenderTexture(*m_TextTexture, pos.x, pos.y);
 		}
 	}
@@ -58,5 +58,5 @@ void TextComponent::SetText(const std::string& text)
 
 void TextComponent::SetPosition(const float x, const float y)
 {
-	m_RelativeTransform.SetPosition(x, y, 0.0f);
+	m_LocalTransform.SetPosition(x, y, 0.0f);
 }

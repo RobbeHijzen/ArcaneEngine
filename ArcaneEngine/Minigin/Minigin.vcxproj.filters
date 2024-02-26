@@ -14,6 +14,9 @@
     <Filter Include="ArcaneEngine Files\Components">
       <UniqueIdentifier>{6799632e-18bd-4988-99ff-596906a84db7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ArcaneEngine Files\Components\DerivedComponents">
+      <UniqueIdentifier>{9f2683af-97da-4044-a8b9-bec3a9738044}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -55,14 +58,14 @@
     <ClInclude Include="BaseComponent.h">
       <Filter>ArcaneEngine Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="TextComponent.h">
-      <Filter>ArcaneEngine Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="FpsComponent.h">
-      <Filter>ArcaneEngine Files\Components</Filter>
+      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
     </ClInclude>
     <ClInclude Include="ImageComponent.h">
-      <Filter>ArcaneEngine Files\Components</Filter>
+      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="TextComponent.h">
+      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -105,14 +108,14 @@
     <ClCompile Include="BaseComponent.cpp">
       <Filter>ArcaneEngine Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="TextComponent.cpp">
-      <Filter>ArcaneEngine Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="FpsComponent.cpp">
-      <Filter>ArcaneEngine Files\Components</Filter>
+      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
     </ClCompile>
     <ClCompile Include="ImageComponent.cpp">
-      <Filter>ArcaneEngine Files\Components</Filter>
+      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="TextComponent.cpp">
+      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
