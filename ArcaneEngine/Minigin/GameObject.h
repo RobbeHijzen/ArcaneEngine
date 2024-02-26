@@ -7,7 +7,6 @@
 
 class Texture2D;
 
-// todo: this should become final.
 class GameObject final
 {
 public:
@@ -21,26 +20,68 @@ public:
 	GameObject& operator=(GameObject&& other) = delete;
 
 
-	bool AddComponent(std::shared_ptr<BaseComponent> component);
-
-	template<typename T>
-	std::shared_ptr<T> GetComponent();
-	template<typename T>
-	void RemoveComponent();
-
-	void ClearComponents() { m_Components.clear(); }
+	void Initialize();
 
 	void Update();
 	void FixedUpdate();
 	void LateUpdate();
 	void Render() const;
 
-	void SetPosition(float x, float y);
-	Transform GetTransform() { return m_Transform; }
+	// Component Management
+	bool AddComponent(std::shared_ptr<BaseComponent> component);
+
+	template<typename T>
+	std::shared_ptr<T> GetComponent()
+	{
+		for (auto& component : m_Components)
+		{
+			if (auto castedComponent = std::dynamic_pointer_cast<T>(component))
+			{
+				return castedComponent;
+			}
+		}
+		return nullptr;
+	}
+	template<typename T>
+	void RemoveComponent()
+	{
+		for (auto it = m_Components.begin(); it != m_Components.end(); ++it)
+		{
+			if (std::dynamic_pointer_cast<T>(*it))
+			{
+				m_Components.erase(it);
+				return;
+			}
+		}
+	}
+
+	void ClearComponents() { m_Components.clear(); }
+
+	// Parent Management
+	void SetParent(GameObject* parent);
+	GameObject* GetParent() { return m_Parent; }
+
+	// Children Management
+	size_t GetChildCount() { return m_Children.size(); }
+	GameObject* GetChildAt(unsigned int index) { assert(index < m_Children.size()); return m_Children[index]; };
+
+	void RemoveChild(GameObject* child);
+	void AddChild(GameObject* child);
+
+	// Transforms
+	void SetLocalTransform(float x, float y);
+	Transform GetLocalTransform() { return m_LocalTransform; }
 
 private:
 
-	Transform m_Transform{};
-	std::vector <std::shared_ptr<BaseComponent>> m_Components{};
+	Transform m_LocalTransform{};
+	Transform m_WorldTransform{};
+
+	std::vector<std::shared_ptr<BaseComponent>> m_Components{};
+		
+	GameObject* m_Parent{};
+	std::vector<GameObject*> m_Children{};
+
+	bool IsChild(GameObject* gameObject);
 };
 

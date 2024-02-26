@@ -91,8 +91,15 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 	Time& time = Time::GetInstance();
 
 	// Set Time Variables
-	time.Initialize(0.02f, 16);
+	DEVMODE dm;
+	dm.dmSize = sizeof(dm);
+	EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, &dm);
+	auto refreshRate{dm.dmDisplayFrequency};
+	
+	time.Initialize(0.02f, 1000.f / refreshRate);
 
+	// Initialize Scene-components
+	sceneManager.Initialize();
 
 	bool doContinue = true;
 	auto lastTime{high_resolution_clock::now()};
@@ -123,7 +130,7 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 		renderer.Render();
 
 		// Too fast? --> slow down
-		const auto sleepTime{ time.GetCurrentTime() + milliseconds(time.GetMsPerFrame()) - high_resolution_clock::now()};
+		const auto sleepTime{ time.GetCurrentTime() + microseconds(time.GetMicroSecondsPerFrame()) - high_resolution_clock::now()};
 		std::this_thread::sleep_for(sleepTime);
 	}
 }

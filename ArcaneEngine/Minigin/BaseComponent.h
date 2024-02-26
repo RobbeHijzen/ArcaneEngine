@@ -8,7 +8,6 @@ class GameObject;
 class BaseComponent
 {
 public:
-	BaseComponent(GameObject* pParent);
 
 	virtual ~BaseComponent() = default;
 	BaseComponent(const BaseComponent& other) = delete;
@@ -16,6 +15,7 @@ public:
 	BaseComponent& operator=(const BaseComponent& other) = delete;
 	BaseComponent& operator=(BaseComponent&& other) = delete;
 
+	virtual void Initialize() {};
 
 	virtual void Update() {};
 	virtual void FixedUpdate() {};
@@ -26,12 +26,13 @@ public:
 
 protected:
 
-	GameObject* GetParent() const { return m_pParent; }
+	BaseComponent(GameObject* pParent);
 
+	GameObject* GetOwner() const { return m_Owner; }
 	Transform m_LocalTransform{};
 
 private:
 
-	GameObject* m_pParent;
+	GameObject* m_Owner;
 };
 

@@ -15,30 +15,13 @@ bool GameObject::AddComponent(std::shared_ptr<BaseComponent> component)
 	}
 	return false;
 }
+	
 
-template<typename T>
-inline std::shared_ptr<T> GameObject::GetComponent()
+void GameObject::Initialize()
 {
 	for (auto& component : m_Components)
 	{
-		if (auto castedComponent = std::dynamic_pointer_cast<T>(component))
-		{
-			return castedComponent;
-		}
-	}
-	return nullptr;
-}
-	
-template<typename T>
-void GameObject::RemoveComponent()
-{
-	for (auto it = m_Components.begin(); it != m_Components.end(); ++it) 
-	{
-		if (std::dynamic_pointer_cast<T>(*it)) 
-		{
-			m_Components.erase(it);
-			return;
-		}
+		component->Initialize();
 	}
 }
 
@@ -75,8 +58,30 @@ void GameObject::Render() const
 
 }
 
-void GameObject::SetPosition(float x, float y)
+void GameObject::SetParent(GameObject* parent)
 {
-	m_Transform.SetPosition(x, y, 0.0f);
+	// Check for valid parent
+	if (IsChild(parent) || parent == this || parent == m_Parent)
+	{
+		return;
+	}
+
+
+
+}
+
+void GameObject::SetLocalTransform(float x, float y)
+{
+	m_LocalTransform.SetPosition(x, y, 0.0f);
+}
+
+bool GameObject::IsChild(GameObject* gameObject)
+{
+	for (auto& child : m_Children)
+	{
+		if (child == gameObject)
+			return true;
+	}
+	return false;
 }
 

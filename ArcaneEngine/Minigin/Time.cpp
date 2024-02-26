@@ -9,8 +9,9 @@ void Time::Update()
 	m_LastTime = m_CurrentTime;
 }
 
-void Time::Initialize(float fixedTimeStep, int msPerFrame)
+void Time::Initialize(float fixedTimeStep, float msPerFrame)
 {
 	m_FixedTimeStep = fixedTimeStep;
 	m_MsPerFrame = msPerFrame;
+	m_MicroSecondsPerFrame = static_cast<int>(m_MsPerFrame * 1000);
 }

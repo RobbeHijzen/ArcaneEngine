@@ -11,6 +11,9 @@ public:
 	void Remove(std::shared_ptr<GameObject> object);
 	void RemoveAll();
 
+
+	void Initialize();
+
 	void Update();
 	void FixedUpdate();
 	void LateUpdate();

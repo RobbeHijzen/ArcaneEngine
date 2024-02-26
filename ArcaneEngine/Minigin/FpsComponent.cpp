@@ -8,7 +8,11 @@
 FpsComponent::FpsComponent(GameObject* const parentGameObject)
 	: BaseComponent(parentGameObject)
 { 
-	m_pTextComponent = GetParent()->GetComponent<TextComponent>().get();
+}
+
+void FpsComponent::Initialize()
+{
+	m_pTextComponent = GetOwner()->GetComponent<TextComponent>().get();
 }
 
 void FpsComponent::Update()

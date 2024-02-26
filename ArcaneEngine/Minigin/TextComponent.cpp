@@ -39,11 +39,11 @@ void TextComponent::Render() const
 {
 	if (m_TextTexture != nullptr)
 	{
-		auto pParent{ GetParent()};
+		auto pParent{ GetOwner()};
 
 		if (pParent)
 		{
-			const auto& pos = m_LocalTransform.GetPosition() + pParent->GetTransform().GetPosition();
+			const auto& pos = m_LocalTransform.GetPosition() + pParent->GetLocalTransform().GetPosition();
 			Renderer::GetInstance().RenderTexture(*m_TextTexture, pos.x, pos.y);
 		}
 	}

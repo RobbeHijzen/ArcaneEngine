@@ -14,11 +14,11 @@ void ImageComponent::Update()
 
 void ImageComponent::Render() const
 {
-	GameObject* pParent{ GetParent()};
+	GameObject* pParent{ GetOwner()};
 
 	if (pParent)
 	{
-		const auto& pos = m_LocalTransform.GetPosition() + pParent->GetTransform().GetPosition();
+		const auto& pos = m_LocalTransform.GetPosition() + pParent->GetLocalTransform().GetPosition();
 		Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
 	}
 }

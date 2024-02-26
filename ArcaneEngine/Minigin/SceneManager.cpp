@@ -1,6 +1,16 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
+
+
+void SceneManager::Initialize()
+{
+	for (auto& scene : m_scenes)
+	{
+		scene->Initialize();
+	}
+}
+
 void SceneManager::Update()
 {
 	for(auto& scene : m_scenes)
@@ -39,3 +49,4 @@ Scene& SceneManager::CreateScene(const std::string& name)
 	m_scenes.push_back(scene);
 	return *scene;
 }
+
