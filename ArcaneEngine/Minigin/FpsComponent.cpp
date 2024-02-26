@@ -17,12 +17,10 @@ FpsComponent::FpsComponent(std::weak_ptr<GameObject> parentGameObject, std::shar
 
 void FpsComponent::Update()
 {
-	float fps = 1.f / Time::GetInstance().GetDeltaTime();
-
 	std::ostringstream out;
-	out.precision(2);
-	out << std::fixed << fps;
-	SetText(std::move(out).str());
+	out.precision(1);
+	out << std::fixed << Time::GetInstance().fps;
+	SetText(std::move(out).str() + " FPS");
 
 	if (m_NeedsUpdate)
 	{

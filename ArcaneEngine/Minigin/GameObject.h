@@ -21,7 +21,13 @@ public:
 	GameObject& operator=(GameObject&& other) = delete;
 
 
-	void AddComponent(std::shared_ptr<BaseComponent> component);
+	bool AddComponent(std::shared_ptr<BaseComponent> component);
+
+	template<typename T>
+	std::shared_ptr<T> GetComponent();
+	template<typename T>
+	void RemoveComponent();
+
 	void ClearComponents() { m_Components.clear(); }
 
 	virtual void Update();
