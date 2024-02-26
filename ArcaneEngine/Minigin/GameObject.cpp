@@ -23,6 +23,10 @@ void GameObject::Initialize()
 	{
 		component->Initialize();
 	}
+	for (auto& child : m_Children)
+	{
+		child->Initialize();
+	}
 }
 
 void GameObject::Update()
@@ -30,6 +34,11 @@ void GameObject::Update()
 	for (auto& component : m_Components)
 	{
 		component->Update();
+	}
+
+	for (auto& child : m_Children)
+	{
+		child->Update();
 	}
 }
 
@@ -39,6 +48,10 @@ void GameObject::FixedUpdate()
 	{
 		component->FixedUpdate();
 	}
+	for (auto& child : m_Children)
+	{
+		child->FixedUpdate();
+	}
 }
 
 void GameObject::LateUpdate()
@@ -46,6 +59,10 @@ void GameObject::LateUpdate()
 	for (auto& component : m_Components)
 	{
 		component->LateUpdate();
+	}
+	for (auto& child : m_Children)
+	{
+		child->LateUpdate();
 	}
 }
 
@@ -55,10 +72,14 @@ void GameObject::Render() const
 	{
 		component->Render();
 	}
+	for (auto& child : m_Children)
+	{
+		child->Render();
+	}
 
 }
 
-void GameObject::SetParent(GameObject* parent)
+void GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 {
 	// Check for valid parent
 	if (IsChild(parent) || parent == this || parent == m_Parent)
@@ -66,13 +87,73 @@ void GameObject::SetParent(GameObject* parent)
 		return;
 	}
 
+	// Transform Handling
+	if (keepWorldPosition)
+	{
+		if (parent == nullptr)
+		{
+			SetLocalTransform(GetWorldTransform());
+		}
+		else
+		{
+			SetLocalTransform(GetWorldTransform() - parent->GetWorldTransform());
+		}
+	}
+	else
+	{
+		SetWorldTransformDirty();
+	}
 
-
+	// Parent's child Handling
+	if (m_Parent)
+	{
+		m_Parent->RemoveChild(this);
+	}
+	m_Parent = parent;
+	if (m_Parent)
+	{
+		m_Parent->AddChild(this);
+	}
 }
 
-void GameObject::SetLocalTransform(float x, float y)
+void GameObject::SetLocalTransform(Transform transform)
 {
-	m_LocalTransform.SetPosition(x, y, 0.0f);
+	m_LocalTransform = transform;
+	SetWorldTransformDirty();
+}
+
+void GameObject::SetWorldTransformDirty()
+{
+	m_WorldTransformIsDirty = true;
+	for (auto& child : m_Children)
+	{
+		child->SetWorldTransformDirty();
+	}
+}
+
+Transform GameObject::GetWorldTransform()
+{
+	if (m_WorldTransformIsDirty)
+	{
+		UpdateWorldTransform();
+	}
+	return m_WorldTransform;
+}
+
+void GameObject::UpdateWorldTransform()
+{
+	if (m_WorldTransformIsDirty)
+	{
+		if (m_Parent != nullptr)
+		{
+			m_WorldTransform = m_Parent->GetWorldTransform() + m_LocalTransform;
+		}
+		else
+		{
+			m_WorldTransform = m_LocalTransform;
+		}
+		m_WorldTransformIsDirty = false;
+	}
 }
 
 bool GameObject::IsChild(GameObject* gameObject)

@@ -85,8 +85,8 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 	load();
 
 	// Initialize singletons
-	Renderer& renderer = Renderer::GetInstance();
 	SceneManager& sceneManager = SceneManager::GetInstance();
+	Renderer& renderer = Renderer::GetInstance();
 	InputManager& input = InputManager::GetInstance();
 	Time& time = Time::GetInstance();
 

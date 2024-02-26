@@ -28,8 +28,8 @@ public:
 private: 
 	explicit Scene(const std::string& name);
 
-	std::string m_name;
-	std::vector < std::shared_ptr<GameObject>> m_objects{};
+	std::string m_Name;
+	std::shared_ptr<GameObject> m_Root{};
 
 	static unsigned int m_idCounter; 
 };

@@ -12,9 +12,17 @@ public:
 	void SetPosition(float x, float y, float z);
 
 
-	const glm::vec3& operator+(glm::vec3 other)
+	Transform operator+(Transform other)
 	{
-		return m_Position + other;
+		glm::vec3 newPos{ m_Position + other.GetPosition() };
+
+		return Transform{newPos.x, newPos.y, newPos.z};
+	}
+	Transform operator-(Transform other)
+	{
+		glm::vec3 newPos{ m_Position - other.GetPosition() };
+
+		return Transform{ newPos.x, newPos.y, newPos.z };
 	}
 
 private:

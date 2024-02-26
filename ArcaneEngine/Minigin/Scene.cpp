@@ -6,62 +6,50 @@
 
 unsigned int Scene::m_idCounter = 0;
 
-Scene::Scene(const std::string& name) : m_name(name) {}
+Scene::Scene(const std::string& name) : m_Name(name) 
+{
+	m_Root = std::make_shared<GameObject>();
+}
 
 Scene::~Scene() = default;
 
 void Scene::Add(std::shared_ptr<GameObject> object)
 {
-	m_objects.emplace_back(std::move(object));
+	object->SetParent(m_Root.get());
 }
 
 void Scene::Remove(std::shared_ptr<GameObject> object)
 {
-	m_objects.erase(std::remove(m_objects.begin(), m_objects.end(), object), m_objects.end());
+	m_Root->RemoveChild(object.get());
 }
 
 void Scene::RemoveAll()
 {
-	m_objects.clear();
+	m_Root->RemoveAllChildren();
 }
 
 void Scene::Initialize()
 {
-	for (auto& object : m_objects)
-	{
-		object->Initialize();
-	}
+	m_Root->Initialize();
 }
 
 void Scene::Update()
 {
-	for(auto& object : m_objects)
-	{
-		object->Update();
-	}
+	m_Root->Update();
 }
 
 void Scene::FixedUpdate()
 {
-	for (auto& object : m_objects)
-	{
-		object->FixedUpdate();
-	}
+	m_Root->FixedUpdate();
 }
 
 void Scene::LateUpdate()
 {
-	for (const auto& object : m_objects)
-	{
-		object->LateUpdate();
-	}
+	m_Root->LateUpdate();
 }
 
 void Scene::Render() const
 {
-	for (const auto& object : m_objects)
-	{
-		object->Render();
-	}
+	m_Root->Render();
 }
 

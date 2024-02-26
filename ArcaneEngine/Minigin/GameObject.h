@@ -58,24 +58,30 @@ public:
 	void ClearComponents() { m_Components.clear(); }
 
 	// Parent Management
-	void SetParent(GameObject* parent);
-	GameObject* GetParent() { return m_Parent; }
+	void SetParent(GameObject* parent, bool keepWorldPosition = true);
+	GameObject* GetParent() const { return m_Parent; }
 
 	// Children Management
-	size_t GetChildCount() { return m_Children.size(); }
-	GameObject* GetChildAt(unsigned int index) { assert(index < m_Children.size()); return m_Children[index]; };
+	size_t GetChildCount() const { return m_Children.size(); }
+	GameObject* GetChildAt(unsigned int index) const { assert(index < m_Children.size()); return m_Children[index]; };
 
-	void RemoveChild(GameObject* child);
-	void AddChild(GameObject* child);
+	void RemoveChild(GameObject* child) { m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), child), m_Children.end()); }
+	void AddChild(GameObject* child) { m_Children.emplace_back(child); }
 
+	void RemoveAllChildren() { m_Children.clear(); }
 	// Transforms
-	void SetLocalTransform(float x, float y);
-	Transform GetLocalTransform() { return m_LocalTransform; }
+	void SetLocalTransform(Transform transform);
+	Transform GetLocalTransform() const { return m_LocalTransform; }
+	void SetWorldTransformDirty();
+	
+	Transform GetWorldTransform();
+	void UpdateWorldTransform();
 
 private:
 
 	Transform m_LocalTransform{};
 	Transform m_WorldTransform{};
+	bool m_WorldTransformIsDirty{};
 
 	std::vector<std::shared_ptr<BaseComponent>> m_Components{};
 		
