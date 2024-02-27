@@ -28,6 +28,24 @@ void Scene::RemoveAll()
 	m_Root->RemoveAllChildren();
 }
 
+void Scene::RemoveDeletedObjects()
+{
+	auto children = m_Root->GetChildren();
+	auto it = children.begin();
+	while (it != children.end()) 
+	{
+		auto& child = *it;
+		if (child->IsDeleted()) 
+		{
+			it = children.erase(it);
+		}
+		else 
+		{
+			++it; 
+		}
+	}
+}
+
 void Scene::Initialize()
 {
 	m_Root->Initialize();

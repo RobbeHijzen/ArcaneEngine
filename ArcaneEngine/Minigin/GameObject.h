@@ -64,8 +64,9 @@ public:
 	// Children Management
 	size_t GetChildCount() const { return m_Children.size(); }
 	GameObject* GetChildAt(unsigned int index) const { assert(index < m_Children.size()); return m_Children[index]; };
+	std::vector<GameObject*> GetChildren() { return m_Children; }
 
-	void RemoveChild(GameObject* child) { m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), child), m_Children.end()); }
+	void RemoveChild(GameObject* child);
 	void AddChild(GameObject* child) { m_Children.emplace_back(child); }
 
 	void RemoveAllChildren() { m_Children.clear(); }
@@ -77,7 +78,12 @@ public:
 	Transform GetWorldTransform();
 	void UpdateWorldTransform();
 
+	void Delete();
+	bool IsDeleted() { return m_IsDeleted; }
+
 private:
+
+	bool m_IsDeleted{ false };
 
 	Transform m_LocalTransform{};
 	Transform m_WorldTransform{};

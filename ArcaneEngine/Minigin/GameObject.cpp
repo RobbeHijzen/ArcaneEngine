@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
+#include "SceneManager.h"
+#include "Scene.h"
 
 GameObject::~GameObject() = default;
 
@@ -114,6 +116,18 @@ void GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 	{
 		m_Parent->AddChild(this);
 	}
+	// Attatch to root if nullptr was given as new parent
+	else
+	{
+		auto root{ SceneManager::GetInstance().GetCurrentScene()->GetRoot()};
+		m_Parent = root.get();
+		m_Parent->AddChild(this);
+	}
+}
+
+void GameObject::RemoveChild(GameObject* child)
+{
+	m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), child), m_Children.end());
 }
 
 void GameObject::SetLocalTransform(Transform transform)
@@ -156,8 +170,16 @@ void GameObject::UpdateWorldTransform()
 	}
 }
 
+void GameObject::Delete()
+{
+	m_IsDeleted = true;
+	SetParent(nullptr);
+}
+
 bool GameObject::IsChild(GameObject* gameObject)
 {
+	if (gameObject == nullptr) return false;
+
 	for (auto& child : m_Children)
 	{
 		if (child == gameObject)

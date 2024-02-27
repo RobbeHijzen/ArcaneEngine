@@ -108,6 +108,9 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 	// Main GameLoop
 	while (doContinue)
 	{
+		// Delete the flagged objects
+		sceneManager.RemoveDeletedObjects();
+
 		// Time Management
 		time.Update();
 		

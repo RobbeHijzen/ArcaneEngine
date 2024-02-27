@@ -11,6 +11,11 @@ class SceneManager final : public Singleton<SceneManager>
 public:
 	Scene& CreateScene(const std::string& name);
 
+
+	Scene* GetCurrentScene() { return m_Scenes[m_CurrentSceneIndex].get(); }
+
+	void RemoveDeletedObjects();
+
 	void Initialize();
 
 	void Update();
@@ -21,6 +26,8 @@ private:
 
 	friend class Singleton<SceneManager>;
 	SceneManager() = default;
-	std::vector<std::shared_ptr<Scene>> m_scenes;
+
+	std::vector<std::shared_ptr<Scene>> m_Scenes;
+	int m_CurrentSceneIndex{-1};
 };
 
