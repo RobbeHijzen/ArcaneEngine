@@ -7,24 +7,28 @@
 
 FpsComponent::FpsComponent(GameObject* const parentGameObject)
 	: BaseComponent(parentGameObject)
-{ 
+{
 }
 
 void FpsComponent::Initialize()
 {
 	m_pTextComponent = GetOwner()->GetComponent<TextComponent>().get();
+	assert(m_pTextComponent);
 }
 
 void FpsComponent::Update()
 {
-	m_CurrentDelay += Time::GetInstance().GetDeltaTime();
-	++m_FrameCount;
-
-	if (m_CurrentDelay >= m_MaxDelay)
+	if (m_pTextComponent)
 	{
-		m_pTextComponent->SetText(std::format("{:.1f}{}", m_FrameCount / m_CurrentDelay, " FPS"));
+		m_CurrentDelay += Time::GetInstance().GetDeltaTime();
+		++m_FrameCount;
 
-		m_FrameCount = 0;
-		m_CurrentDelay = 0;
+		if (m_CurrentDelay >= m_MaxDelay)
+		{
+			m_pTextComponent->SetText(std::format("{:.1f}{}", m_FrameCount / m_CurrentDelay, " FPS"));
+
+			m_FrameCount = 0;
+			m_CurrentDelay = 0;
+		}
 	}
 }
