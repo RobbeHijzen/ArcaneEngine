@@ -106,28 +106,67 @@ void GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 		SetWorldTransformDirty();
 	}
 	
+	// Place this inside the already known shared_ptr so ownership can be transferred
+	std::shared_ptr<GameObject> thisPtr{};
+	if (m_Parent)
+
+	{
+		thisPtr = m_Parent->GetChildSharedPtr(this);
+	}
+	else
+	{
+		auto scene{ SceneManager::GetInstance().GetCurrentScene() };
+		thisPtr = scene->GetChildSharedPtr(this);
+	}
+
 	// Parent's child Handling
 	if (m_Parent)
 	{
 		m_Parent->RemoveChild(this);
 	}
+	else
+	{
+		auto scene{ SceneManager::GetInstance().GetCurrentScene() };
+		scene->DettatchFromRoot(this);
+	}
+
+	
 	m_Parent = parent;
+
 	if (m_Parent)
 	{
-		m_Parent->AddChild(this);
+		m_Parent->AddChild(thisPtr);
 	}
 	// Attatch to root if nullptr was given as new parent
 	else
 	{
-		auto root{ SceneManager::GetInstance().GetCurrentScene()->GetRoot()};
-		m_Parent = root.get();
-		m_Parent->AddChild(this);
+		auto scene{ SceneManager::GetInstance().GetCurrentScene()};
+		scene->AttatchToRoot(thisPtr);
 	}
+}
+
+std::shared_ptr<GameObject> GameObject::GetChildSharedPtr(GameObject* child)
+{
+	for (auto& currentChild : m_Children)
+	{
+		if (currentChild.get() == child)
+		{
+			return currentChild;
+		}
+	}
+	return nullptr;
 }
 
 void GameObject::RemoveChild(GameObject* child)
 {
-	m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), child), m_Children.end());
+	for (auto it{m_Children.begin()}; it != m_Children.end(); ++it)
+	{
+		if ((*it).get() == child)
+		{
+			m_Children.erase(it);
+			return;
+		}
+	}
 }
 
 void GameObject::SetLocalTransform(Transform transform)
@@ -152,6 +191,11 @@ Transform GameObject::GetWorldTransform()
 		UpdateWorldTransform();
 	}
 	return m_WorldTransform;
+}
+
+void GameObject::AddChild(std::shared_ptr<GameObject> child)
+{
+	m_Children.emplace_back(child);
 }
 
 void GameObject::UpdateWorldTransform()
@@ -182,7 +226,7 @@ bool GameObject::IsChild(GameObject* gameObject)
 
 	for (auto& child : m_Children)
 	{
-		if (child == gameObject)
+		if (child.get() == gameObject)
 			return true;
 	}
 	return false;

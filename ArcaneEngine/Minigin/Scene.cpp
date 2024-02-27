@@ -8,7 +8,7 @@ unsigned int Scene::m_idCounter = 0;
 
 Scene::Scene(const std::string& name) : m_Name(name) 
 {
-	m_Root = std::make_shared<GameObject>();
+	//m_Root = std::make_shared<GameObject>();
 }
 
 Scene::~Scene() = default;
@@ -19,28 +19,21 @@ void Scene::Add(std::shared_ptr<GameObject> object)
 	m_GameObjects.emplace_back(object);
 }
 
-void Scene::Remove(std::shared_ptr<GameObject> object)
-{
-	//m_Root->RemoveChild(object.get());
-	m_GameObjects.erase(std::remove(m_GameObjects.begin(), m_GameObjects.end(), object), m_GameObjects.end());
-}
-
 void Scene::RemoveAll()
 {
-	//m_Root->RemoveAllChildren();v
+	//m_Root->RemoveAllChildren();
 	m_GameObjects.clear();
 }
 
 void Scene::RemoveDeletedObjects()
 {
-	auto children = m_Root->GetChildren();
-	auto it = children.begin();
-	while (it != children.end()) 
+	auto it = m_GameObjects.begin();
+	while (it != m_GameObjects.end())
 	{
 		auto& child = *it;
 		if (child->IsDeleted()) 
 		{
-			it = children.erase(it);
+			it = m_GameObjects.erase(it);
 		}
 		else 
 		{
@@ -92,5 +85,37 @@ void Scene::Render() const
 	{
 		gameObject->Render();
 	}
+}
+
+void Scene::AttatchToRoot(std::shared_ptr<GameObject> gameObject)
+{
+	m_GameObjects.emplace_back(gameObject);
+}
+
+void Scene::DettatchFromRoot(GameObject* gameObject)
+{
+	auto it = m_GameObjects.begin();
+	while (it != m_GameObjects.end())
+	{
+		auto& child = *it;
+		if (child.get() == gameObject)
+		{
+			it = m_GameObjects.erase(it);
+			return;
+		}
+		++it;
+	}
+}
+
+std::shared_ptr<GameObject> Scene::GetChildSharedPtr(GameObject* child)
+{
+	for (auto& currentChild : m_GameObjects)
+	{
+		if (currentChild.get() == child)
+		{
+			return currentChild;
+		}
+	}
+	return nullptr;
 }
 

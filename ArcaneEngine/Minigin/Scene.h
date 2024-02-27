@@ -16,7 +16,6 @@ public:
 
 
 	void Add(std::shared_ptr<GameObject> object);
-	void Remove(std::shared_ptr<GameObject> object);
 	void RemoveAll();
 
 
@@ -29,13 +28,15 @@ public:
 	void LateUpdate();
 	void Render() const;
 
-	std::shared_ptr<GameObject> GetRoot() { return m_Root; }
+	void AttatchToRoot(std::shared_ptr<GameObject> gameObject);
+	void DettatchFromRoot(GameObject* gameObject);
+	std::shared_ptr<GameObject> GetChildSharedPtr(GameObject* child);
 
 private: 
 	explicit Scene(const std::string& name);
 
 	std::string m_Name;
-	std::shared_ptr<GameObject> m_Root{};
+	//std::shared_ptr<GameObject> m_Root{};
 	std::vector<std::shared_ptr<GameObject>> m_GameObjects{};
 
 	static unsigned int m_idCounter; 

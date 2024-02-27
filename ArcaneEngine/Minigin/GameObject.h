@@ -63,8 +63,9 @@ public:
 
 	// Children Management
 	size_t GetChildCount() const { return m_Children.size(); }
-	GameObject* GetChildAt(unsigned int index) const { assert(index < m_Children.size()); return m_Children[index]; };
-	std::vector<GameObject*> GetChildren() { return m_Children; }
+	std::shared_ptr<GameObject> GetChildAt(unsigned int index) const { assert(index < m_Children.size()); return m_Children[index]; };
+	std::shared_ptr<GameObject> GetChildSharedPtr(GameObject* child);
+	std::vector<std::shared_ptr<GameObject>> GetChildren() { return m_Children; }
 
 	void RemoveChild(GameObject* child);
 	void RemoveAllChildren() { m_Children.clear(); }
@@ -91,10 +92,10 @@ private:
 	std::vector<std::shared_ptr<BaseComponent>> m_Components{};
 		
 	GameObject* m_Parent{};
-	std::vector<GameObject*> m_Children{};
+	std::vector<std::shared_ptr<GameObject>> m_Children{};
 
 
-	void AddChild(GameObject* child) { m_Children.emplace_back(child); }
+	void AddChild(std::shared_ptr<GameObject>child);
 
 
 	void UpdateWorldTransform();
