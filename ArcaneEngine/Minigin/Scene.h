@@ -36,6 +36,7 @@ private:
 
 	std::string m_Name;
 	std::shared_ptr<GameObject> m_Root{};
+	std::vector<std::shared_ptr<GameObject>> m_GameObjects{};
 
 	static unsigned int m_idCounter; 
 };

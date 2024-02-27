@@ -43,7 +43,7 @@ void TextComponent::Render() const
 
 		if (pParent)
 		{
-			const auto& pos = m_LocalTransform.GetPosition() + pParent->GetLocalTransform().GetPosition();
+			const auto& pos = m_LocalTransform.GetPosition() + pParent->GetWorldTransform().GetPosition();
 			Renderer::GetInstance().RenderTexture(*m_TextTexture, pos.x, pos.y);
 		}
 	}

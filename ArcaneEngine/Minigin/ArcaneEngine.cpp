@@ -96,7 +96,7 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 	EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, &dm);
 	auto refreshRate{dm.dmDisplayFrequency};
 	
-	time.Initialize(0.02f, 1000.f / refreshRate);
+	time.Initialize(0.02f, 1000 / refreshRate);
 
 	// Initialize Scene-components
 	sceneManager.Initialize();
@@ -133,7 +133,7 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 		renderer.Render();
 
 		// Too fast? --> slow down
-		const auto sleepTime{ time.GetCurrentTime() + microseconds(time.GetMicroSecondsPerFrame()) - high_resolution_clock::now()};
+		const auto sleepTime{ time.GetCurrentTime() + milliseconds(time.GetMsPerFrame()) - high_resolution_clock::now()};
 		std::this_thread::sleep_for(sleepTime);
 	}
 }

@@ -10,12 +10,11 @@ struct Time final: public Singleton<Time>
 public:
 
 	void Update();
-	void Initialize(float fixedTimeStep, float msPerFrame);
+	void Initialize(float fixedTimeStep, int msPerFrame);
 
 	float GetDeltaTime() const { return m_DeltaTime; }
 	float GetFixedTimeStep() const { return m_FixedTimeStep; }
-	float GetMsPerFrame() const { return m_MsPerFrame; }
-	int GetMicroSecondsPerFrame() const { return m_MicroSecondsPerFrame; }
+	int GetMsPerFrame() const { return m_MsPerFrame; }
 	float GetFps() const { return m_Fps; }
 	auto GetCurrentTime() const { return m_CurrentTime; }
 
@@ -23,7 +22,7 @@ private:
 
 	float m_DeltaTime{};
 	float m_FixedTimeStep{};
-	float m_MsPerFrame{};
+	int m_MsPerFrame{};
 	int m_MicroSecondsPerFrame{};
 	float m_Fps{};
 
