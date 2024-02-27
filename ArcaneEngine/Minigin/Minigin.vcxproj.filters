@@ -5,9 +5,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="MiniGin Files">
-      <UniqueIdentifier>{06a66bb5-9906-477b-848a-0706e190068b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ArcaneEngine Files">
       <UniqueIdentifier>{278d05d1-e7f5-4577-9a5c-24447c2b8fc5}</UniqueIdentifier>
     </Filter>
@@ -17,42 +14,36 @@
     <Filter Include="ArcaneEngine Files\Components\DerivedComponents">
       <UniqueIdentifier>{9f2683af-97da-4044-a8b9-bec3a9738044}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ArcaneEngine Files\Singletons">
+      <UniqueIdentifier>{49d5b0e1-0f4f-45d8-8c1e-84b054547b71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine Files\Singletons\DerivedSingletons">
+      <UniqueIdentifier>{6fdf4334-4221-4797-aebb-d4262b0aa78f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework Files">
+      <UniqueIdentifier>{06a66bb5-9906-477b-848a-0706e190068b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
-      <Filter>MiniGin Files</Filter>
+      <Filter>Framework Files</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>MiniGin Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>MiniGin Files</Filter>
+      <Filter>Framework Files</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
-      <Filter>MiniGin Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>MiniGin Files</Filter>
+      <Filter>Framework Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>MiniGin Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>MiniGin Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>MiniGin Files</Filter>
+      <Filter>Framework Files</Filter>
     </ClInclude>
     <ClInclude Include="Texture2D.h">
-      <Filter>MiniGin Files</Filter>
+      <Filter>Framework Files</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
-      <Filter>MiniGin Files</Filter>
+      <Filter>Framework Files</Filter>
     </ClInclude>
     <ClInclude Include="ArcaneEngine.h">
-      <Filter>ArcaneEngine Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Time.h">
       <Filter>ArcaneEngine Files</Filter>
     </ClInclude>
     <ClInclude Include="BaseComponent.h">
@@ -67,43 +58,49 @@
     <ClInclude Include="TextComponent.h">
       <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
     </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>ArcaneEngine Files\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
+    </ClInclude>
+    <ClInclude Include="RotatingComponent.h">
+      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font.cpp">
-      <Filter>MiniGin Files</Filter>
+      <Filter>Framework Files</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>MiniGin Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>MiniGin Files</Filter>
+      <Filter>Framework Files</Filter>
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
-      <Filter>MiniGin Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>MiniGin Files</Filter>
+      <Filter>Framework Files</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>MiniGin Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>MiniGin Files</Filter>
+      <Filter>Framework Files</Filter>
     </ClCompile>
     <ClCompile Include="Texture2D.cpp">
-      <Filter>MiniGin Files</Filter>
+      <Filter>Framework Files</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
-      <Filter>MiniGin Files</Filter>
+      <Filter>Framework Files</Filter>
     </ClCompile>
     <ClCompile Include="ArcaneEngine.cpp">
       <Filter>ArcaneEngine Files</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
-      <Filter>MiniGin Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.cpp">
-      <Filter>ArcaneEngine Files</Filter>
+      <Filter>Framework Files</Filter>
     </ClCompile>
     <ClCompile Include="BaseComponent.cpp">
       <Filter>ArcaneEngine Files\Components</Filter>
@@ -115,6 +112,21 @@
       <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
     </ClCompile>
     <ClCompile Include="TextComponent.cpp">
+      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
+    </ClCompile>
+    <ClCompile Include="RotatingComponent.cpp">
       <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
     </ClCompile>
   </ItemGroup>
