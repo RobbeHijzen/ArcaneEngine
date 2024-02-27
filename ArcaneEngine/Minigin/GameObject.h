@@ -67,17 +67,16 @@ public:
 	std::vector<GameObject*> GetChildren() { return m_Children; }
 
 	void RemoveChild(GameObject* child);
-	void AddChild(GameObject* child) { m_Children.emplace_back(child); }
-
 	void RemoveAllChildren() { m_Children.clear(); }
+
 	// Transforms
 	void SetLocalTransform(Transform transform);
 	Transform GetLocalTransform() const { return m_LocalTransform; }
 	void SetWorldTransformDirty();
 	
 	Transform GetWorldTransform();
-	void UpdateWorldTransform();
 
+	// Deleting
 	void Delete();
 	bool IsDeleted() { return m_IsDeleted; }
 
@@ -93,6 +92,12 @@ private:
 		
 	GameObject* m_Parent{};
 	std::vector<GameObject*> m_Children{};
+
+
+	void AddChild(GameObject* child) { m_Children.emplace_back(child); }
+
+
+	void UpdateWorldTransform();
 
 	bool IsChild(GameObject* gameObject);
 };

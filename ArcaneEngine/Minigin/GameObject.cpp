@@ -88,7 +88,7 @@ void GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 	{
 		return;
 	}
-
+	
 	// Transform Handling
 	if (keepWorldPosition)
 	{
@@ -105,7 +105,7 @@ void GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 	{
 		SetWorldTransformDirty();
 	}
-
+	
 	// Parent's child Handling
 	if (m_Parent)
 	{
