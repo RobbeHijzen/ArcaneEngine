@@ -177,7 +177,7 @@ void GameObject::SetLocalTransform(Transform transform)
 
 void GameObject::SetWorldTransformDirty()
 {
-	m_WorldTransformIsDirty = true;
+	m_IsTransformDirty = true;
 	for (auto& child : m_Children)
 	{
 		child->SetWorldTransformDirty();
@@ -186,7 +186,7 @@ void GameObject::SetWorldTransformDirty()
 
 Transform GameObject::GetWorldTransform()
 {
-	if (m_WorldTransformIsDirty)
+	if (m_IsTransformDirty)
 	{
 		UpdateWorldTransform();
 	}
@@ -200,7 +200,7 @@ void GameObject::AddChild(std::shared_ptr<GameObject> child)
 
 void GameObject::UpdateWorldTransform()
 {
-	if (m_WorldTransformIsDirty)
+	if (m_IsTransformDirty)
 	{
 		if (m_Parent != nullptr)
 		{
@@ -210,7 +210,7 @@ void GameObject::UpdateWorldTransform()
 		{
 			m_WorldTransform = m_LocalTransform;
 		}
-		m_WorldTransformIsDirty = false;
+		m_IsTransformDirty = false;
 	}
 }
 

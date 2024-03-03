@@ -65,7 +65,7 @@ public:
 	size_t GetChildCount() const { return m_Children.size(); }
 	std::shared_ptr<GameObject> GetChildAt(unsigned int index) const { assert(index < m_Children.size()); return m_Children[index]; };
 	std::shared_ptr<GameObject> GetChildSharedPtr(GameObject* child);
-	std::vector<std::shared_ptr<GameObject>> GetChildren() { return m_Children; }
+	const std::vector<std::shared_ptr<GameObject>>& GetChildren() { return m_Children; }
 
 	void RemoveChild(GameObject* child);
 	void RemoveAllChildren() { m_Children.clear(); }
@@ -79,7 +79,7 @@ public:
 
 	// Deleting
 	void Delete();
-	bool IsDeleted() { return m_IsDeleted; }
+	bool IsDeleted() const { return m_IsDeleted; }
 
 private:
 
@@ -87,7 +87,7 @@ private:
 
 	Transform m_LocalTransform{};
 	Transform m_WorldTransform{};
-	bool m_WorldTransformIsDirty{};
+	bool m_IsTransformDirty{};
 
 	std::vector<std::shared_ptr<BaseComponent>> m_Components{};
 		
@@ -96,7 +96,6 @@ private:
 
 
 	void AddChild(std::shared_ptr<GameObject>child);
-
 
 	void UpdateWorldTransform();
 
