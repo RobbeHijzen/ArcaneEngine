@@ -8,7 +8,7 @@ class RotatingComponent final : public BaseComponent
 {
 public:
 
-	RotatingComponent(GameObject* const parentGameObject, glm::vec2 center, float radius, float rotationSpeed = 1.f);
+	RotatingComponent(GameObject* const parentGameObject, float radius, float rotationSpeed = 1.f);
 
 	virtual ~RotatingComponent() = default;
 	RotatingComponent(const RotatingComponent& other) = delete;
@@ -20,7 +20,6 @@ public:
 
 private:
 
-	glm::vec2 m_Center{};
 	const float m_Radius{};
 
 	float m_CurrentAngle{}; // in radians

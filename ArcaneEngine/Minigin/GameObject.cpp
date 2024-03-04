@@ -106,7 +106,7 @@ void GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 		SetWorldTransformDirty();
 	}
 	
-	// Place this inside the already known shared_ptr so ownership can be transferred
+	// Place "this" inside the already known shared_ptr so ownership can be transferred
 	std::shared_ptr<GameObject> thisPtr{};
 	if (m_Parent)
 
@@ -145,7 +145,7 @@ void GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 	}
 }
 
-std::shared_ptr<GameObject> GameObject::GetChildSharedPtr(GameObject* child)
+std::shared_ptr<GameObject> GameObject::GetChildSharedPtr(GameObject* child) const
 {
 	for (auto& currentChild : m_Children)
 	{

@@ -3,9 +3,8 @@
 
 constexpr float PI_F = 3.14159265f;
 
-RotatingComponent::RotatingComponent(GameObject* const parentGameObject, glm::vec2 center, float radius, float rotationSpeed)
+RotatingComponent::RotatingComponent(GameObject* const parentGameObject, float radius, float rotationSpeed)
 	: BaseComponent(parentGameObject)
-	, m_Center{center}
 	, m_Radius{radius}
 	, m_RotationSpeed{rotationSpeed}
 {
@@ -17,8 +16,8 @@ void RotatingComponent::Update()
 	while (m_CurrentAngle >= 2 * PI_F) m_CurrentAngle -= 2 * PI_F;
 
 
-	float xPos{cosf(m_CurrentAngle) * m_Radius + m_Center.x};
-	float yPos{sinf(m_CurrentAngle) * m_Radius + m_Center.y};
+	float xPos{cosf(m_CurrentAngle) * m_Radius};
+	float yPos{sinf(m_CurrentAngle) * m_Radius};
 
 	GetOwner()->SetLocalTransform({ xPos, yPos });
 }
