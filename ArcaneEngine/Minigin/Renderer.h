@@ -1,7 +1,9 @@
 #pragma once
 #include <SDL.h>
 #include "Singleton.h"
-
+#include "imgui.h"
+#include "backends/imgui_impl_sdl2.h"
+#include "backends/imgui_impl_opengl3.h"
 
 class Texture2D;
 /**
