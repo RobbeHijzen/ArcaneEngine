@@ -103,6 +103,9 @@
     <ClInclude Include="Renderer.h">
       <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
     </ClInclude>
+    <ClInclude Include="DearImGui.h">
+      <Filter>ArcaneEngine Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font.cpp">
@@ -176,6 +179,9 @@
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
+    </ClCompile>
+    <ClCompile Include="DearImGui.cpp">
+      <Filter>ArcaneEngine Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

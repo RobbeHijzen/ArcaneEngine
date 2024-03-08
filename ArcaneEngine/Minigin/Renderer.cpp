@@ -26,11 +26,7 @@ void Renderer::Init(SDL_Window* window)
 		throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
 	}
 
-	// Imgui setup
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGui_ImplSDL2_InitForOpenGL(window, SDL_GL_GetCurrentContext());
-	ImGui_ImplOpenGL3_Init();
+	m_ImGui.Initialize(window);
 }
 
 void Renderer::Render() const
@@ -41,12 +37,7 @@ void Renderer::Render() const
 	SceneManager::GetInstance().Render();
 
 	
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame();
-	ImGui::NewFrame();
-	ImGui::ShowDemoWindow();
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	m_ImGui.Render();
 
 	
 	SDL_RenderPresent(m_renderer);
