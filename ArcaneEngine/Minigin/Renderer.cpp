@@ -29,7 +29,7 @@ void Renderer::Init(SDL_Window* window)
 	m_ImGui.Initialize(window);
 }
 
-void Renderer::Render() const
+void Renderer::Render()
 {
 	const auto& color = GetBackgroundColor();
 	SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
