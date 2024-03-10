@@ -5,14 +5,13 @@
 #endif
 #include <imgui.h>
 
-namespace ImGui {
 // Use this structure to pass the plot data and settings into the Plot function
 struct PlotConfig {
     struct Values {
         // if necessary, you can provide x-axis values
-        const float *xs = nullptr;
+        const float* xs = nullptr;
         // array of y values. If null, use ys_list (below)
-        const float *ys = nullptr;
+        const float* ys = nullptr;
         // the number of values in each array
         int count;
         // at which offset to start plotting.
@@ -22,7 +21,7 @@ struct PlotConfig {
         ImU32 color = 0;
 
         // in case you need to draw multiple plots at once, use this instead of ys
-        const float **ys_list = nullptr;
+        const float** ys_list = nullptr;
         // the number of plots to draw
         int ys_count = 0;
         // colors for each plot
@@ -75,4 +74,6 @@ enum class PlotStatus {
 };
 
 IMGUI_API PlotStatus Plot(const char* label, const PlotConfig& conf);
-}
+
+
+

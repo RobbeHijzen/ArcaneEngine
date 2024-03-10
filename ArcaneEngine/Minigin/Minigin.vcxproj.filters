@@ -106,6 +106,9 @@
     <ClInclude Include="DearImGui.h">
       <Filter>ArcaneEngine Files</Filter>
     </ClInclude>
+    <ClInclude Include="ImGuiPlot.h">
+      <Filter>Framework Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font.cpp">
@@ -182,6 +185,9 @@
     </ClCompile>
     <ClCompile Include="DearImGui.cpp">
       <Filter>ArcaneEngine Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiPlot.cpp">
+      <Filter>Framework Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

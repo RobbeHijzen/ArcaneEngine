@@ -5,6 +5,7 @@
 #include "backends/imgui_impl_sdl2.h"
 #include "backends/imgui_impl_opengl3.h"
 #include <vector>
+#include "ImGuiPlot.h"
 
 class DearImGuiEx1
 {
@@ -21,7 +22,6 @@ private:
 
 
 	std::vector<float> CalculateGraphValues();
-	void RenderGraphValues(std::vector<float> graphValues);
 };
 
 class DearImGuiEx2
@@ -40,6 +40,9 @@ private:
 
 	std::vector<float> m_CurrentGraphValuesAlt{};
 	bool m_DrawGraphAlt{ false };
+
+	PlotConfig m_CombinedConfig{};
+	bool m_FirstFrameButton{};
 
 	std::vector<float> CalculateGraphValuesNormal();
 	std::vector<float> CalculateGraphValuesAlt();
@@ -76,11 +79,21 @@ class TestObjectNormal
 public:
 	TestTransform local{};
 	int id{};
+
+	int operator*=(int other)
+	{
+		return id *= other;
+	}
 };
 class TestObjectAlt
 {
 public:
 	TestTransform* local{};
 	int id{};
+
+	int operator*=(int other)
+	{
+		return id *= other;
+	}
 };
 
