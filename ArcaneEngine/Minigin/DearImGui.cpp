@@ -1,4 +1,5 @@
 #include "DearImGui.h"
+#include "../3rdParty/imgui-plot-master/include/imgui_plot.h"
 #include <string>
 #include <iostream>
 #include <chrono>
@@ -6,9 +7,23 @@
 
 namespace MyImGui
 {
-	void RenderGraph(std::vector<float> graphValues, ImVec4 color)
+	void RenderGraph(const std::vector<float>& graphValues, const ImVec4 color, const std::string& title)
 	{
+		ImGui::PushStyleColor(ImGuiCol_PlotLines, color);
+		ImGui::PlotLines("", &graphValues[0], static_cast<int>(graphValues.size()),
+						 0, title.c_str(), FLT_MAX, FLT_MAX,
+						 ImVec2{ 160, 80 });
+		ImGui::PopStyleColor();
+	}
 
+	std::vector<float*> VectorOfVectorsToImGuiFormat(const std::vector<std::vector<float>>& vec) 
+	{
+		std::vector<float*> result{};
+		for (const auto& innerVec : vec) 
+		{
+			result.emplace_back(innerVec.data());
+		}
+		return result;
 	}
 }
 
@@ -19,7 +34,6 @@ void DearImGui::Initialize(SDL_Window* window)
 	ImGui_ImplSDL2_InitForOpenGL(window, SDL_GL_GetCurrentContext());
 	ImGui_ImplOpenGL3_Init();
 }
-
 void DearImGui::Render()
 {
 	ImGui_ImplOpenGL3_NewFrame();
@@ -56,7 +70,7 @@ void DearImGuiEx1::Render()
 	}
 	if (m_DrawGraph)
 	{
-		RenderGraphValues(m_CurrentGraphValues);
+		MyImGui::RenderGraph(m_CurrentGraphValues, ImVec4{0.f, 1.f, 1.f, 1.f}, "Excercise 1");
 	}
 }
 std::vector<float> DearImGuiEx1::CalculateGraphValues()
@@ -131,7 +145,7 @@ void DearImGuiEx1::RenderGraphValues(std::vector<float> graphValues)
 	ImGui::PushStyleColor(ImGuiCol_PlotLines, ImVec4(0.0f, 1.0f, 1.0f, 1.0f));
 	
 	ImGui::PlotLines("", &graphValues[0], static_cast<int>(graphValues.size()), 
-					 0, "Excercise 1", FLT_MAX, FLT_MAX,
+					 0, NULL, FLT_MAX, FLT_MAX,
 					 ImVec2{ 160, 80 });
 	ImGui::PopStyleColor();
 }
@@ -150,7 +164,7 @@ void DearImGuiEx2::Render()
 	}
 	if (m_DrawGraphNormal)
 	{
-		RenderGraphValues(m_CurrentGraphValuesNormal, ImVec4{1.f, 0.f, 1.f, 1.f});
+		MyImGui::RenderGraph(m_CurrentGraphValuesNormal, ImVec4{1.f, 0.f, 1.f, 1.f}, "");
 	}
 
 	// Alt
@@ -161,18 +175,27 @@ void DearImGuiEx2::Render()
 	}
 	if (m_DrawGraphAlt)
 	{
-		RenderGraphValues(m_CurrentGraphValuesAlt, ImVec4{1.f, 1.f, 0.f, 1.f});
+		MyImGui::RenderGraph(m_CurrentGraphValuesAlt, ImVec4{1.f, 1.f, 0.f, 1.f}, "");
 	}
 
 	// Combined
 	if (m_DrawGraphNormal && m_DrawGraphAlt)
 	{
-		ImGui::PushStyleColor(ImGuiCol_PlotLines, ImVec4{1.f, 1.f, 1.f, 1.f});
+		std::vector<std::vector<float>> combinedGraphs{ m_CurrentGraphValuesNormal, m_CurrentGraphValuesAlt};
+		auto imGuiFormat{ MyImGui::VectorOfVectorsToImGuiFormat(combinedGraphs)};
 
-		ImGui::PlotLines("", &m_CurrentGraphValuesNormal[0], static_cast<int>(m_CurrentGraphValuesAlt.size() * 2),
-			0, NULL, -1.f, 1.f,
-			ImVec2{ 160, 80 });
-		ImGui::PopStyleColor();
+		std::vector<float*> rawPointerArray(imGuiFormat.size());
+		for (size_t i = 0; i < imGuiFormat.size(); ++i) 
+		{
+			rawPointerArray[i] = imGuiFormat[i];
+		}
+
+		ImGui::PlotConfig combinedConfig{};
+		combinedConfig.values.ys_list = rawPointerArray.data();
+		combinedConfig.values.ys_count = static_cast<int>(combinedGraphs.size());
+		
+
+		ImGui::Plot("", combinedConfig);
 	}
 }
 std::vector<float> DearImGuiEx2::CalculateGraphValuesNormal()
@@ -308,14 +331,5 @@ std::vector<float> DearImGuiEx2::CalculateGraphValuesAlt()
 	}
 
 	return finalValues;
-}
-void DearImGuiEx2::RenderGraphValues(std::vector<float> graphValues, ImVec4 color)
-{
-	ImGui::PushStyleColor(ImGuiCol_PlotLines, color);
-
-	ImGui::PlotLines("", &graphValues[0], static_cast<int>(graphValues.size()),
-					 0, NULL, FLT_MAX, FLT_MAX,
-					 ImVec2{ 160, 80 });
-	ImGui::PopStyleColor();
 }
 

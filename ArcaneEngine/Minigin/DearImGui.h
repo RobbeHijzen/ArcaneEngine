@@ -44,8 +44,6 @@ private:
 	std::vector<float> CalculateGraphValuesNormal();
 	std::vector<float> CalculateGraphValuesAlt();
 
-	void RenderGraphValues(std::vector<float> graphValues, ImVec4 color);
-
 };
 
 
