@@ -23,9 +23,6 @@
     <Filter Include="Framework Files">
       <UniqueIdentifier>{06a66bb5-9906-477b-848a-0706e190068b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="imgui">
-      <UniqueIdentifier>{9bc5f53c-8e9d-4d8f-a720-3cb4798ffc5f}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -76,38 +73,8 @@
     <ClInclude Include="RotatingComponent.h">
       <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
     </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\imconfig.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\imgui.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\imgui_internal.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\imstb_rectpack.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\imstb_textedit.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\imstb_truetype.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\backends\imgui_impl_opengl3.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\backends\imgui_impl_sdl2.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
-    </ClInclude>
-    <ClInclude Include="DearImGui.h">
-      <Filter>ArcaneEngine Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGuiPlot.h">
-      <Filter>Framework Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -159,35 +126,8 @@
     <ClCompile Include="RotatingComponent.cpp">
       <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
     </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\imgui.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\imgui_demo.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\imgui_draw.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\imgui_tables.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\imgui_widgets.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\backends\imgui_impl_opengl3.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\backends\imgui_impl_sdl2.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
-    </ClCompile>
-    <ClCompile Include="DearImGui.cpp">
-      <Filter>ArcaneEngine Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGuiPlot.cpp">
-      <Filter>Framework Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

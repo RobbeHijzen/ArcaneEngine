@@ -1,7 +1,6 @@
 #pragma once
 #include <SDL.h>
 #include "Singleton.h"
-#include "DearImGui.h"
 
 class Texture2D;
 /**
@@ -12,8 +11,6 @@ class Renderer final : public Singleton<Renderer>
 	SDL_Renderer* m_renderer{};
 	SDL_Window* m_window{};
 	SDL_Color m_clearColor{};	
-
-	DearImGui m_ImGui{};
 
 public:
 	void Init(SDL_Window* window);

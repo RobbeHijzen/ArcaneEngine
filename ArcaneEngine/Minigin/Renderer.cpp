@@ -26,7 +26,6 @@ void Renderer::Init(SDL_Window* window)
 		throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
 	}
 
-	m_ImGui.Initialize(window);
 }
 
 void Renderer::Render() const
@@ -36,8 +35,6 @@ void Renderer::Render() const
 	SDL_RenderClear(m_renderer);
 	SceneManager::GetInstance().Render();
 
-	
-	m_ImGui.Render();
 
 	
 	SDL_RenderPresent(m_renderer);
@@ -45,12 +42,6 @@ void Renderer::Render() const
 
 void Renderer::Destroy()
 {
-	// Imgui cleanup
-	ImGui_ImplSDL2_Shutdown();
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui::DestroyContext();
-
-
 	if (m_renderer != nullptr)
 	{
 		SDL_DestroyRenderer(m_renderer);

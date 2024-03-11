@@ -91,12 +91,8 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 	Time& time = Time::GetInstance();
 
 	// Set Time Variables
-	DEVMODE dm;
-	dm.dmSize = sizeof(dm);
-	EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, &dm);
-	auto refreshRate{dm.dmDisplayFrequency};
-	
-	time.Initialize(0.02f, 1000 / refreshRate);
+	constexpr int maxFps{60};
+	time.Initialize(0.02f, 1000 / maxFps);
 
 	// Initialize Scene-components
 	sceneManager.Initialize();
