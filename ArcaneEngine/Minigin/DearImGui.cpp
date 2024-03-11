@@ -87,7 +87,7 @@ void DearImGui::Initialize(SDL_Window* window)
 	ImGui_ImplSDL2_InitForOpenGL(window, SDL_GL_GetCurrentContext());
 	ImGui_ImplOpenGL3_Init();
 }
-void DearImGui::Render()
+void DearImGui::Render() const
 {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
@@ -95,23 +95,22 @@ void DearImGui::Render()
 
 
 	ImGui::Begin("Excercise 1");
-
+	ImGui::SetWindowPos({ 100.f, 100.f }, ImGuiCond_FirstUseEver);
 	m_ImGuiEx1.Render();
-
 	ImGui::End();
 
 	ImGui::Begin("Excercise 2");
-
+	ImGui::SetWindowPos({ 500.f, 100.f }, ImGuiCond_FirstUseEver);
+	ImGui::SetWindowSize({ 150.f, 300.f }, ImGuiCond_FirstUseEver);
 	m_ImGuiEx2.Render();
-
 	ImGui::End();
-
 	ImGui::Render();
+
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 
-void DearImGuiEx1::Render()
+void DearImGuiEx1::Render() const
 {
 	ImGui::InputInt("#Samples", &m_SamplesAmount);
 	if (m_SamplesAmount < m_MinimumSampleAmount) m_SamplesAmount = m_MinimumSampleAmount;
@@ -126,7 +125,7 @@ void DearImGuiEx1::Render()
 		MyImGui::RenderGraph(m_CurrentGraphValues, ImVec4{0.f, 1.f, 1.f, 1.f}, "Excercise 1");
 	}
 }
-std::vector<float> DearImGuiEx1::CalculateGraphValues()
+std::vector<float> DearImGuiEx1::CalculateGraphValues() const
 {
 	std::vector<std::vector<float>> allCalculatedTimes{};
 	allCalculatedTimes.resize(m_SamplesAmount);
@@ -145,7 +144,7 @@ std::vector<float> DearImGuiEx1::CalculateGraphValues()
 }
 
 
-void DearImGuiEx2::Render()
+void DearImGuiEx2::Render() const
 {
 	ImGui::InputInt("#Samples", &m_SamplesAmount);
 	if (m_SamplesAmount < m_MinimumSampleAmount) m_SamplesAmount = m_MinimumSampleAmount;
@@ -202,7 +201,7 @@ void DearImGuiEx2::Render()
 		Plot("Test", m_CombinedConfig);
 	}
 }
-std::vector<float> DearImGuiEx2::CalculateGraphValuesNormal()
+std::vector<float> DearImGuiEx2::CalculateGraphValuesNormal() const
 {
 	std::vector<std::vector<float>> allCalculatedTimes{};
 	allCalculatedTimes.resize(m_SamplesAmount);
@@ -219,7 +218,7 @@ std::vector<float> DearImGuiEx2::CalculateGraphValuesNormal()
 
 	return MyImGui::CalculateAverageTimes(allCalculatedTimes, m_StepAmount, m_SamplesAmount);
 }
-std::vector<float> DearImGuiEx2::CalculateGraphValuesAlt()
+std::vector<float> DearImGuiEx2::CalculateGraphValuesAlt() const
 {
 	std::vector<std::vector<float>> allCalculatedTimes{};
 	allCalculatedTimes.resize(m_SamplesAmount);

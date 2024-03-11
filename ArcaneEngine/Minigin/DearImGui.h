@@ -10,42 +10,42 @@
 class DearImGuiEx1
 {
 public:
-	void Render();
+	void Render() const;
 
 private:
-	int m_StepAmount{ 10 };
+	const int m_StepAmount{ 10 };
 
-	int m_SamplesAmount{ 10 };
-	int m_MinimumSampleAmount{ 4 };
-	std::vector<float> m_CurrentGraphValues{};
-	bool m_DrawGraph{ false };
+	mutable int m_SamplesAmount{ 10 };
+	const int m_MinimumSampleAmount{ 4 };
 
+	mutable std::vector<float> m_CurrentGraphValues{};
+	mutable bool m_DrawGraph{ false };
 
-	std::vector<float> CalculateGraphValues();
+	std::vector<float> CalculateGraphValues() const;
 };
 
 class DearImGuiEx2
 {
 public:
-	void Render();
+	void Render() const;
 
 private:
-	int m_StepAmount{ 10 };
+	const int m_StepAmount{ 10 };
 
-	int m_SamplesAmount{ 50 };
-	int m_MinimumSampleAmount{ 4 };
+	mutable int m_SamplesAmount{ 5 };
+	const int m_MinimumSampleAmount{ 4 };
 
-	std::vector<float> m_CurrentGraphValuesNormal{};
-	bool m_DrawGraphNormal{ false };
+	mutable std::vector<float> m_CurrentGraphValuesNormal{};
+	mutable bool m_DrawGraphNormal{ false };
 
-	std::vector<float> m_CurrentGraphValuesAlt{};
-	bool m_DrawGraphAlt{ false };
+	mutable std::vector<float> m_CurrentGraphValuesAlt{};
+	mutable bool m_DrawGraphAlt{ false };
 
-	PlotConfig m_CombinedConfig{};
-	bool m_FirstFrameButton{};
+	mutable PlotConfig m_CombinedConfig{};
+	mutable bool m_FirstFrameButton{};
 
-	std::vector<float> CalculateGraphValuesNormal();
-	std::vector<float> CalculateGraphValuesAlt();
+	std::vector<float> CalculateGraphValuesNormal() const;
+	std::vector<float> CalculateGraphValuesAlt() const;
 
 };
 
@@ -57,7 +57,7 @@ public:
 	DearImGui() = default;
 
 	void Initialize(SDL_Window* window);
-	void Render();
+	void Render() const;
 
 private:
 
