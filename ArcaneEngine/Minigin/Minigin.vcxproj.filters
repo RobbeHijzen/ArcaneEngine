@@ -23,12 +23,15 @@
     <Filter Include="Framework Files">
       <UniqueIdentifier>{06a66bb5-9906-477b-848a-0706e190068b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ArcaneEngine Files\InputSystem">
+      <UniqueIdentifier>{5a15abcb-28a7-46d5-a39b-e695ec4776b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine Files\GameObject">
+      <UniqueIdentifier>{480071f3-dab1-4792-ba6d-acfca33879e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
-      <Filter>Framework Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
       <Filter>Framework Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
@@ -64,9 +67,6 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
     </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
-    </ClInclude>
     <ClInclude Include="Time.h">
       <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
     </ClInclude>
@@ -76,12 +76,21 @@
     <ClInclude Include="Renderer.h">
       <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
     </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>ArcaneEngine Files\InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="InputCommands.h">
+      <Filter>ArcaneEngine Files\InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>ArcaneEngine Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementComponent.h">
+      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font.cpp">
-      <Filter>Framework Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
       <Filter>Framework Files</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
@@ -117,9 +126,6 @@
     <ClCompile Include="ResourceManager.cpp">
       <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
-    </ClCompile>
     <ClCompile Include="Time.cpp">
       <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
     </ClCompile>
@@ -128,6 +134,15 @@
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>ArcaneEngine Files\InputSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>ArcaneEngine Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementComponent.cpp">
+      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

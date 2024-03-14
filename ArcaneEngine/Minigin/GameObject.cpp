@@ -175,6 +175,12 @@ void GameObject::SetLocalTransform(Transform transform)
 	SetWorldTransformDirty();
 }
 
+void GameObject::AddLocalTransform(Transform transform)
+{
+	m_LocalTransform += transform;
+	SetWorldTransformDirty();
+}
+
 void GameObject::SetWorldTransformDirty()
 {
 	m_IsTransformDirty = true;

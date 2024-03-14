@@ -69,6 +69,8 @@ public:
 
 	// Transforms
 	void SetLocalTransform(Transform transform);
+	void AddLocalTransform(Transform transform);
+
 	Transform GetLocalTransform() const { return m_LocalTransform; }
 	void SetWorldTransformDirty();
 	
