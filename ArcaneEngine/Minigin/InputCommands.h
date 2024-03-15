@@ -29,7 +29,10 @@ private:
 class MoveCommand : public GameObjectCommand
 {
 public:
-	MoveCommand(GameObject* gameObject, glm::vec2 direction) : GameObjectCommand(gameObject), m_Direction{ direction.x, -direction.y } {}
+	MoveCommand(GameObject* gameObject, glm::vec2 direction) : GameObjectCommand(gameObject)
+	{
+		m_Direction = glm::normalize(glm::vec2{direction.x, -direction.y});
+	}
 
 	virtual void Execute() override 
 	{
