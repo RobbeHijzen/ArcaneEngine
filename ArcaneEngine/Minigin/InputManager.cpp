@@ -13,7 +13,6 @@ bool InputManager::ProcessInput()
 		}
 	}
 
-
 	CopyMemory(&m_PreviousState, &m_CurrentState, sizeof(XINPUT_STATE));
 	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
 	XInputGetState(0, &m_CurrentState);
@@ -22,52 +21,55 @@ bool InputManager::ProcessInput()
 	m_ButtonsPressedThisFrame = buttonChanges & m_CurrentState.Gamepad.wButtons;
 	m_ButtonsReleasedThisFrame = buttonChanges & (~m_CurrentState.Gamepad.wButtons);
 
-	
+	// SDL Keyboard input handling
 	const uint8_t* pKeyboardState = SDL_GetKeyboardState(nullptr);
-	
-	for (auto& inputBinding : m_InputBindings)
+	for (auto& inputBinding : m_InputBindingsKB)
 	{
 		if (!inputBinding.command)
 			continue;
 
-		if (inputBinding.usingSDL)
+		if (pKeyboardState[inputBinding.key])
 		{
-			if (pKeyboardState[inputBinding.key])
+			inputBinding.command->Execute();
+		}
+	}
+
+
+	// XINPUT Controller input handling
+	for (auto& inputBinding : m_InputBindingsGP)
+	{
+		if (!inputBinding.command)
+			continue;
+
+		
+		switch (inputBinding.inputType)
+		{
+		case InputTypeGP::IsPressed:
+		{
+			if (IsPressed(inputBinding.key))
 			{
 				inputBinding.command->Execute();
 			}
+			break;
 		}
-		else
+		case InputTypeGP::IsDownThisFrame:
 		{
-			switch (inputBinding.inputType)
+			if (IsDownThisFrame(inputBinding.key))
 			{
-			case InputType::IsPressed:
+				inputBinding.command->Execute();
+			}
+			break;
+		}
+		case InputTypeGP::IsUpThisFrame:
+		{
+			if (IsUpThisFrame(inputBinding.key))
 			{
-				if (IsPressed(inputBinding.key))
-				{
-					inputBinding.command->Execute();
-				}
-				break;
+				inputBinding.command->Execute();
 			}
-			case InputType::IsDownThisFrame:
-			{
-				if (IsDownThisFrame(inputBinding.key))
-				{
-					inputBinding.command->Execute();
-				}
-				break;
-			}
-			case InputType::IsUpThisFrame:
-			{
-				if (IsUpThisFrame(inputBinding.key))
-				{
-					inputBinding.command->Execute();
-				}
-				break;
-			}
-			default:
-				break;
-			}
+			break;
+		}
+		default:
+			break;
 		}
 	}
 
