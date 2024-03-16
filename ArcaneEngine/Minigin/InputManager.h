@@ -21,7 +21,7 @@ public:
 
 	bool ProcessInput();
 
-	void BindActionGP(int controllerIndex, int key, InputTypeGP inputType, auto command)
+	void BindActionGP(int controllerIndex, int key, InputTypeGP inputType, Command* const command)
 	{
 		assert(controllerIndex < static_cast<int>(m_Controllers.size()));
 

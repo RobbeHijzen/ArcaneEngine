@@ -19,28 +19,28 @@ struct InputBindingGP
 {
 	int key;
 	InputTypeGP inputType;
-	std::shared_ptr<Command> command;
+	std::unique_ptr<Command> command;
 
 	template<typename CommandType>
-	InputBindingGP(int keyIn, InputTypeGP inputTypeIn, CommandType commandIn)
+	InputBindingGP(int keyIn, InputTypeGP inputTypeIn, CommandType* const commandIn)
 		: key{ keyIn }
 		, inputType{ inputTypeIn }
+		, command{commandIn}
 	{
 		static_assert(std::is_base_of<Command, CommandType>::value, "CommandType must be derived from Command");
-		command = std::make_shared<CommandType>(commandIn);
 	}
 };
 
 struct InputBindingKB
 {
 	SDL_Scancode key;
-	std::shared_ptr<Command> command;
+	std::unique_ptr<Command> command;
 
 	template<typename CommandType>
 	InputBindingKB(SDL_Scancode keyIn, CommandType commandIn)
 		: key{ keyIn }
 	{
 		static_assert(std::is_base_of<Command, CommandType>::value, "CommandType must be derived from Command");
-		command = std::make_shared<CommandType>(commandIn);
+		command = std::make_unique<CommandType>(commandIn);
 	}
 };
