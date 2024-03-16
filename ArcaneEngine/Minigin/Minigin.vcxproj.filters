@@ -88,6 +88,12 @@
     <ClInclude Include="MovementComponent.h">
       <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
     </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>ArcaneEngine Files\InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>ArcaneEngine Files\InputSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font.cpp">
@@ -143,6 +149,15 @@
     </ClCompile>
     <ClCompile Include="MovementComponent.cpp">
       <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHelperStructs.h">
+      <Filter>ArcaneEngine Files\InputSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>ArcaneEngine Files\InputSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>ArcaneEngine Files\InputSystem</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -9,46 +9,36 @@
 #include "Singleton.h"
 #include "InputCommands.h"
 #include "InputHelperStructs.h"
-
+#include "Controller.h"
+#include "Keyboard.h"
 
 
 class InputManager final : public Singleton<InputManager>
 {
 public:
+
+	InputManager();
+
 	bool ProcessInput();
 
-	template<typename CommandType>
-	void BindActionGP(int key, InputTypeGP inputType, CommandType command)
+	void BindActionGP(int controllerIndex, int key, InputTypeGP inputType, auto command)
 	{
-		static_assert(std::is_base_of<Command, CommandType>::value, "CommandType must be derived from Command");
-		
-		InputBindingGP inputBinding{ key, inputType, command };
-		m_InputBindingsGP.emplace_back(inputBinding);
-	}
-	template<typename CommandType>
-	void BindActionKB(SDL_Scancode key, CommandType command)
-	{
-		static_assert(std::is_base_of<Command, CommandType>::value, "CommandType must be derived from Command");
+		assert(controllerIndex < static_cast<int>(m_Controllers.size()));
 
-		InputBindingKB inputBinding{ key, command };
-		m_InputBindingsKB.emplace_back(inputBinding);
+		m_Controllers[controllerIndex]->BindAction(key, inputType, command);
+	}
+
+	void BindActionKB(SDL_Scancode key, auto command)
+	{
+		m_Keyboard->BindAction(key, command);
 	}
 
 private:
 
-	std::vector<InputBindingGP> m_InputBindingsGP{};
-	std::vector<InputBindingKB> m_InputBindingsKB{};
+	std::vector<std::unique_ptr<Controller>> m_Controllers{};
+	const int m_ControllersAmount{ 2 };
 
-	XINPUT_STATE m_CurrentState{};
-	XINPUT_STATE m_PreviousState{};
-
-	int m_ButtonsPressedThisFrame{};
-	int m_ButtonsReleasedThisFrame{};
-
-
-	bool IsDownThisFrame(unsigned int button) const;
-	bool IsUpThisFrame(unsigned int button) const;
-	bool IsPressed(unsigned int button) const;
+	std::unique_ptr<Keyboard> m_Keyboard{};
 	
 };
 
