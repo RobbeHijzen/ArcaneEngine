@@ -29,6 +29,9 @@
     <Filter Include="ArcaneEngine Files\GameObject">
       <UniqueIdentifier>{480071f3-dab1-4792-ba6d-acfca33879e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ArcaneEngine Files\InputSystem\InputDevices">
+      <UniqueIdentifier>{69389cc1-37fe-42fd-9893-438dc95788a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -89,10 +92,13 @@
       <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
     </ClInclude>
     <ClInclude Include="Controller.h">
-      <Filter>ArcaneEngine Files\InputSystem</Filter>
+      <Filter>ArcaneEngine Files\InputSystem\InputDevices</Filter>
     </ClInclude>
     <ClInclude Include="Keyboard.h">
-      <Filter>ArcaneEngine Files\InputSystem</Filter>
+      <Filter>ArcaneEngine Files\InputSystem\InputDevices</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerImpl.h">
+      <Filter>ArcaneEngine Files\InputSystem\InputDevices</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -110,9 +116,6 @@
     </ClCompile>
     <ClCompile Include="ArcaneEngine.cpp">
       <Filter>ArcaneEngine Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Framework Files</Filter>
     </ClCompile>
     <ClCompile Include="BaseComponent.cpp">
       <Filter>ArcaneEngine Files\Components</Filter>
@@ -154,10 +157,16 @@
       <Filter>ArcaneEngine Files\InputSystem</Filter>
     </ClCompile>
     <ClCompile Include="Controller.cpp">
-      <Filter>ArcaneEngine Files\InputSystem</Filter>
+      <Filter>ArcaneEngine Files\InputSystem\InputDevices</Filter>
     </ClCompile>
     <ClCompile Include="Keyboard.cpp">
-      <Filter>ArcaneEngine Files\InputSystem</Filter>
+      <Filter>ArcaneEngine Files\InputSystem\InputDevices</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerImpl.cpp">
+      <Filter>ArcaneEngine Files\InputSystem\InputDevices</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>ArcaneEngine Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
