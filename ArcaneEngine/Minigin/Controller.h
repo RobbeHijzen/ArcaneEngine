@@ -12,7 +12,7 @@ public:
 	~Controller();
 
 	void ProcessInput();
-	void BindAction(int key, InputTypeGP inputType, Command* const command);
+	void BindAction(int key, InputType inputType, Command* const command);
 
 private:
 

@@ -13,7 +13,7 @@ public:
 	ControllerImpl(int controllerIndex) : m_ControllerIndex{ controllerIndex } {}
 
 	void ProcessInput();
-	void BindAction(int key, InputTypeGP inputType, Command* const command)
+	void BindAction(int key, InputType inputType, Command* const command)
 	{
 		m_InputBindings.emplace_back(std::make_unique<InputBindingGP>(key, inputType, command));
 	}

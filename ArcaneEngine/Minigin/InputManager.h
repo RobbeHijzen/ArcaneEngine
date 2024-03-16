@@ -21,14 +21,14 @@ public:
 
 	bool ProcessInput();
 
-	void BindActionGP(int controllerIndex, int key, InputTypeGP inputType, Command* const command)
+	void BindActionGP(int controllerIndex, int key, InputType inputType, Command* const command)
 	{
 		assert(controllerIndex < static_cast<int>(m_Controllers.size()));
 
 		m_Controllers[controllerIndex]->BindAction(key, inputType, command);
 	}
 
-	void BindActionKB(SDL_Scancode key, auto command)
+	void BindActionKB(SDL_Scancode key, Command* const command)
 	{
 		m_Keyboard->BindAction(key, command);
 	}
@@ -36,7 +36,7 @@ public:
 private:
 
 	std::vector<std::unique_ptr<Controller>> m_Controllers{};
-	const int m_ControllersAmount{ 2 };
+	const int m_ControllersAmount{ 1 };
 
 	std::unique_ptr<Keyboard> m_Keyboard{};
 	

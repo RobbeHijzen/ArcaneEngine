@@ -10,7 +10,7 @@ public:
 
 	void ProcessInput();
 
-	void BindAction(SDL_Scancode key, auto command)
+	void BindAction(SDL_Scancode key, Command* const command)
 	{
 		m_InputBindings.emplace_back(std::make_unique<InputBindingKB>(key, command));
 	}

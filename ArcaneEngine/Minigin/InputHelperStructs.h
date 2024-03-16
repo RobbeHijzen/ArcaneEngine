@@ -8,7 +8,7 @@
 //*** KB = KeyBoard
 //////////////////////////
 
-enum class InputTypeGP
+enum class InputType
 {
 	IsPressed,
 	IsDownThisFrame,
@@ -18,16 +18,14 @@ enum class InputTypeGP
 struct InputBindingGP
 {
 	int key;
-	InputTypeGP inputType;
+	InputType inputType;
 	std::unique_ptr<Command> command;
 
-	template<typename CommandType>
-	InputBindingGP(int keyIn, InputTypeGP inputTypeIn, CommandType* const commandIn)
+	InputBindingGP(int keyIn, InputType inputTypeIn, Command* const commandIn)
 		: key{ keyIn }
 		, inputType{ inputTypeIn }
 		, command{commandIn}
 	{
-		static_assert(std::is_base_of<Command, CommandType>::value, "CommandType must be derived from Command");
 	}
 };
 
@@ -36,11 +34,9 @@ struct InputBindingKB
 	SDL_Scancode key;
 	std::unique_ptr<Command> command;
 
-	template<typename CommandType>
-	InputBindingKB(SDL_Scancode keyIn, CommandType commandIn)
+	InputBindingKB(SDL_Scancode keyIn, Command* const commandIn)
 		: key{ keyIn }
+		, command{commandIn}
 	{
-		static_assert(std::is_base_of<Command, CommandType>::value, "CommandType must be derived from Command");
-		command = std::make_unique<CommandType>(commandIn);
 	}
 };

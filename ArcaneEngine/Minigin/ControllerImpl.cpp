@@ -21,7 +21,7 @@ void Controller::ControllerImpl::ProcessInput()
 
 		switch (inputBinding->inputType)
 		{
-		case InputTypeGP::IsPressed:
+		case InputType::IsPressed:
 		{
 			if (IsPressed(inputBinding->key))
 			{
@@ -29,7 +29,7 @@ void Controller::ControllerImpl::ProcessInput()
 			}
 			break;
 		}
-		case InputTypeGP::IsDownThisFrame:
+		case InputType::IsDownThisFrame:
 		{
 			if (IsDownThisFrame(inputBinding->key))
 			{
@@ -37,7 +37,7 @@ void Controller::ControllerImpl::ProcessInput()
 			}
 			break;
 		}
-		case InputTypeGP::IsUpThisFrame:
+		case InputType::IsUpThisFrame:
 		{
 			if (IsUpThisFrame(inputBinding->key))
 			{

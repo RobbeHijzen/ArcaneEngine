@@ -16,7 +16,7 @@ void Controller::ProcessInput()
 }
 
 
-void Controller::BindAction(int key, InputTypeGP inputType, Command* const command)
+void Controller::BindAction(int key, InputType inputType, Command* const command)
 {
 	m_pImpl->BindAction(key, inputType, command);
 }

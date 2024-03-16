@@ -10,7 +10,6 @@ InputManager::InputManager()
 	for (int index{}; index < m_ControllersAmount; ++index)
 	{
 		m_Controllers[index] = std::make_unique<Controller>(index);
-		m_Controllers[index] = std::make_unique<Controller>(index);
 	}
 	
 }
