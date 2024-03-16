@@ -9,7 +9,7 @@ class Keyboard
 public:
 	Keyboard() = default;
 
-	bool ProcessInput();
+	void ProcessInput();
 
 	void BindAction(SDL_Scancode key, auto command)
 	{

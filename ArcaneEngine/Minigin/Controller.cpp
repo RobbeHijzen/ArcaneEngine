@@ -5,7 +5,7 @@ Controller::Controller(int controllerIndex)
 {
 }
 
-bool Controller::ProcessInput()
+void Controller::ProcessInput()
 {
 	XINPUT_STATE previousState{};
 
@@ -53,8 +53,6 @@ bool Controller::ProcessInput()
 			break;
 		}
 	}
-
-	return true;
 }
 
 

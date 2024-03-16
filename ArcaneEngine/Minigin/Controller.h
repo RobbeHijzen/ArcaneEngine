@@ -14,7 +14,7 @@ class Controller
 public:
 	Controller(int controllerIndex);
 
-	bool ProcessInput();
+	void ProcessInput();
 
 	void BindAction(int key, InputTypeGP inputType, auto command)
 	{

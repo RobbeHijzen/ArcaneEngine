@@ -1,6 +1,6 @@
 #include "Keyboard.h"
 
-bool Keyboard::ProcessInput()
+void Keyboard::ProcessInput()
 {
 	const uint8_t* pKeyboardState = SDL_GetKeyboardState(nullptr);
 	for (auto& inputBinding : m_InputBindings)
@@ -13,6 +13,4 @@ bool Keyboard::ProcessInput()
 			inputBinding->command->Execute();
 		}
 	}
-
-	return true;
 }
