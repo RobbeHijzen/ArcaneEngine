@@ -15,7 +15,7 @@ public:
 	BaseComponent& operator=(const BaseComponent& other) = delete;
 	BaseComponent& operator=(BaseComponent&& other) = delete;
 
-	virtual void Initialize() {};
+	virtual void GameStart() {};
 
 	virtual void Update() {};
 	virtual void FixedUpdate() {};

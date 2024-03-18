@@ -20,7 +20,7 @@ public:
 	GameObject& operator=(GameObject&& other) = delete;
 
 
-	void Initialize();
+	void GameStart();
 
 	void Update();
 	void FixedUpdate();

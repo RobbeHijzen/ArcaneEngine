@@ -3,9 +3,9 @@
 
 
 
-void SceneManager::Initialize()
+void SceneManager::GameStart()
 {
-	m_Scenes[m_CurrentSceneIndex]->Initialize();
+	m_Scenes[m_CurrentSceneIndex]->GameStart();
 }
 
 void SceneManager::Update()

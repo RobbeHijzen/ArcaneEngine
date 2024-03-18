@@ -94,8 +94,8 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 	constexpr int maxFps{60};
 	time.Initialize(0.02f, 1000 / maxFps);
 
-	// Initialize Scene-components
-	sceneManager.Initialize();
+	// Call GameStart for all Scene-components
+	sceneManager.GameStart();
 
 	bool doContinue = true;
 	auto lastTime{high_resolution_clock::now()};

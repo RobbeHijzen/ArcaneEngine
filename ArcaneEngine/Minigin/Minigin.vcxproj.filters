@@ -88,9 +88,6 @@
     <ClInclude Include="GameObject.h">
       <Filter>ArcaneEngine Files\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="MovementComponent.h">
-      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
-    </ClInclude>
     <ClInclude Include="Controller.h">
       <Filter>ArcaneEngine Files\InputSystem\InputDevices</Filter>
     </ClInclude>
@@ -149,9 +146,6 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>ArcaneEngine Files\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="MovementComponent.cpp">
-      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
     </ClCompile>
     <ClCompile Include="InputHelperStructs.h">
       <Filter>ArcaneEngine Files\InputSystem</Filter>

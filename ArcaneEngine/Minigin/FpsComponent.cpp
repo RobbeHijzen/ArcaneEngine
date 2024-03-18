@@ -10,7 +10,7 @@ FpsComponent::FpsComponent(GameObject* const parentGameObject)
 {
 }
 
-void FpsComponent::Initialize()
+void FpsComponent::GameStart()
 {
 	m_pTextComponent = GetOwner()->GetComponent<TextComponent>().get();
 	assert(m_pTextComponent);

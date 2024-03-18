@@ -16,7 +16,7 @@ public:
 
 	void RemoveDeletedObjects();
 
-	void Initialize();
+	void GameStart();
 
 	void Update();
 	void FixedUpdate();

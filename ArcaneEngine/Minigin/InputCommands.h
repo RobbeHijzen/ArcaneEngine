@@ -2,8 +2,8 @@
 
 #include <memory>
 
+#include "Time.h"
 #include "GameObject.h"
-#include "MovementComponent.h"
 
 class Command
 {
@@ -29,21 +29,23 @@ private:
 class MoveCommand : public GameObjectCommand
 {
 public:
-	MoveCommand(GameObject* gameObject, glm::vec2 direction) : GameObjectCommand(gameObject)
+	MoveCommand(GameObject* gameObject, glm::vec2 direction, float movementSpeed)
+		: GameObjectCommand(gameObject)
+		, m_MovementSpeed{movementSpeed}
 	{
-		m_Direction = glm::normalize(glm::vec2{direction.x, -direction.y});
+		assert(std::abs(direction.x) > 0 || std::abs(direction.y) > 0);
+		m_Direction = glm::normalize(direction);
 	}
 
 	virtual void Execute() override 
 	{
-		if (auto movementComp{ GetGameObject()->GetComponent<MovementComponent>() })
-		{
-			movementComp->Move(m_Direction);
-		}
+		glm::vec2 addedPosition{ m_Direction * m_MovementSpeed * Time::GetInstance().GetDeltaTime() };
+		GetGameObject()->AddLocalTransform(Transform{ addedPosition });
 	}
 
 private:
 	glm::vec2 m_Direction;
+	float m_MovementSpeed;
 };
 
 

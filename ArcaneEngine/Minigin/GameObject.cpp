@@ -19,15 +19,15 @@ bool GameObject::AddComponent(std::shared_ptr<BaseComponent> component)
 }
 	
 
-void GameObject::Initialize()
+void GameObject::GameStart()
 {
 	for (auto& component : m_Components)
 	{
-		component->Initialize();
+		component->GameStart();
 	}
 	for (auto& child : m_Children)
 	{
-		child->Initialize();
+		child->GameStart();
 	}
 }
 

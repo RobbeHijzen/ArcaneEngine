@@ -17,7 +17,7 @@ public:
 	FpsComponent& operator=(const FpsComponent& other) = delete;
 	FpsComponent& operator=(FpsComponent&& other) = delete;
 
-	virtual void Initialize() override;
+	virtual void GameStart() override;
 	virtual void Update() override;
 
 private:
