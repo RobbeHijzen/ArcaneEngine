@@ -91,6 +91,10 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 	Time& time = Time::GetInstance();
 
 	// Set Time Variables
+
+	constexpr bool useVsync{ true };
+	SDL_GL_SetSwapInterval(useVsync);
+
 	constexpr int maxFps{60};
 	time.Initialize(0.02f, 1000 / maxFps);
 
@@ -129,7 +133,10 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 		renderer.Render();
 
 		// Too fast? --> slow down
-		const auto sleepTime{ time.GetCurrentTime() + milliseconds(time.GetMsPerFrame()) - high_resolution_clock::now()};
-		std::this_thread::sleep_for(sleepTime);
+		if (!useVsync)
+		{
+			const auto sleepTime{ time.GetCurrentTime() + milliseconds(time.GetMsPerFrame()) - high_resolution_clock::now() };
+			std::this_thread::sleep_for(sleepTime);
+		}
 	}
 }
