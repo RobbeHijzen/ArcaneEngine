@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Windows.h>
-#include <Xinput.h>
 #include <memory>
 #include <type_traits>
 #include <WinUser.h>
@@ -36,7 +35,7 @@ public:
 private:
 
 	std::vector<std::unique_ptr<Controller>> m_Controllers{};
-	const int m_ControllersAmount{ 1 };
+	const int m_ControllersAmount{ 2 };
 
 	std::unique_ptr<Keyboard> m_Keyboard{};
 	
