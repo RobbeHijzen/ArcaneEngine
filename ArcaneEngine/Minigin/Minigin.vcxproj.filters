@@ -82,9 +82,6 @@
     <ClInclude Include="InputManager.h">
       <Filter>ArcaneEngine Files\InputSystem</Filter>
     </ClInclude>
-    <ClInclude Include="InputCommands.h">
-      <Filter>ArcaneEngine Files\InputSystem</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>ArcaneEngine Files\GameObject</Filter>
     </ClInclude>
@@ -94,8 +91,8 @@
     <ClInclude Include="Keyboard.h">
       <Filter>ArcaneEngine Files\InputSystem\InputDevices</Filter>
     </ClInclude>
-    <ClInclude Include="ControllerImpl.h">
-      <Filter>ArcaneEngine Files\InputSystem\InputDevices</Filter>
+    <ClInclude Include="Commands.h">
+      <Filter>ArcaneEngine Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -154,9 +151,6 @@
       <Filter>ArcaneEngine Files\InputSystem\InputDevices</Filter>
     </ClCompile>
     <ClCompile Include="Keyboard.cpp">
-      <Filter>ArcaneEngine Files\InputSystem\InputDevices</Filter>
-    </ClCompile>
-    <ClCompile Include="ControllerImpl.cpp">
       <Filter>ArcaneEngine Files\InputSystem\InputDevices</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">

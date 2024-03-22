@@ -6,7 +6,7 @@
 #include <WinUser.h>
 
 #include "Singleton.h"
-#include "InputCommands.h"
+#include "Commands.h"
 #include "InputHelperStructs.h"
 #include "Controller.h"
 #include "Keyboard.h"

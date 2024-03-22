@@ -1,7 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <memory>
-#include "InputCommands.h"
+#include "Commands.h"
 
 //////////////////////////
 //*** GP = GamePad

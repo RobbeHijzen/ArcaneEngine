@@ -180,12 +180,11 @@
   <ItemGroup>
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="Controller.h" />
-    <ClInclude Include="ControllerImpl.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FpsComponent.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="ImageComponent.h" />
-    <ClInclude Include="InputCommands.h" />
+    <ClInclude Include="Commands.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="ArcaneEngine.h" />
     <ClInclude Include="Keyboard.h" />
@@ -203,7 +202,6 @@
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="Controller.cpp" />
-    <ClCompile Include="ControllerImpl.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FpsComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
