@@ -8,6 +8,8 @@
 //*** KB = KeyBoard
 //////////////////////////
 
+using namespace Commands;
+
 enum class InputType
 {
 	IsPressed,

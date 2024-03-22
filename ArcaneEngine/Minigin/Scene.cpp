@@ -86,17 +86,10 @@ void Scene::AttatchToRoot(std::shared_ptr<GameObject> gameObject)
 
 void Scene::DettatchFromRoot(GameObject* gameObject)
 {
-	auto it = m_GameObjects.begin();
-	while (it != m_GameObjects.end())
+	m_GameObjects.erase(std::find_if(m_GameObjects.begin(), m_GameObjects.end(), [&](const std::shared_ptr<GameObject>& sp)
 	{
-		auto& child = *it;
-		if (child.get() == gameObject)
-		{
-			it = m_GameObjects.erase(it);
-			return;
-		}
-		++it;
-	}
+		return sp.get() == gameObject;
+	}));
 }
 
 std::shared_ptr<GameObject> Scene::GetChildSharedPtr(GameObject* child)

@@ -32,6 +32,9 @@
     <Filter Include="ArcaneEngine Files\InputSystem\InputDevices">
       <UniqueIdentifier>{69389cc1-37fe-42fd-9893-438dc95788a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ArcaneEngine Files\ObserverPattern">
+      <UniqueIdentifier>{5014dffb-bf06-4e15-9fd0-7ff02192f7d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -94,6 +97,15 @@
     <ClInclude Include="Commands.h">
       <Filter>ArcaneEngine Files</Filter>
     </ClInclude>
+    <ClInclude Include="Observers.h">
+      <Filter>ArcaneEngine Files\ObserverPattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>ArcaneEngine Files\ObserverPattern</Filter>
+    </ClInclude>
+    <ClInclude Include="ObserverEvents.h">
+      <Filter>ArcaneEngine Files\ObserverPattern</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font.cpp">
@@ -155,6 +167,9 @@
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>ArcaneEngine Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Observers.cpp">
+      <Filter>ArcaneEngine Files\ObserverPattern</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

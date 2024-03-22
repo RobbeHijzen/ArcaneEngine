@@ -5,7 +5,12 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
-GameObject::~GameObject() = default;
+using namespace ObserverPattern;
+
+GameObject::~GameObject()
+{
+	m_pSubject->Notify(Event::SubjectDestroyed, this);
+}
 
 
 bool GameObject::AddComponent(std::shared_ptr<BaseComponent> component)
@@ -21,6 +26,12 @@ bool GameObject::AddComponent(std::shared_ptr<BaseComponent> component)
 
 void GameObject::GameStart()
 {
+	auto po1{ new PrintObserver() };
+	auto po2{ new PrintObserver() };
+	m_pSubject->AddObserver(po1);
+	m_pSubject->AddObserver(po2);
+	m_pSubject->Notify(Event::PrintTest, this);
+
 	for (auto& component : m_Components)
 	{
 		component->GameStart();
@@ -33,6 +44,7 @@ void GameObject::GameStart()
 
 void GameObject::Update()
 {
+
 	for (auto& component : m_Components)
 	{
 		component->Update();
@@ -159,14 +171,10 @@ std::shared_ptr<GameObject> GameObject::GetChildSharedPtr(GameObject* child) con
 
 void GameObject::RemoveChild(GameObject* child)
 {
-	for (auto it{m_Children.begin()}; it != m_Children.end(); ++it)
+	m_Children.erase(std::find_if(m_Children.begin(), m_Children.end(), [&](const std::shared_ptr<GameObject>& sp)
 	{
-		if ((*it).get() == child)
-		{
-			m_Children.erase(it);
-			return;
-		}
-	}
+		return sp.get() == child;
+	}));
 }
 
 void GameObject::SetLocalTransform(Transform transform)

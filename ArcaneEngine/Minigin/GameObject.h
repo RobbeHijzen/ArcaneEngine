@@ -3,7 +3,7 @@
 #include <vector>
 #include "Transform.h"
 #include "BaseComponent.h"
-
+#include "Subject.h"
 
 class Texture2D;
 
@@ -100,5 +100,7 @@ private:
 	void UpdateWorldTransform();
 
 	bool IsChild(GameObject* gameObject);
+
+	std::unique_ptr<ObserverPattern::Subject> m_pSubject{std::make_unique<ObserverPattern::Subject>()};
 };
 
