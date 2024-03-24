@@ -189,6 +189,7 @@
     <ClInclude Include="ArcaneEngine.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="ObserverEvents.h" />
+    <ClInclude Include="ObserverManager.h" />
     <ClInclude Include="Observers.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -214,6 +215,7 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ArcaneEngine.cpp" />
+    <ClCompile Include="ObserverManager.cpp" />
     <ClCompile Include="Observers.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />

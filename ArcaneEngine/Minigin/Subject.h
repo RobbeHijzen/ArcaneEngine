@@ -15,16 +15,25 @@ namespace ObserverPattern
 
 		Subject() = default;
 
+		~Subject()
+		{
+			for (auto& observer : m_Observers)
+			{
+				observer->RemoveSubject(this);
+			}
+		}
+
 		void AddObserver(Observer* newObserver)
 		{
 			m_Observers.emplace_back(newObserver);
+
+			newObserver->AddNewSubject(this);
 		}
 		void RemoveObserver(Observer* observer)
 		{
-			m_Observers.erase(std::find_if(m_Observers.begin(), m_Observers.end(), [&](const std::unique_ptr<Observer>& up)
-			{
-				return observer == up.get();
-			}));
+			m_Observers.erase(std::find(m_Observers.begin(), m_Observers.end(), observer));
+
+			observer->RemoveSubject(this);
 		}
 
 		void Notify(Event event, GameObject* gameObject)
@@ -37,7 +46,7 @@ namespace ObserverPattern
 
 	private:
 
-		std::vector<std::unique_ptr<Observer>> m_Observers{};
+		std::vector<Observer*> m_Observers{};
 	};
 
 }

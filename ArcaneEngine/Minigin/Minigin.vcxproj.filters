@@ -106,6 +106,9 @@
     <ClInclude Include="ObserverEvents.h">
       <Filter>ArcaneEngine Files\ObserverPattern</Filter>
     </ClInclude>
+    <ClInclude Include="ObserverManager.h">
+      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font.cpp">
@@ -170,6 +173,9 @@
     </ClCompile>
     <ClCompile Include="Observers.cpp">
       <Filter>ArcaneEngine Files\ObserverPattern</Filter>
+    </ClCompile>
+    <ClCompile Include="ObserverManager.cpp">
+      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -5,9 +5,18 @@
 
 using namespace ObserverPattern;
 
-PrintObserver::~PrintObserver()
+
+ObserverPattern::Observer::~Observer()
 {
+	m_IsDestroyed = true;
+
+	for (Subject* subject : m_Subjects)
+	{
+		subject->RemoveObserver(this);
+	}
 }
+
+
 
 void PrintObserver::Notify(Event event, GameObject*)
 {

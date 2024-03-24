@@ -9,7 +9,6 @@ using namespace ObserverPattern;
 
 GameObject::~GameObject()
 {
-	m_pSubject->Notify(Event::SubjectDestroyed, this);
 }
 
 
@@ -26,10 +25,8 @@ bool GameObject::AddComponent(std::shared_ptr<BaseComponent> component)
 
 void GameObject::GameStart()
 {
-	auto po1{ new PrintObserver() };
-	auto po2{ new PrintObserver() };
-	m_pSubject->AddObserver(po1);
-	m_pSubject->AddObserver(po2);
+	m_pSubject->AddObserver(new PrintObserver());
+	m_pSubject->AddObserver(new PrintObserver());
 	m_pSubject->Notify(Event::PrintTest, this);
 
 	for (auto& component : m_Components)

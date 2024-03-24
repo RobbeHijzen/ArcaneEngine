@@ -5,7 +5,7 @@
 #include "Time.h"
 #include "GameObject.h"
 
-namespace Commands
+namespace EngineCommands
 {
 	class Command
 	{
