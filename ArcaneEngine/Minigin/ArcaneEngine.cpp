@@ -6,6 +6,7 @@
 #include <SDL_ttf.h>
 #include <chrono>
 #include <thread>
+#include <steam_api.h>
 #include "ArcaneEngine.h"
 #include "InputManager.h"
 #include "SceneManager.h"
@@ -108,6 +109,8 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 	// Main GameLoop
 	while (doContinue)
 	{
+		SteamAPI_RunCallbacks();
+
 		// Delete the flagged objects
 		sceneManager.RemoveDeletedObjects();
 

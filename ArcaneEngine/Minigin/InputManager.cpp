@@ -16,15 +16,6 @@ InputManager::InputManager()
 
 bool InputManager::ProcessInput()
 {
-	//SDL_Event e;
-	//while (SDL_PollEvent(&e))
-	//{
-	//	if (e.type == SDL_QUIT)
-	//	{
-	//		return false;
-	//	}
-	//}
-
 	// Input Management
 	if (!m_Keyboard->ProcessInput())
 	{
