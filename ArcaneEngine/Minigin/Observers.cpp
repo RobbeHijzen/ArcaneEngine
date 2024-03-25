@@ -2,6 +2,7 @@
 
 #include "Subject.h"
 #include "GameObject.h"
+#include "SteamAchievements.h"
 
 #include "HealthComponent.h"
 #include "ScoreComponent.h"
@@ -57,6 +58,21 @@ void ObserverPattern::ScoreDisplayObserver::Notify(Event event, GameObject* game
 
 		std::string newText{ "#Score: " + std::to_string(newScore) };
 		m_pTextComponent->SetText(newText);
+	}
+	}
+}
+
+void ObserverPattern::AchievementObserver::Notify(Event event, GameObject* gameObject)
+{
+	switch (event)
+	{
+	case Event::ScoreChanged:
+	{
+		int newScore{ gameObject->GetComponent<ScoreComponent>()->GetScore() };
+		if (newScore >= m_WinnerScoreAmount)
+		{
+			CSteamAchievements::GetInstance().SetAchievement("ACH_WIN_ONE_GAME");
+		}
 	}
 	}
 }

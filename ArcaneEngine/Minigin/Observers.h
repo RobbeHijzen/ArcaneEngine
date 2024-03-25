@@ -87,5 +87,17 @@ namespace ObserverPattern
 
 	};
 
+	class AchievementObserver : public Observer
+	{
+	public:
+
+		virtual void Notify(Event event, GameObject* gameObject) override;
+
+	private:
+
+		const int m_WinnerScoreAmount{ 500 };
+
+	};
+
 }
 
