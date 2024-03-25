@@ -4,8 +4,10 @@ namespace ObserverPattern
 {
 	enum class Event
 	{
-		PrintTest
+		PrintTest,
 
+		ObjectDied,
+		ScoreChanged
 	};
 
 }

@@ -5,6 +5,8 @@
 #include "ObserverEvents.h"
 #include "ObserverManager.h"
 
+#include "TextComponent.h"
+
 class GameObject;
 
 namespace ObserverPattern
@@ -57,5 +59,33 @@ namespace ObserverPattern
 
 		virtual void Notify(Event event, GameObject* gameObject) override;
 	};
+
+	class HealthDisplayObserver : public Observer
+	{
+	public:
+
+		HealthDisplayObserver(TextComponent* textComp) : m_pTextComponent{textComp} {}
+
+		virtual void Notify(Event event, GameObject* gameObject) override;
+
+	private:
+
+		TextComponent* m_pTextComponent{};
+
+	};
+	class ScoreDisplayObserver : public Observer
+	{
+	public:
+
+		ScoreDisplayObserver(TextComponent* textComp) : m_pTextComponent{ textComp } {}
+
+		virtual void Notify(Event event, GameObject* gameObject) override;
+
+	private:
+
+		TextComponent* m_pTextComponent{};
+
+	};
+
 }
 

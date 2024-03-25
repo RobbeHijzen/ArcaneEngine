@@ -16,17 +16,20 @@ InputManager::InputManager()
 
 bool InputManager::ProcessInput()
 {
-	SDL_Event e;
-	while (SDL_PollEvent(&e))
-	{
-		if (e.type == SDL_QUIT)
-		{
-			return false;
-		}
-	}
+	//SDL_Event e;
+	//while (SDL_PollEvent(&e))
+	//{
+	//	if (e.type == SDL_QUIT)
+	//	{
+	//		return false;
+	//	}
+	//}
 
 	// Input Management
-	m_Keyboard->ProcessInput();
+	if (!m_Keyboard->ProcessInput())
+	{
+		return false;
+	}
 
 	for (auto& controller : m_Controllers)
 	{

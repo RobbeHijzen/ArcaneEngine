@@ -25,10 +25,6 @@ bool GameObject::AddComponent(std::shared_ptr<BaseComponent> component)
 
 void GameObject::GameStart()
 {
-	m_pSubject->AddObserver(new PrintObserver());
-	m_pSubject->AddObserver(new PrintObserver());
-	m_pSubject->Notify(Event::PrintTest, this);
-
 	for (auto& component : m_Components)
 	{
 		component->GameStart();

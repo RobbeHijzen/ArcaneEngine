@@ -1,12 +1,12 @@
 #pragma once
 #include <string>
 #include <memory>
-#include "GameObject.h"
 #include "Transform.h"
-
+#include "BaseComponent.h"
 
 class Font;
 class Texture2D;
+class GameObject;
 
 
 class TextComponent final : public BaseComponent

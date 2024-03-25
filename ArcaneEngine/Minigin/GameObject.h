@@ -80,6 +80,18 @@ public:
 	void Delete();
 	bool IsDeleted() const { return m_IsDeleted; }
 
+
+	void AddObserver(ObserverPattern::Observer* observer)
+	{
+		m_pSubject->AddObserver(observer);
+	}
+	void RemoveObserver(ObserverPattern::Observer* observer)
+	{
+		m_pSubject->RemoveObserver(observer);
+	}
+
+	void Notify(ObserverPattern::Event event) { m_pSubject->Notify(event, this); }
+
 private:
 
 	bool m_IsDeleted{ false };
@@ -102,5 +114,6 @@ private:
 	bool IsChild(GameObject* gameObject);
 
 	std::unique_ptr<ObserverPattern::Subject> m_pSubject{std::make_unique<ObserverPattern::Subject>()};
+
 };
 

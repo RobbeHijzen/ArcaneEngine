@@ -27,9 +27,9 @@ public:
 		m_Controllers[controllerIndex]->BindAction(key, inputType, command);
 	}
 
-	void BindActionKB(SDL_Scancode key, Command* const command)
+	void BindActionKB(SDL_Scancode key, InputType inputType, Command* const command)
 	{
-		m_Keyboard->BindAction(key, command);
+		m_Keyboard->BindAction(key, inputType, command);
 	}
 
 private:

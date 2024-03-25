@@ -4,6 +4,8 @@
 
 #include "Time.h"
 #include "GameObject.h"
+#include "HealthComponent.h"
+#include "ScoreComponent.h"
 
 namespace EngineCommands
 {
@@ -48,6 +50,37 @@ namespace EngineCommands
 	private:
 		glm::vec2 m_Direction;
 		float m_MovementSpeed;
+	};
+
+	class KillCommand : public GameObjectCommand
+	{
+	public:
+
+		KillCommand(GameObject* gameObject) : GameObjectCommand(gameObject) {}
+
+		virtual void Execute() override
+		{
+			GetGameObject()->GetComponent<HealthComponent>()->KillObject();
+		}
+	};
+
+	class IncreaseScoreCommand : public GameObjectCommand
+	{
+	public:
+
+		IncreaseScoreCommand(GameObject* gameObject, int scoreAmount)
+			: GameObjectCommand(gameObject) 
+			, m_ScoreIncreaseAmount{scoreAmount}
+		{}
+
+		virtual void Execute() override
+		{
+			GetGameObject()->GetComponent<ScoreComponent>()->IncreaseScore(m_ScoreIncreaseAmount);
+		}
+
+	private:
+
+		const int m_ScoreIncreaseAmount;
 	};
 }
 

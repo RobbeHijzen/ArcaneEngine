@@ -34,10 +34,12 @@ struct InputBindingGP
 struct InputBindingKB
 {
 	SDL_Scancode key;
+	InputType inputType;
 	std::unique_ptr<Command> command;
 
-	InputBindingKB(SDL_Scancode keyIn, Command* const commandIn)
+	InputBindingKB(SDL_Scancode keyIn, InputType inputTypeIn, Command* const commandIn)
 		: key{ keyIn }
+		, inputType{ inputTypeIn }
 		, command{commandIn}
 	{
 	}

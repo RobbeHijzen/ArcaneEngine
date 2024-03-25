@@ -6,18 +6,27 @@
 class Keyboard
 {
 public:
-	Keyboard() = default;
+	Keyboard();
 
-	void ProcessInput();
+	bool ProcessInput();
 
-	void BindAction(SDL_Scancode key, Command* const command)
+	void BindAction(SDL_Scancode key, InputType inputType, Command* const command)
 	{
-		m_InputBindings.emplace_back(std::make_unique<InputBindingKB>(key, command));
+		m_InputBindings.emplace_back(std::make_unique<InputBindingKB>(key, inputType, command));
 	}
 
 private:
 
 	std::vector<std::unique_ptr<InputBindingKB>> m_InputBindings{};
 
+	bool IsKeyPressed(SDL_Scancode key);
+	bool IsKeyDownThisFrame(SDL_Scancode key);
+	bool IsKeyUpThisFrame(SDL_Scancode key);
+
+	void HandleKeyDown(SDL_Scancode key);
+	void HandleKeyUp(SDL_Scancode key);
+
+	std::vector<bool> m_CurrentKeyStates{};
+	std::vector<bool> m_PreviousKeyStates{};
 };
 
