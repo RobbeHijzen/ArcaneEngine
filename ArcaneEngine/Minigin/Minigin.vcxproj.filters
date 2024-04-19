@@ -35,9 +35,6 @@
     <Filter Include="ArcaneEngine Files\ObserverPattern">
       <UniqueIdentifier>{5014dffb-bf06-4e15-9fd0-7ff02192f7d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ArcaneEngine Files\Achievements">
-      <UniqueIdentifier>{12248808-4741-4429-9e03-4d17ec75a36f}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -109,17 +106,11 @@
     <ClInclude Include="ObserverEvents.h">
       <Filter>ArcaneEngine Files\ObserverPattern</Filter>
     </ClInclude>
-    <ClInclude Include="ObserverManager.h">
-      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
-    </ClInclude>
     <ClInclude Include="HealthComponent.h">
       <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
     </ClInclude>
     <ClInclude Include="ScoreComponent.h">
       <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="SteamAchievements.h">
-      <Filter>ArcaneEngine Files\Achievements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -186,17 +177,11 @@
     <ClCompile Include="Observers.cpp">
       <Filter>ArcaneEngine Files\ObserverPattern</Filter>
     </ClCompile>
-    <ClCompile Include="ObserverManager.cpp">
-      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
-    </ClCompile>
     <ClCompile Include="HealthComponent.cpp">
       <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
     </ClCompile>
     <ClCompile Include="ScoreComponent.cpp">
       <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="SteamAchievements.cpp">
-      <Filter>ArcaneEngine Files\Achievements</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

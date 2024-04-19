@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <list>
 #include <memory>
 #include "Observers.h"
 #include "ObserverEvents.h"
@@ -15,38 +15,33 @@ namespace ObserverPattern
 
 		Subject() = default;
 
-		~Subject()
+		void AddObserver(std::unique_ptr<Observer> newObserver)
 		{
-			for (auto& observer : m_Observers)
-			{
-				observer->RemoveSubject(this);
-			}
-		}
-
-		void AddObserver(Observer* newObserver)
-		{
-			m_Observers.emplace_back(newObserver);
-
-			newObserver->AddNewSubject(this);
+			m_Observers.emplace_back(std::move(newObserver));
 		}
 		void RemoveObserver(Observer* observer)
 		{
-			m_Observers.erase(std::find(m_Observers.begin(), m_Observers.end(), observer));
-
-			observer->RemoveSubject(this);
+			for (auto it{ m_Observers.begin() }; it != m_Observers.end(); ++it)
+			{
+				if (observer == (*it).get())
+				{
+					m_Observers.erase(it);
+					return;
+				}
+			}
 		}
 
-		void Notify(Event event, GameObject* gameObject)
+		void NotifyAll(Event event, GameObject* gameObject)
 		{
 			for (auto& observer : m_Observers)
 			{
-				observer->Notify(event, gameObject);
+				observer->OnNotify(event, gameObject);
 			}
 		}
 
 	private:
 
-		std::vector<Observer*> m_Observers{};
+		std::vector<std::unique_ptr<Observer>> m_Observers{};
 	};
 
 }

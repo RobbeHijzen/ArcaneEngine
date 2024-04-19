@@ -6,13 +6,11 @@
 #include <SDL_ttf.h>
 #include <chrono>
 #include <thread>
-#include <steam_api.h>
 #include "ArcaneEngine.h"
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
-#include "SteamAchievements.h"
 #include "Time.h"
 
 SDL_Window* g_window{};
@@ -91,7 +89,6 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 	Renderer& renderer = Renderer::GetInstance();
 	InputManager& input = InputManager::GetInstance();
 	Time& time = Time::GetInstance();
-	CSteamAchievements::GetInstance();
 
 	// Set Time Variables
 
@@ -111,8 +108,6 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 	// Main GameLoop
 	while (doContinue)
 	{
-		SteamAPI_RunCallbacks();
-
 		// Delete the flagged objects
 		sceneManager.RemoveDeletedObjects();
 

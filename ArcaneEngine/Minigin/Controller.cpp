@@ -11,9 +11,9 @@ public:
 	ControllerImpl(int controllerIndex) : m_ControllerIndex{ controllerIndex } {}
 
 	void ProcessInput();
-	void BindAction(int key, InputType inputType, Command* const command)
+	void BindAction(int key, InputType inputType, std::unique_ptr<Command> command)
 	{
-		m_InputBindings.emplace_back(std::make_unique<InputBindingGP>(key, inputType, command));
+		m_InputBindings.emplace_back(std::make_unique<InputBindingGP>(key, inputType, std::move(command)));
 	}
 private:
 
@@ -115,8 +115,8 @@ void Controller::ProcessInput()
 }
 
 
-void Controller::BindAction(int key, InputType inputType, Command* const command)
+void Controller::BindAction(int key, InputType inputType, std::unique_ptr<Command> command)
 {
-	m_pImpl->BindAction(key, inputType, command);
+	m_pImpl->BindAction(key, inputType, std::move(command));
 }
 

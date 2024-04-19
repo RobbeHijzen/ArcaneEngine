@@ -23,10 +23,10 @@ struct InputBindingGP
 	InputType inputType;
 	std::unique_ptr<Command> command;
 
-	InputBindingGP(int keyIn, InputType inputTypeIn, Command* const commandIn)
+	InputBindingGP(int keyIn, InputType inputTypeIn, std::unique_ptr<Command> commandIn)
 		: key{ keyIn }
 		, inputType{ inputTypeIn }
-		, command{commandIn}
+		, command{std::move(commandIn)}
 	{
 	}
 };
@@ -37,10 +37,10 @@ struct InputBindingKB
 	InputType inputType;
 	std::unique_ptr<Command> command;
 
-	InputBindingKB(SDL_Scancode keyIn, InputType inputTypeIn, Command* const commandIn)
+	InputBindingKB(SDL_Scancode keyIn, InputType inputTypeIn, std::unique_ptr<Command> commandIn)
 		: key{ keyIn }
 		, inputType{ inputTypeIn }
-		, command{commandIn}
+		, command{std::move(commandIn)}
 	{
 	}
 };

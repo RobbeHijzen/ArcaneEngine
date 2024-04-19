@@ -10,9 +10,9 @@ public:
 
 	bool ProcessInput();
 
-	void BindAction(SDL_Scancode key, InputType inputType, Command* const command)
+	void BindAction(SDL_Scancode key, InputType inputType, std::unique_ptr<Command> command)
 	{
-		m_InputBindings.emplace_back(std::make_unique<InputBindingKB>(key, inputType, command));
+		m_InputBindings.emplace_back(std::make_unique<InputBindingKB>(key, inputType, std::move(command)));
 	}
 
 private:

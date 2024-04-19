@@ -12,7 +12,7 @@ public:
 	~Controller();
 
 	void ProcessInput();
-	void BindAction(int key, InputType inputType, Command* const command);
+	void BindAction(int key, InputType inputType, std::unique_ptr<Command> command);
 
 private:
 

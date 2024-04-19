@@ -1,8 +1,6 @@
 #include "Observers.h"
 
-#include "Subject.h"
 #include "GameObject.h"
-#include "SteamAchievements.h"
 
 #include "HealthComponent.h"
 #include "ScoreComponent.h"
@@ -10,19 +8,7 @@
 using namespace ObserverPattern;
 
 
-ObserverPattern::Observer::~Observer()
-{
-	m_IsDestroyed = true;
-
-	for (Subject* subject : m_Subjects)
-	{
-		subject->RemoveObserver(this);
-	}
-}
-
-
-
-void PrintObserver::Notify(Event event, GameObject*)
+void PrintObserver::OnNotify(Event event, GameObject*)
 {
 	switch (event)
 	{
@@ -33,7 +19,7 @@ void PrintObserver::Notify(Event event, GameObject*)
 	}
 }
 
-void ObserverPattern::HealthDisplayObserver::Notify(Event event, GameObject* gameObject)
+void ObserverPattern::HealthDisplayObserver::OnNotify(Event event, GameObject* gameObject)
 {
 	switch (event)
 	{
@@ -48,7 +34,7 @@ void ObserverPattern::HealthDisplayObserver::Notify(Event event, GameObject* gam
 	}
 }
 
-void ObserverPattern::ScoreDisplayObserver::Notify(Event event, GameObject* gameObject)
+void ObserverPattern::ScoreDisplayObserver::OnNotify(Event event, GameObject* gameObject)
 {
 	switch (event)
 	{
@@ -58,21 +44,6 @@ void ObserverPattern::ScoreDisplayObserver::Notify(Event event, GameObject* game
 
 		std::string newText{ "#Score: " + std::to_string(newScore) };
 		m_pTextComponent->SetText(newText);
-	}
-	}
-}
-
-void ObserverPattern::AchievementObserver::Notify(Event event, GameObject* gameObject)
-{
-	switch (event)
-	{
-	case Event::ScoreChanged:
-	{
-		int newScore{ gameObject->GetComponent<ScoreComponent>()->GetScore() };
-		if (newScore >= m_WinnerScoreAmount)
-		{
-			CSteamAchievements::GetInstance().SetAchievement("ACH_WIN_ONE_GAME");
-		}
 	}
 	}
 }

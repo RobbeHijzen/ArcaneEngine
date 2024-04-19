@@ -7,7 +7,11 @@ namespace ObserverPattern
 		PrintTest,
 
 		ObjectDied,
-		ScoreChanged
+		ScoreChanged,
+
+		EnemyDied,
+		PlayerDied,
+
 	};
 
 }
