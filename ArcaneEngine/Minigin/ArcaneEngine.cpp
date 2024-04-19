@@ -1,17 +1,4 @@
-#include <stdexcept>
-#define WIN32_LEAN_AND_MEAN 
-#include <windows.h>
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
-#include <chrono>
-#include <thread>
 #include "ArcaneEngine.h"
-#include "InputManager.h"
-#include "SceneManager.h"
-#include "Renderer.h"
-#include "ResourceManager.h"
-#include "Time.h"
 
 SDL_Window* g_window{};
 

@@ -1,7 +1,21 @@
 #pragma once
 #include <string>
 #include <functional>
+#include <stdexcept>
+#define WIN32_LEAN_AND_MEAN 
+#include <windows.h>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <chrono>
+#include <thread>
 
+#include "InputManager.h"
+#include "SceneManager.h"
+#include "Scene.h"
+#include "Renderer.h"
+#include "ResourceManager.h"
+#include "Time.h"
 
 class ArcaneEngine
 {

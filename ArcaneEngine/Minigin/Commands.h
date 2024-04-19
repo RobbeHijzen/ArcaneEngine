@@ -1,34 +1,13 @@
 #pragma once
 
-#include <memory>
+#include "Command.h"
 
 #include "Time.h"
-#include "GameObject.h"
 #include "HealthComponent.h"
 #include "ScoreComponent.h"
 
 namespace EngineCommands
 {
-	class Command
-	{
-	public:
-		virtual ~Command() {}
-		virtual void Execute() = 0;
-
-	};
-	class GameObjectCommand : public Command
-	{
-	public:
-		GameObjectCommand(GameObject* gameObject) : m_pGameObject{ gameObject } {}
-		virtual ~GameObjectCommand() {}
-
-	protected:
-		GameObject* GetGameObject() const { return m_pGameObject; }
-
-	private:
-		GameObject* m_pGameObject{};
-	};
-
 
 	class MoveCommand : public GameObjectCommand
 	{
@@ -69,8 +48,8 @@ namespace EngineCommands
 	public:
 
 		IncreaseScoreCommand(GameObject* gameObject, int scoreAmount)
-			: GameObjectCommand(gameObject) 
-			, m_ScoreIncreaseAmount{scoreAmount}
+			: GameObjectCommand(gameObject)
+			, m_ScoreIncreaseAmount{ scoreAmount }
 		{}
 
 		virtual void Execute() override
@@ -82,6 +61,5 @@ namespace EngineCommands
 
 		const int m_ScoreIncreaseAmount;
 	};
+
 }
-
-

@@ -201,17 +201,19 @@ xcopy "$(SolutionDir)3rdParty\SDL2\lib\$(PlatformTarget)\SDL2.dll" "$(OutputPath
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BaseComponent.h" />
+    <ClInclude Include="Commands.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FpsComponent.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="ImageComponent.h" />
-    <ClInclude Include="Commands.h" />
+    <ClInclude Include="Command.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="ArcaneEngine.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="ObserverEvents.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="Observers.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />

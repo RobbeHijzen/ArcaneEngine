@@ -1,24 +1,10 @@
 #pragma once
-
-#include <iostream>
-#include <vector>
-#include "ObserverEvents.h"
+#include "Observer.h"
 
 #include "TextComponent.h"
 
-class GameObject;
-
 namespace ObserverPattern
 {
-	class Observer
-	{
-	public:
-
-		virtual ~Observer() = default;
-		virtual void OnNotify(Event event, GameObject* gameObject) = 0;
-
-	};
-
 
 	class PrintObserver : public Observer
 	{
@@ -31,8 +17,8 @@ namespace ObserverPattern
 	{
 	public:
 
-		HealthDisplayObserver(TextComponent* textComp) 
-			: m_pTextComponent{textComp}
+		HealthDisplayObserver(TextComponent* textComp)
+			: m_pTextComponent{ textComp }
 		{}
 
 		virtual void OnNotify(Event event, GameObject* gameObject) override;
@@ -47,7 +33,7 @@ namespace ObserverPattern
 	public:
 
 		ScoreDisplayObserver(TextComponent* textComp)
-			: m_pTextComponent{ textComp } 
+			: m_pTextComponent{ textComp }
 		{}
 
 		virtual void OnNotify(Event event, GameObject* gameObject) override;
@@ -59,4 +45,3 @@ namespace ObserverPattern
 	};
 
 }
-

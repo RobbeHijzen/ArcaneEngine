@@ -8,21 +8,6 @@
     <Filter Include="ArcaneEngine Files">
       <UniqueIdentifier>{278d05d1-e7f5-4577-9a5c-24447c2b8fc5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ArcaneEngine Files\Components">
-      <UniqueIdentifier>{6799632e-18bd-4988-99ff-596906a84db7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ArcaneEngine Files\Components\DerivedComponents">
-      <UniqueIdentifier>{9f2683af-97da-4044-a8b9-bec3a9738044}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ArcaneEngine Files\Singletons">
-      <UniqueIdentifier>{49d5b0e1-0f4f-45d8-8c1e-84b054547b71}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ArcaneEngine Files\Singletons\DerivedSingletons">
-      <UniqueIdentifier>{6fdf4334-4221-4797-aebb-d4262b0aa78f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework Files">
-      <UniqueIdentifier>{06a66bb5-9906-477b-848a-0706e190068b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ArcaneEngine Files\InputSystem">
       <UniqueIdentifier>{5a15abcb-28a7-46d5-a39b-e695ec4776b7}</UniqueIdentifier>
     </Filter>
@@ -35,52 +20,61 @@
     <Filter Include="ArcaneEngine Files\ObserverPattern">
       <UniqueIdentifier>{5014dffb-bf06-4e15-9fd0-7ff02192f7d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Galaga Files">
+      <UniqueIdentifier>{c0876c3e-9323-47ee-aff6-859ecc6755b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine Files\Component">
+      <UniqueIdentifier>{6799632e-18bd-4988-99ff-596906a84db7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Galaga Files\Components">
+      <UniqueIdentifier>{9f2683af-97da-4044-a8b9-bec3a9738044}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Galaga Files\Observers">
+      <UniqueIdentifier>{07217ab4-831a-4e16-9722-a70b2682b553}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine Files\Rendering">
+      <UniqueIdentifier>{e8f31d3d-40ae-4b99-99b1-771ebbfdf88d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine Files\Scene">
+      <UniqueIdentifier>{eee17d7d-410f-4184-8bd6-7f39a45dbdf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine Files\Time">
+      <UniqueIdentifier>{bde96632-7dca-4aff-a900-43930665a4f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine Files\Transform">
+      <UniqueIdentifier>{f3ffd088-8b8d-4944-a415-9030e85ea97a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine Files\Singleton">
+      <UniqueIdentifier>{49d5b0e1-0f4f-45d8-8c1e-84b054547b71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine Files\Command">
+      <UniqueIdentifier>{efd25abd-bc72-4e66-b6df-22c4275540e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Galaga Files\Commands">
+      <UniqueIdentifier>{488d1350-e8d2-49b6-84f3-b26c1fabcd38}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Font.h">
-      <Filter>Framework Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Framework Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture2D.h">
-      <Filter>Framework Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Framework Files</Filter>
-    </ClInclude>
     <ClInclude Include="ArcaneEngine.h">
       <Filter>ArcaneEngine Files</Filter>
     </ClInclude>
     <ClInclude Include="BaseComponent.h">
-      <Filter>ArcaneEngine Files\Components</Filter>
+      <Filter>ArcaneEngine Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="FpsComponent.h">
-      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
+      <Filter>Galaga Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="ImageComponent.h">
-      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
+      <Filter>Galaga Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="TextComponent.h">
-      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
+      <Filter>Galaga Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h">
-      <Filter>ArcaneEngine Files\Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
-    </ClInclude>
-    <ClInclude Include="Time.h">
-      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
+      <Filter>ArcaneEngine Files\Singleton</Filter>
     </ClInclude>
     <ClInclude Include="RotatingComponent.h">
-      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
+      <Filter>Galaga Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>ArcaneEngine Files\InputSystem</Filter>
@@ -94,10 +88,7 @@
     <ClInclude Include="Keyboard.h">
       <Filter>ArcaneEngine Files\InputSystem\InputDevices</Filter>
     </ClInclude>
-    <ClInclude Include="Commands.h">
-      <Filter>ArcaneEngine Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Observers.h">
+    <ClInclude Include="Observer.h">
       <Filter>ArcaneEngine Files\ObserverPattern</Filter>
     </ClInclude>
     <ClInclude Include="Subject.h">
@@ -107,54 +98,63 @@
       <Filter>ArcaneEngine Files\ObserverPattern</Filter>
     </ClInclude>
     <ClInclude Include="HealthComponent.h">
-      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
+      <Filter>Galaga Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="ScoreComponent.h">
-      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
+      <Filter>Galaga Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Observers.h">
+      <Filter>Galaga Files\Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>ArcaneEngine Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>ArcaneEngine Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>ArcaneEngine Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>ArcaneEngine Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>ArcaneEngine Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>ArcaneEngine Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>ArcaneEngine Files\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>ArcaneEngine Files\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>ArcaneEngine Files\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="Commands.h">
+      <Filter>Galaga Files\Commands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Font.cpp">
-      <Filter>Framework Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Framework Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture2D.cpp">
-      <Filter>Framework Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Framework Files</Filter>
-    </ClCompile>
     <ClCompile Include="ArcaneEngine.cpp">
       <Filter>ArcaneEngine Files</Filter>
     </ClCompile>
     <ClCompile Include="BaseComponent.cpp">
-      <Filter>ArcaneEngine Files\Components</Filter>
+      <Filter>ArcaneEngine Files\Component</Filter>
     </ClCompile>
     <ClCompile Include="FpsComponent.cpp">
-      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
+      <Filter>Galaga Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="ImageComponent.cpp">
-      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
+      <Filter>Galaga Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="TextComponent.cpp">
-      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.cpp">
-      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
+      <Filter>Galaga Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="RotatingComponent.cpp">
-      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>ArcaneEngine Files\Singletons\DerivedSingletons</Filter>
+      <Filter>Galaga Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>ArcaneEngine Files\InputSystem</Filter>
@@ -171,17 +171,41 @@
     <ClCompile Include="Keyboard.cpp">
       <Filter>ArcaneEngine Files\InputSystem\InputDevices</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>ArcaneEngine Files</Filter>
-    </ClCompile>
     <ClCompile Include="Observers.cpp">
       <Filter>ArcaneEngine Files\ObserverPattern</Filter>
     </ClCompile>
     <ClCompile Include="HealthComponent.cpp">
-      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
+      <Filter>Galaga Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="ScoreComponent.cpp">
-      <Filter>ArcaneEngine Files\Components\DerivedComponents</Filter>
+      <Filter>Galaga Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>ArcaneEngine Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>ArcaneEngine Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>ArcaneEngine Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>ArcaneEngine Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>ArcaneEngine Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>ArcaneEngine Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>ArcaneEngine Files\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>ArcaneEngine Files\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Galaga Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
