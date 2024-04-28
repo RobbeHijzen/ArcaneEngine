@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ArcaneEngine">
+      <UniqueIdentifier>{b9372f17-8a4a-4ae5-8f6b-2ce5e784fe9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine\Command">
+      <UniqueIdentifier>{4d151caf-6dd2-47ab-a404-a1624f59bc5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine\Component">
+      <UniqueIdentifier>{ec6b0249-8351-4e3a-b093-ebdc7dda8a67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine\GameObject">
+      <UniqueIdentifier>{98c3efa0-f49b-4899-9977-ab6a6eccda60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine\InputSystem">
+      <UniqueIdentifier>{cbd87289-5582-4923-b27b-6a390295d56c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine\ObserverPattern">
+      <UniqueIdentifier>{2ecc6be7-6a21-4ebb-b1a2-ea9e5fcaca36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine\Rendering">
+      <UniqueIdentifier>{de27616d-aa12-46e5-abb0-2b5ee6978362}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine\Scene">
+      <UniqueIdentifier>{c0f6fad6-d0df-4db9-abbb-05adc3f14e25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine\Singleton">
+      <UniqueIdentifier>{ff6e2fa1-2ee7-46f1-b3d5-deab7bbf65e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine\Time">
+      <UniqueIdentifier>{7e915ce0-6c6a-4377-a914-412a34fd2e0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcaneEngine\Transform">
+      <UniqueIdentifier>{9e99ea01-ee67-4afd-a40e-2f8d9700a27a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BaseComponent.cpp">
+      <Filter>ArcaneEngine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>ArcaneEngine\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>ArcaneEngine\InputSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>ArcaneEngine\InputSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>ArcaneEngine\InputSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>ArcaneEngine\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="MyTime.cpp">
+      <Filter>ArcaneEngine\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>ArcaneEngine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>ArcaneEngine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>ArcaneEngine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>ArcaneEngine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>ArcaneEngine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>ArcaneEngine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="ArcaneEngine.cpp">
+      <Filter>ArcaneEngine</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BaseComponent.h">
+      <Filter>ArcaneEngine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>ArcaneEngine\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>ArcaneEngine\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHelperStructs.h">
+      <Filter>ArcaneEngine\InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>ArcaneEngine\InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>ArcaneEngine\InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>ArcaneEngine\InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>ArcaneEngine\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="MyTime.h">
+      <Filter>ArcaneEngine\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>ArcaneEngine\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>ArcaneEngine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>ArcaneEngine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>ArcaneEngine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>ArcaneEngine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>ArcaneEngine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>ArcaneEngine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="ObserverEvents.h">
+      <Filter>ArcaneEngine\ObserverPattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>ArcaneEngine\ObserverPattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>ArcaneEngine\ObserverPattern</Filter>
+    </ClInclude>
+    <ClInclude Include="ArcaneEngine.h">
+      <Filter>ArcaneEngine</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

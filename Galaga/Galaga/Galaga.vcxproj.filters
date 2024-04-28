@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="src\Commands.h">
+      <Filter>Galaga\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FpsComponent.h">
+      <Filter>Galaga\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HealthComponent.h">
+      <Filter>Galaga\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ImageComponent.h">
+      <Filter>Galaga\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RotatingComponent.h">
+      <Filter>Galaga\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ScoreComponent.h">
+      <Filter>Galaga\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextComponent.h">
+      <Filter>Galaga\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Observers.h">
+      <Filter>Galaga\Observers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\FpsComponent.cpp">
+      <Filter>Galaga\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HealthComponent.cpp">
+      <Filter>Galaga\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ImageComponent.cpp">
+      <Filter>Galaga\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RotatingComponent.cpp">
+      <Filter>Galaga\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ScoreComponent.cpp">
+      <Filter>Galaga\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextComponent.cpp">
+      <Filter>Galaga\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Observers.cpp">
+      <Filter>Galaga\Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Main.cpp">
+      <Filter>Galaga</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Galaga">
+      <UniqueIdentifier>{5bbcd3af-9bf9-4deb-a34f-5a9f95135988}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Galaga\Commands">
+      <UniqueIdentifier>{1d591b61-21a6-41e5-8896-fa265c9a5b2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Galaga\Components">
+      <UniqueIdentifier>{96a4efc5-5368-4d50-81e3-3435cd7e7e10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Galaga\Observers">
+      <UniqueIdentifier>{1b1fef9c-e8fd-4c6e-867b-b80940ffd00f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
