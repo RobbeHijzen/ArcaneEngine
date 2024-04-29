@@ -1,8 +1,10 @@
 #pragma once
 
 #include "Audio.h"
+
 #include <vector>
-#include "SDL_mixer.h"
+#include <memory>
+
 
 class AudioSDL : public Audio
 {
@@ -17,6 +19,7 @@ public:
 
 private:
 
-    std::vector<Mix_Chunk*> m_Sounds{};
+    class AudioSDLImpl;
+    std::unique_ptr<AudioSDLImpl> m_pImpl;
 };
 
