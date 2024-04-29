@@ -6,6 +6,7 @@
 #include "ScoreComponent.h"
 #include "ShootComponent.h"
 
+#include "Locator.h"
 using namespace ObserverPattern;
 
 
@@ -78,6 +79,8 @@ void ObserverPattern::BulletObserver::OnNotify(Event event, GameObject* gameObje
 	{
 		if (auto comp = gameObject->GetComponent<ShootComponent>())
 		{
+			// Hardcoded Audio-id for now;
+			Locator::GetAudio()->PlaySound(0, 70);
 			comp->FireBullet();
 		}
 		break;

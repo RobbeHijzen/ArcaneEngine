@@ -34,6 +34,9 @@
     <Filter Include="ArcaneEngine\Transform">
       <UniqueIdentifier>{9e99ea01-ee67-4afd-a40e-2f8d9700a27a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ArcaneEngine\Sound">
+      <UniqueIdentifier>{dbe9c985-3c4a-4f35-9873-c4051308c987}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -77,6 +80,12 @@
     </ClCompile>
     <ClCompile Include="ArcaneEngine.cpp">
       <Filter>ArcaneEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioSDL.cpp">
+      <Filter>ArcaneEngine\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Locator.cpp">
+      <Filter>ArcaneEngine\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +148,15 @@
     </ClInclude>
     <ClInclude Include="ArcaneEngine.h">
       <Filter>ArcaneEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>ArcaneEngine\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioSDL.h">
+      <Filter>ArcaneEngine\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Locator.h">
+      <Filter>ArcaneEngine\Sound</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

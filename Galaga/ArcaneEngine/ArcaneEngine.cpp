@@ -1,4 +1,6 @@
 #include "ArcaneEngine.h"
+#include "Locator.h"
+#include "AudioSDL.h"
 
 SDL_Window* g_window{};
 
@@ -77,6 +79,7 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 	InputManager& input = InputManager::GetInstance();
 	Time& time = Time::GetInstance();
 
+	Locator::ProvideAudio(std::move(std::make_unique<AudioSDL>()));
 	// Set Time Variables
 
 	constexpr bool useVsync{ true };
