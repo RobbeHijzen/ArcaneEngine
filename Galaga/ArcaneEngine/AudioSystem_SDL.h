@@ -14,8 +14,6 @@ namespace AE
         ~AudioSystem_SDL();
 
         virtual void PlaySound(int soundID, float volume) override;
-        virtual void StopSound(int soundID) override;
-        virtual void StopAllSounds() override;
         virtual int LoadSound(std::string path) override;
 
     private:

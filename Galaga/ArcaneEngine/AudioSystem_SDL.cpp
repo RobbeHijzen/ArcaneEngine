@@ -20,17 +20,11 @@ public:
 
 	void PlaySound(int soundID, float volume)
 	{
-		Mix_VolumeMusic(static_cast<int>(volume));
-		Mix_PlayChannel(-1, m_Sounds[soundID], 0);
+		auto soundChunk{ m_Sounds[soundID] };
+		Mix_VolumeChunk(soundChunk, static_cast<int>(volume));
+		Mix_PlayChannel(-1, soundChunk, 0);
 	}
-	void StopSound(int )
-	{
-
-	}
-	void StopAllSounds()
-	{
-
-	}
+	
 	int LoadSound(std::string path)
 	{
 		auto sound{ Mix_LoadWAV(("../Resources/" + path).c_str()) };
@@ -62,16 +56,6 @@ AudioSystem_SDL::~AudioSystem_SDL()
 void AudioSystem_SDL::PlaySound(int soundID, float volume)
 {
 	m_pImpl->PlaySound(soundID, volume);
-}
-
-void AudioSystem_SDL::StopSound(int soundID)
-{
-	m_pImpl->StopSound(soundID);
-}
-
-void AudioSystem_SDL::StopAllSounds()
-{
-	m_pImpl->StopAllSounds();
 }
 
 int AudioSystem_SDL::LoadSound(std::string path)
