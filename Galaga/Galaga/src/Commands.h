@@ -6,9 +6,7 @@
 #include "HealthComponent.h"
 #include "ScoreComponent.h"
 
-using namespace EngineCommands;
-
-class MoveCommand : public GameObjectCommand
+class MoveCommand : public EngineCommands::GameObjectCommand
 {
 public:
 	MoveCommand(GameObject* gameObject, glm::vec2 direction, float movementSpeed)
@@ -30,7 +28,7 @@ private:
 	float m_MovementSpeed;
 };
 
-class KillCommand : public GameObjectCommand
+class KillCommand : public EngineCommands::GameObjectCommand
 {
 public:
 
@@ -42,7 +40,7 @@ public:
 	}
 };
 
-class PickupSilverCommand : public GameObjectCommand
+class PickupSilverCommand : public EngineCommands::GameObjectCommand
 {
 public:
 
@@ -55,7 +53,7 @@ public:
 		GetGameObject()->NotifyAll(ObserverPattern::Event::SilverPickup);
 	}
 };
-class PickupGoldCommand : public GameObjectCommand
+class PickupGoldCommand : public EngineCommands::GameObjectCommand
 {
 public:
 
@@ -69,7 +67,7 @@ public:
 	}
 };
 
-class ShootCommand : public GameObjectCommand
+class ShootCommand : public EngineCommands::GameObjectCommand
 {
 public:
 

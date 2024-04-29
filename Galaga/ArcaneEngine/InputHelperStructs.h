@@ -8,8 +8,6 @@
 //*** KB = KeyBoard
 //////////////////////////
 
-using namespace EngineCommands;
-
 enum class InputType
 {
 	IsPressed,
@@ -21,9 +19,9 @@ struct InputBindingGP
 {
 	int key;
 	InputType inputType;
-	std::unique_ptr<Command> command;
+	std::unique_ptr<EngineCommands::Command> command;
 
-	InputBindingGP(int keyIn, InputType inputTypeIn, std::unique_ptr<Command> commandIn)
+	InputBindingGP(int keyIn, InputType inputTypeIn, std::unique_ptr<EngineCommands::Command> commandIn)
 		: key{ keyIn }
 		, inputType{ inputTypeIn }
 		, command{std::move(commandIn)}
@@ -35,9 +33,9 @@ struct InputBindingKB
 {
 	SDL_Scancode key;
 	InputType inputType;
-	std::unique_ptr<Command> command;
+	std::unique_ptr<EngineCommands::Command> command;
 
-	InputBindingKB(SDL_Scancode keyIn, InputType inputTypeIn, std::unique_ptr<Command> commandIn)
+	InputBindingKB(SDL_Scancode keyIn, InputType inputTypeIn, std::unique_ptr<EngineCommands::Command> commandIn)
 		: key{ keyIn }
 		, inputType{ inputTypeIn }
 		, command{std::move(commandIn)}

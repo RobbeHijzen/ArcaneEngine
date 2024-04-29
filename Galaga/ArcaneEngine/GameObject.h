@@ -7,7 +7,6 @@
 
 class Texture2D;
 
-using namespace ObserverPattern;
 
 class GameObject final
 {
@@ -83,16 +82,16 @@ public:
 	bool IsDeleted() const { return m_IsDeleted; }
 
 
-	void AddObserver(std::unique_ptr<Observer> observer)
+	void AddObserver(std::unique_ptr<ObserverPattern::Observer> observer)
 	{
 		m_pSubject->AddObserver(std::move(observer));
 	}
-	void RemoveObserver(Observer* observer)
+	void RemoveObserver(ObserverPattern::Observer* observer)
 	{
 		m_pSubject->RemoveObserver(observer);
 	}
 	
-	void NotifyAll(Event event) { m_pSubject->NotifyAll(event, this); }
+	void NotifyAll(ObserverPattern::Event event) { m_pSubject->NotifyAll(event, this); }
 
 private:
 
@@ -115,7 +114,7 @@ private:
 
 	bool IsChild(GameObject* gameObject);
 
-	std::unique_ptr<Subject> m_pSubject{std::make_unique<Subject>()};
+	std::unique_ptr<ObserverPattern::Subject> m_pSubject{std::make_unique<ObserverPattern::Subject>()};
 
 };
 

@@ -20,14 +20,14 @@ public:
 
 	bool ProcessInput();
 
-	void BindActionGP(int controllerIndex, int key, InputType inputType, std::unique_ptr<Command> command)
+	void BindActionGP(int controllerIndex, int key, InputType inputType, std::unique_ptr<EngineCommands::Command> command)
 	{
 		assert(controllerIndex < static_cast<int>(m_Controllers.size()));
 
 		m_Controllers[controllerIndex]->BindAction(key, inputType, std::move(command));
 	}
 
-	void BindActionKB(SDL_Scancode key, InputType inputType, std::unique_ptr<Command> command)
+	void BindActionKB(SDL_Scancode key, InputType inputType, std::unique_ptr<EngineCommands::Command> command)
 	{
 		m_Keyboard->BindAction(key, inputType, std::move(command));
 	}
