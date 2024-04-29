@@ -6,12 +6,15 @@ namespace ObserverPattern
 	{
 		PrintTest,
 
-		ObjectDied,
 		ScoreChanged,
 
 		EnemyDied,
 		PlayerDied,
 
+		SilverPickup,
+		GoldPickup,
+
+		BulletFired
 	};
 
 }

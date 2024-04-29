@@ -13,9 +13,6 @@
     <ClInclude Include="src\ImageComponent.h">
       <Filter>Galaga\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\RotatingComponent.h">
-      <Filter>Galaga\Components</Filter>
-    </ClInclude>
     <ClInclude Include="src\ScoreComponent.h">
       <Filter>Galaga\Components</Filter>
     </ClInclude>
@@ -24,6 +21,12 @@
     </ClInclude>
     <ClInclude Include="src\Observers.h">
       <Filter>Galaga\Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ShootComponent.h">
+      <Filter>Galaga\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ProjectileMovementComponent.h">
+      <Filter>Galaga\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -34,9 +37,6 @@
       <Filter>Galaga\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\ImageComponent.cpp">
-      <Filter>Galaga\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\RotatingComponent.cpp">
       <Filter>Galaga\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\ScoreComponent.cpp">
@@ -50,6 +50,12 @@
     </ClCompile>
     <ClCompile Include="src\Main.cpp">
       <Filter>Galaga</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShootComponent.cpp">
+      <Filter>Galaga\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ProjectileMovementComponent.cpp">
+      <Filter>Galaga\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

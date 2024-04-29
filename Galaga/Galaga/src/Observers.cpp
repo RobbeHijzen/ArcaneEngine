@@ -4,6 +4,7 @@
 
 #include "HealthComponent.h"
 #include "ScoreComponent.h"
+#include "ShootComponent.h"
 
 using namespace ObserverPattern;
 
@@ -23,7 +24,7 @@ void ObserverPattern::HealthDisplayObserver::OnNotify(Event event, GameObject* g
 {
 	switch (event)
 	{
-	case Event::ObjectDied:
+	case Event::PlayerDied:
 	{
 		int newHealth{ gameObject->GetComponent<HealthComponent>()->GetHealth() };
 
@@ -44,6 +45,42 @@ void ObserverPattern::ScoreDisplayObserver::OnNotify(Event event, GameObject* ga
 
 		std::string newText{ "#Score: " + std::to_string(newScore) };
 		m_pTextComponent->SetText(newText);
+	}
+	}
+}
+
+void ObserverPattern::PickupObserver::OnNotify(Event event, GameObject* gameObject)
+{
+	switch (event)
+	{
+	case Event::SilverPickup:
+	{
+		gameObject->GetComponent<ScoreComponent>()->IncreaseScore(SilverScoreValue);
+		gameObject->NotifyAll(Event::ScoreChanged);
+
+		break;
+	}
+	case Event::GoldPickup:
+	{
+		gameObject->GetComponent<ScoreComponent>()->IncreaseScore(GoldScoreValue);
+		gameObject->NotifyAll(Event::ScoreChanged);
+
+		break;
+	}
+	}
+}
+
+void ObserverPattern::BulletObserver::OnNotify(Event event, GameObject* gameObject)
+{
+	switch (event)
+	{
+	case Event::BulletFired:
+	{
+		if (auto comp = gameObject->GetComponent<ShootComponent>())
+		{
+			comp->FireBullet();
+		}
+		break;
 	}
 	}
 }

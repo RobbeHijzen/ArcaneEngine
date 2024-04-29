@@ -10,6 +10,7 @@ public:
 	ScoreComponent(GameObject* pParent)
 		: BaseComponent(pParent)
 	{
+		//pParent->
 	}
 
 

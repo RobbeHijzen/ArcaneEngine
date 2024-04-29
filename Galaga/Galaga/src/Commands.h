@@ -42,22 +42,44 @@ public:
 	}
 };
 
-class IncreaseScoreCommand : public GameObjectCommand
+class PickupSilverCommand : public GameObjectCommand
 {
 public:
 
-	IncreaseScoreCommand(GameObject* gameObject, int scoreAmount)
+	PickupSilverCommand(GameObject* gameObject)
 		: GameObjectCommand(gameObject)
-		, m_ScoreIncreaseAmount{ scoreAmount }
 	{}
 
 	virtual void Execute() override
 	{
-		GetGameObject()->GetComponent<ScoreComponent>()->IncreaseScore(m_ScoreIncreaseAmount);
+		GetGameObject()->NotifyAll(ObserverPattern::Event::SilverPickup);
 	}
+};
+class PickupGoldCommand : public GameObjectCommand
+{
+public:
 
-private:
+	PickupGoldCommand(GameObject* gameObject)
+		: GameObjectCommand(gameObject)
+	{}
 
-	const int m_ScoreIncreaseAmount;
+	virtual void Execute() override
+	{
+		GetGameObject()->NotifyAll(ObserverPattern::Event::GoldPickup);
+	}
+};
+
+class ShootCommand : public GameObjectCommand
+{
+public:
+
+	ShootCommand(GameObject* gameObject)
+		: GameObjectCommand(gameObject)
+	{}
+
+	virtual void Execute() override
+	{
+		GetGameObject()->NotifyAll(ObserverPattern::Event::BulletFired);
+	}
 };
 

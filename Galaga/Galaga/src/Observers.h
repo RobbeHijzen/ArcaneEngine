@@ -28,6 +28,18 @@ namespace ObserverPattern
 		TextComponent* m_pTextComponent{};
 
 	};
+
+	class PickupObserver : public Observer
+	{
+	public:
+
+		virtual void OnNotify(Event event, GameObject* gameObject) override;
+
+	private:
+
+		int SilverScoreValue{10};
+		int GoldScoreValue{100};
+	};
 	class ScoreDisplayObserver : public Observer
 	{
 	public:
@@ -41,6 +53,16 @@ namespace ObserverPattern
 	private:
 
 		TextComponent* m_pTextComponent{};
+
+	};
+
+	class BulletObserver : public Observer
+	{
+	public:
+
+		virtual void OnNotify(Event event, GameObject* gameObject) override;
+
+	private:
 
 	};
 
