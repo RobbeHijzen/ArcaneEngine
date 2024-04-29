@@ -2,6 +2,8 @@
 #include <iostream>
 #include "InputManager.h"
 
+using namespace AE;
+
 InputManager::InputManager()
 {
 	m_Keyboard = std::make_unique<Keyboard>();

@@ -2,11 +2,11 @@
 
 #include "BaseComponent.h"
 
-class HealthComponent : public BaseComponent
+class HealthComponent : public AE::BaseComponent
 {
 public:
 
-	HealthComponent(GameObject* pParent, int maxHealth)
+	HealthComponent(AE::GameObject* pParent, int maxHealth)
 		: BaseComponent(pParent)
 		, m_Health{maxHealth}
 	{

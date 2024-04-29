@@ -1,10 +1,11 @@
 #include "ArcaneEngine.h"
-#include "Locator.h"
-#include "AudioSDL.h"
+#include "ServiceLocator.h"
+#include "AudioSystem_SDL.h"
 
 SDL_Window* g_window{};
 
 using namespace std::chrono;
+using namespace AE;
 
 void PrintSDLVersion()
 {
@@ -71,7 +72,7 @@ ArcaneEngine::~ArcaneEngine()
 
 void ArcaneEngine::Run(const std::function<void()>& load)
 {
-	Locator::ProvideAudio(std::move(std::make_unique<AudioSDL>()));
+	ServiceLocator::ProvideAudio(std::move(std::make_unique<AudioSystem_SDL>()));
 
 	load();
 

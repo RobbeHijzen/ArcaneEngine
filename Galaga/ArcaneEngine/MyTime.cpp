@@ -1,6 +1,8 @@
 #include "MyTime.h"
 #include <algorithm>
 
+using namespace AE;
+
 void Time::Update()
 {
 	m_CurrentTime = high_resolution_clock::now();

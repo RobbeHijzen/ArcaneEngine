@@ -5,7 +5,7 @@
 #include "TextComponent.h"
 #include "MyTime.h"
 
-FpsComponent::FpsComponent(GameObject* const parentGameObject)
+FpsComponent::FpsComponent(AE::GameObject* const parentGameObject)
 	: BaseComponent(parentGameObject)
 {
 }
@@ -20,7 +20,7 @@ void FpsComponent::Update()
 {
 	if (m_pTextComponent)
 	{
-		m_CurrentDelay += Time::GetInstance().GetDeltaTime();
+		m_CurrentDelay += AE::Time::GetInstance().GetDeltaTime();
 		++m_FrameCount;
 
 		if (m_CurrentDelay >= m_MaxDelay)

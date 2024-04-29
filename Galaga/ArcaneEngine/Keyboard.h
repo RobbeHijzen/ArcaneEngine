@@ -3,30 +3,33 @@
 #include <memory>
 #include "InputHelperStructs.h"
 
-class Keyboard
+namespace AE
 {
-public:
-	Keyboard();
-
-	bool ProcessInput();
-
-	void BindAction(SDL_Scancode key, InputType inputType, std::unique_ptr<EngineCommands::Command> command)
+	class Keyboard
 	{
-		m_InputBindings.emplace_back(std::make_unique<InputBindingKB>(key, inputType, std::move(command)));
-	}
+	public:
+		Keyboard();
 
-private:
+		bool ProcessInput();
 
-	std::vector<std::unique_ptr<InputBindingKB>> m_InputBindings{};
+		void BindAction(SDL_Scancode key, InputType inputType, std::unique_ptr<Command> command)
+		{
+			m_InputBindings.emplace_back(std::make_unique<InputBindingKB>(key, inputType, std::move(command)));
+		}
 
-	bool IsKeyPressed(SDL_Scancode key);
-	bool IsKeyDownThisFrame(SDL_Scancode key);
-	bool IsKeyUpThisFrame(SDL_Scancode key);
+	private:
 
-	void HandleKeyDown(SDL_Scancode key);
-	void HandleKeyUp(SDL_Scancode key);
+		std::vector<std::unique_ptr<InputBindingKB>> m_InputBindings{};
 
-	std::vector<bool> m_CurrentKeyStates{};
-	std::vector<bool> m_PreviousKeyStates{};
-};
+		bool IsKeyPressed(SDL_Scancode key);
+		bool IsKeyDownThisFrame(SDL_Scancode key);
+		bool IsKeyUpThisFrame(SDL_Scancode key);
+
+		void HandleKeyDown(SDL_Scancode key);
+		void HandleKeyUp(SDL_Scancode key);
+
+		std::vector<bool> m_CurrentKeyStates{};
+		std::vector<bool> m_PreviousKeyStates{};
+	};
+}
 

@@ -81,10 +81,10 @@
     <ClCompile Include="ArcaneEngine.cpp">
       <Filter>ArcaneEngine</Filter>
     </ClCompile>
-    <ClCompile Include="AudioSDL.cpp">
+    <ClCompile Include="AudioSystem_SDL.cpp">
       <Filter>ArcaneEngine\Sound</Filter>
     </ClCompile>
-    <ClCompile Include="Locator.cpp">
+    <ClCompile Include="ServiceLocator.cpp">
       <Filter>ArcaneEngine\Sound</Filter>
     </ClCompile>
   </ItemGroup>
@@ -152,10 +152,10 @@
     <ClInclude Include="Audio.h">
       <Filter>ArcaneEngine\Sound</Filter>
     </ClInclude>
-    <ClInclude Include="AudioSDL.h">
+    <ClInclude Include="AudioSystem_SDL.h">
       <Filter>ArcaneEngine\Sound</Filter>
     </ClInclude>
-    <ClInclude Include="Locator.h">
+    <ClInclude Include="ServiceLocator.h">
       <Filter>ArcaneEngine\Sound</Filter>
     </ClInclude>
   </ItemGroup>

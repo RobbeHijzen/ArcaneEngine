@@ -1,5 +1,7 @@
 #include "Keyboard.h"
 
+using namespace AE;
+
 Keyboard::Keyboard()
 {
     m_CurrentKeyStates.resize(SDL_NUM_SCANCODES);

@@ -4,11 +4,10 @@
 #include <vector>
 #include "ObserverEvents.h"
 
-
-class GameObject;
-
-namespace ObserverPattern
+namespace AE
 {
+	class GameObject;
+
 	class Observer
 	{
 	public:

@@ -6,6 +6,6 @@ void HealthComponent::KillObject()
 {
 	--m_Health;
 	
-	GetOwner()->NotifyAll(ObserverPattern::Event::PlayerDied);
+	GetOwner()->NotifyAll(AE::Event::PlayerDied);
 
 }

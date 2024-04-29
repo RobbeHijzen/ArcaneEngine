@@ -4,30 +4,31 @@
 #include <memory>
 #include "Singleton.h"
 
-
-class Scene;
-class SceneManager final : public Singleton<SceneManager>
+namespace AE
 {
-public:
-	Scene& CreateScene(const std::string& name);
+	class Scene;
+	class SceneManager final : public Singleton<SceneManager>
+	{
+	public:
+		Scene& CreateScene(const std::string& name);
 
 
-	Scene* GetCurrentScene() { return m_Scenes[m_CurrentSceneIndex].get(); }
+		Scene* GetCurrentScene() { return m_Scenes[m_CurrentSceneIndex].get(); }
 
-	void RemoveDeletedObjects();
+		void RemoveDeletedObjects();
 
-	void GameStart();
+		void GameStart();
 
-	void Update();
-	void FixedUpdate();
-	void LateUpdate();
-	void Render();
-private:
+		void Update();
+		void FixedUpdate();
+		void LateUpdate();
+		void Render();
+	private:
 
-	friend class Singleton<SceneManager>;
-	SceneManager() = default;
+		friend class Singleton<SceneManager>;
+		SceneManager() = default;
 
-	std::vector<std::shared_ptr<Scene>> m_Scenes;
-	int m_CurrentSceneIndex{-1};
-};
-
+		std::vector<std::shared_ptr<Scene>> m_Scenes;
+		int m_CurrentSceneIndex{ -1 };
+	};
+}

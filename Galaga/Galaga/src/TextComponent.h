@@ -4,16 +4,20 @@
 #include "Transform.h"
 #include "BaseComponent.h"
 
-class Font;
-class Texture2D;
-class GameObject;
+namespace AE
+{
+	class Font;
+	class Texture2D;
+	class GameObject;
+}
 
 
-class TextComponent final : public BaseComponent
+
+class TextComponent final : public AE::BaseComponent
 {
 public:
 
-	TextComponent(GameObject* parentGameObject, const std::string& text, std::shared_ptr<Font> font);
+	TextComponent(AE::GameObject* parentGameObject, const std::string& text, std::shared_ptr<AE::Font> font);
 	
 	virtual ~TextComponent() = default;
 	TextComponent(const TextComponent& other) = delete;
@@ -33,7 +37,7 @@ private:
 
 	bool m_NeedsUpdate;
 	std::string m_Text;
-	std::shared_ptr<Font> m_Font;
-	std::shared_ptr<Texture2D> m_TextTexture;
+	std::shared_ptr<AE::Font> m_Font;
+	std::shared_ptr<AE::Texture2D> m_TextTexture;
 };
 

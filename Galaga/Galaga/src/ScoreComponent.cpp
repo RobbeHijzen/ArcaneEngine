@@ -7,6 +7,6 @@ void ScoreComponent::IncreaseScore(int scoreAmount)
 {
 	m_Score += scoreAmount;
 
-	GetOwner()->NotifyAll(ObserverPattern::Event::ScoreChanged);
+	GetOwner()->NotifyAll(AE::Event::ScoreChanged);
 
 }

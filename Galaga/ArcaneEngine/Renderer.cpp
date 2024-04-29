@@ -3,6 +3,8 @@
 #include "SceneManager.h"
 #include "Texture2D.h"
 
+using namespace AE;
+
 int GetOpenGLDriverIndex()
 {
 	auto openglIndex = -1;

@@ -6,26 +6,25 @@
 #include "ScoreComponent.h"
 #include "ShootComponent.h"
 
-#include "Locator.h"
-using namespace ObserverPattern;
+#include "ServiceLocator.h"
 
 
-void PrintObserver::OnNotify(Event event, GameObject*)
+void PrintObserver::OnNotify(AE::Event event, AE::GameObject*)
 {
 	switch (event)
 	{
-		case Event::PrintTest:
+		case AE::Event::PrintTest:
 		{
 			std::cout << "Test Printed\n";
 		}
 	}
 }
 
-void ObserverPattern::HealthDisplayObserver::OnNotify(Event event, GameObject* gameObject)
+void HealthDisplayObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 {
 	switch (event)
 	{
-	case Event::PlayerDied:
+	case AE::Event::PlayerDied:
 	{
 		int newHealth{ gameObject->GetComponent<HealthComponent>()->GetHealth() };
 
@@ -36,11 +35,11 @@ void ObserverPattern::HealthDisplayObserver::OnNotify(Event event, GameObject* g
 	}
 }
 
-void ObserverPattern::ScoreDisplayObserver::OnNotify(Event event, GameObject* gameObject)
+void ScoreDisplayObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 {
 	switch (event)
 	{
-	case Event::ScoreChanged:
+	case AE::Event::ScoreChanged:
 	{
 		int newScore{ gameObject->GetComponent<ScoreComponent>()->GetScore() };
 
@@ -50,37 +49,41 @@ void ObserverPattern::ScoreDisplayObserver::OnNotify(Event event, GameObject* ga
 	}
 }
 
-void ObserverPattern::PickupObserver::OnNotify(Event event, GameObject* gameObject)
+void PickupObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 {
 	switch (event)
 	{
-	case Event::SilverPickup:
+	case AE::Event::SilverPickup:
 	{
 		gameObject->GetComponent<ScoreComponent>()->IncreaseScore(SilverScoreValue);
-		gameObject->NotifyAll(Event::ScoreChanged);
+		gameObject->NotifyAll(AE::Event::ScoreChanged);
 
 		break;
 	}
-	case Event::GoldPickup:
+	case AE::Event::GoldPickup:
 	{
 		gameObject->GetComponent<ScoreComponent>()->IncreaseScore(GoldScoreValue);
-		gameObject->NotifyAll(Event::ScoreChanged);
+		gameObject->NotifyAll(AE::Event::ScoreChanged);
 
 		break;
 	}
 	}
 }
 
-void ObserverPattern::BulletObserver::OnNotify(Event event, GameObject* gameObject)
+BulletObserver::BulletObserver()
+{
+	m_ShotSoundID = AE::ServiceLocator::GetAudio()->LoadSound("Galaga/galaga_shot.mp3");
+}
+
+void BulletObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 {
 	switch (event)
 	{
-	case Event::BulletFired:
+	case AE::Event::BulletFired:
 	{
 		if (auto comp = gameObject->GetComponent<ShootComponent>())
 		{
-			// Hardcoded Audio-id for now;
-			Locator::GetAudio()->PlaySound(0, 70);
+			AE::ServiceLocator::GetAudio()->PlaySound(m_ShotSoundID, 70);
 			comp->FireBullet();
 		}
 		break;

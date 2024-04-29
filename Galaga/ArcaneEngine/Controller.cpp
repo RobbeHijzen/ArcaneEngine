@@ -2,7 +2,7 @@
 #include <Xinput.h>
 
 #include "Controller.h"
-using namespace EngineCommands;
+using namespace AE;
 
 class Controller::ControllerImpl
 {

@@ -20,14 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArcaneEngine.cpp" />
-    <ClCompile Include="AudioSDL.cpp" />
+    <ClCompile Include="AudioSystem_SDL.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Keyboard.cpp" />
-    <ClCompile Include="Locator.cpp" />
+    <ClCompile Include="ServiceLocator.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -39,7 +39,7 @@
   <ItemGroup>
     <ClInclude Include="ArcaneEngine.h" />
     <ClInclude Include="Audio.h" />
-    <ClInclude Include="AudioSDL.h" />
+    <ClInclude Include="AudioSystem_SDL.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Controller.h" />
@@ -48,7 +48,7 @@
     <ClInclude Include="InputHelperStructs.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Keyboard.h" />
-    <ClInclude Include="Locator.h" />
+    <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="ObserverEvents.h" />
     <ClInclude Include="Renderer.h" />

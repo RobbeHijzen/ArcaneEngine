@@ -1,6 +1,6 @@
 #pragma once
 
-namespace ObserverPattern
+namespace AE
 {
 	enum class Event
 	{

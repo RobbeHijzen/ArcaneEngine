@@ -6,7 +6,9 @@
 #include "Texture2D.h"
 #include <SDL_ttf.h>
 
-TextComponent::TextComponent(GameObject* parentGameObject, const std::string& text, std::shared_ptr<Font> font)
+using namespace AE;
+
+TextComponent::TextComponent(AE::GameObject* parentGameObject, const std::string& text, std::shared_ptr<Font> font)
 	: BaseComponent(parentGameObject)
 	, m_NeedsUpdate(true)
 	, m_Text(text)

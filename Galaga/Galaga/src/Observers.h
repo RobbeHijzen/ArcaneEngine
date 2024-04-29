@@ -3,67 +3,67 @@
 
 #include "TextComponent.h"
 
-namespace ObserverPattern
+class PrintObserver : public AE::Observer
 {
+public:
 
-	class PrintObserver : public Observer
-	{
-	public:
+	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
+};
 
-		virtual void OnNotify(Event event, GameObject* gameObject) override;
-	};
+class HealthDisplayObserver : public AE::Observer
+{
+public:
 
-	class HealthDisplayObserver : public Observer
-	{
-	public:
+	HealthDisplayObserver(TextComponent* textComp)
+		: m_pTextComponent{ textComp }
+	{}
 
-		HealthDisplayObserver(TextComponent* textComp)
-			: m_pTextComponent{ textComp }
-		{}
+	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
 
-		virtual void OnNotify(Event event, GameObject* gameObject) override;
+private:
 
-	private:
+	TextComponent* m_pTextComponent{};
 
-		TextComponent* m_pTextComponent{};
+};
 
-	};
+class PickupObserver : public AE::Observer
+{
+public:
 
-	class PickupObserver : public Observer
-	{
-	public:
+	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
 
-		virtual void OnNotify(Event event, GameObject* gameObject) override;
+private:
 
-	private:
+	int SilverScoreValue{10};
+	int GoldScoreValue{100};
+};
+class ScoreDisplayObserver : public AE::Observer
+{
+public:
 
-		int SilverScoreValue{10};
-		int GoldScoreValue{100};
-	};
-	class ScoreDisplayObserver : public Observer
-	{
-	public:
+	ScoreDisplayObserver(TextComponent* textComp)
+		: m_pTextComponent{ textComp }
+	{}
 
-		ScoreDisplayObserver(TextComponent* textComp)
-			: m_pTextComponent{ textComp }
-		{}
+	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
 
-		virtual void OnNotify(Event event, GameObject* gameObject) override;
+private:
 
-	private:
+	TextComponent* m_pTextComponent{};
 
-		TextComponent* m_pTextComponent{};
+};
 
-	};
+class BulletObserver : public AE::Observer
+{
+public:
+	BulletObserver();
 
-	class BulletObserver : public Observer
-	{
-	public:
+	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
 
-		virtual void OnNotify(Event event, GameObject* gameObject) override;
+private:
 
-	private:
+	int m_ShotSoundID{-1};
 
-	};
+};
 
-}
+

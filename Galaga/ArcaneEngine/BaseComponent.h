@@ -2,37 +2,39 @@
 #include <memory>
 #include "Transform.h"
 
-
-class GameObject;
-
-class BaseComponent
+namespace AE
 {
-public:
+	class GameObject;
 
-	virtual ~BaseComponent() = default;
-	BaseComponent(const BaseComponent& other) = delete;
-	BaseComponent(BaseComponent&& other) = delete;
-	BaseComponent& operator=(const BaseComponent& other) = delete;
-	BaseComponent& operator=(BaseComponent&& other) = delete;
+	class BaseComponent
+	{
+	public:
 
-	virtual void GameStart() {};
+		virtual ~BaseComponent() = default;
+		BaseComponent(const BaseComponent& other) = delete;
+		BaseComponent(BaseComponent&& other) = delete;
+		BaseComponent& operator=(const BaseComponent& other) = delete;
+		BaseComponent& operator=(BaseComponent&& other) = delete;
 
-	virtual void Update() {};
-	virtual void FixedUpdate() {};
-	virtual void LateUpdate() {};
-	virtual void Render() const {};
+		virtual void GameStart() {};
 
-	inline void SetLocalPosition(float x, float y, float z = 0.f) { m_LocalTransform.SetPosition(x, y, z); }
+		virtual void Update() {};
+		virtual void FixedUpdate() {};
+		virtual void LateUpdate() {};
+		virtual void Render() const {};
 
-protected:
+		inline void SetLocalPosition(float x, float y, float z = 0.f) { m_LocalTransform.SetPosition(x, y, z); }
 
-	BaseComponent(GameObject* pParent);
+	protected:
 
-	GameObject* GetOwner() const { return m_Owner; }
-	Transform m_LocalTransform{};
+		BaseComponent(GameObject* pParent);
 
-private:
+		GameObject* GetOwner() const { return m_Owner; }
+		Transform m_LocalTransform{};
 
-	GameObject* m_Owner;
-};
+	private:
+
+		GameObject* m_Owner;
+	};
+}
 

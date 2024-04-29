@@ -7,7 +7,7 @@
 
 class GameObject;
 
-namespace ObserverPattern
+namespace AE
 {
 	class Subject
 	{

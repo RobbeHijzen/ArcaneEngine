@@ -6,12 +6,12 @@
 
 class Texture2D;
 
-class ImageComponent final : public BaseComponent
+class ImageComponent final : public AE::BaseComponent
 {
 public:
 
-	ImageComponent(GameObject* parentGameObject, const std::string& fileName, float destWidth, float destHeight);
-	ImageComponent(GameObject* parentGameObject, const std::string& fileName);
+	ImageComponent(AE::GameObject* parentGameObject, const std::string& fileName, float destWidth, float destHeight);
+	ImageComponent(AE::GameObject* parentGameObject, const std::string& fileName);
 
 	virtual ~ImageComponent() = default;
 	ImageComponent(const ImageComponent& other) = delete;
@@ -25,7 +25,7 @@ public:
 
 private:
 
-	std::shared_ptr<Texture2D> m_Texture{};
+	std::shared_ptr<AE::Texture2D> m_Texture{};
 
 	bool m_UseDestSizes{ true };
 	float m_DestWidth{};

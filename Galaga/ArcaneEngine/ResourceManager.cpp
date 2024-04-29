@@ -6,6 +6,8 @@
 #include "Texture2D.h"
 #include "Font.h"
 
+using namespace AE;
+
 void ResourceManager::Init(const std::string& dataPath)
 {
 	m_dataPath = dataPath;

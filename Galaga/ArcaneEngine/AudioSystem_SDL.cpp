@@ -1,10 +1,12 @@
-#include "AudioSDL.h"
+#include "AudioSystem_SDL.h"
 #include <cassert>
 #include <iostream>
 
 #include "SDL_mixer.h"
 
-class AudioSDL::AudioSDLImpl
+using namespace AE;
+
+class AudioSystem_SDL::AudioSDLImpl
 {
 public:
 
@@ -31,7 +33,7 @@ public:
 	}
 	int LoadSound(std::string path)
 	{
-		auto sound{ Mix_LoadWAV(("../Galaga/Resources/" + path).c_str()) };
+		auto sound{ Mix_LoadWAV(("../Resources/" + path).c_str()) };
 		if (!sound)
 		{
 			std::cout << "Sound could not be loaded at path: " << path.c_str() << "\n";
@@ -48,31 +50,31 @@ private:
 };
 
 
-AudioSDL::AudioSDL()
+AudioSystem_SDL::AudioSystem_SDL()
 	: m_pImpl{ std::make_unique<AudioSDLImpl>() }
 {
 }
 
-AudioSDL::~AudioSDL()
+AudioSystem_SDL::~AudioSystem_SDL()
 {
 }
 
-void AudioSDL::PlaySound(int soundID, float volume)
+void AudioSystem_SDL::PlaySound(int soundID, float volume)
 {
 	m_pImpl->PlaySound(soundID, volume);
 }
 
-void AudioSDL::StopSound(int soundID)
+void AudioSystem_SDL::StopSound(int soundID)
 {
 	m_pImpl->StopSound(soundID);
 }
 
-void AudioSDL::StopAllSounds()
+void AudioSystem_SDL::StopAllSounds()
 {
 	m_pImpl->StopAllSounds();
 }
 
-int AudioSDL::LoadSound(std::string path)
+int AudioSystem_SDL::LoadSound(std::string path)
 {
 	return m_pImpl->LoadSound(path);
 }

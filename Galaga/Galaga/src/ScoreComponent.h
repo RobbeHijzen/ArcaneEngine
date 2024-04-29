@@ -3,14 +3,13 @@
 #include "BaseComponent.h"
 
 
-class ScoreComponent : public BaseComponent
+class ScoreComponent : public AE::BaseComponent
 {
 public:
 
-	ScoreComponent(GameObject* pParent)
+	ScoreComponent(AE::GameObject* pParent)
 		: BaseComponent(pParent)
 	{
-		//pParent->
 	}
 
 

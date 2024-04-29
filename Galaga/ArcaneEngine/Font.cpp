@@ -2,6 +2,8 @@
 #include <SDL_ttf.h>
 #include "Font.h"
 
+using namespace AE;
+
 TTF_Font* Font::GetFont() const {
 	return m_Font;
 }

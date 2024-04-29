@@ -5,237 +5,238 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
-using namespace ObserverPattern;
-
-GameObject::~GameObject()
+namespace AE
 {
-}
-
-
-bool GameObject::AddComponent(std::shared_ptr<BaseComponent> component)
-{
-	if (component.get())
+	GameObject::~GameObject()
 	{
-		m_Components.emplace_back(component);
-		return true;
-	}
-	return false;
-}
-	
-
-void GameObject::GameStart()
-{
-	for (auto& component : m_Components)
-	{
-		component->GameStart();
-	}
-	for (auto& child : m_Children)
-	{
-		child->GameStart();
-	}
-}
-
-void GameObject::Update()
-{
-
-	for (auto& component : m_Components)
-	{
-		component->Update();
 	}
 
-	for (auto& child : m_Children)
-	{
-		child->Update();
-	}
-}
 
-void GameObject::FixedUpdate()
-{
-	for (auto& component : m_Components)
+	bool GameObject::AddComponent(std::shared_ptr<BaseComponent> component)
 	{
-		component->FixedUpdate();
-	}
-	for (auto& child : m_Children)
-	{
-		child->FixedUpdate();
-	}
-}
-
-void GameObject::LateUpdate()
-{
-	for (auto& component : m_Components)
-	{
-		component->LateUpdate();
-	}
-	for (auto& child : m_Children)
-	{
-		child->LateUpdate();
-	}
-}
-
-void GameObject::Render() const
-{
-	for (auto& component : m_Components)
-	{
-		component->Render();
-	}
-	for (auto& child : m_Children)
-	{
-		child->Render();
-	}
-
-}
-
-void GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
-{
-	// Check for valid parent
-	if (IsChild(parent) || parent == this || parent == m_Parent)
-	{
-		return;
-	}
-	
-	// Transform Handling
-	if (keepWorldPosition)
-	{
-		if (parent == nullptr)
+		if (component.get())
 		{
-			SetLocalTransform(GetWorldTransform());
+			m_Components.emplace_back(component);
+			return true;
+		}
+		return false;
+	}
+
+
+	void GameObject::GameStart()
+	{
+		for (auto& component : m_Components)
+		{
+			component->GameStart();
+		}
+		for (auto& child : m_Children)
+		{
+			child->GameStart();
+		}
+	}
+
+	void GameObject::Update()
+	{
+
+		for (auto& component : m_Components)
+		{
+			component->Update();
+		}
+
+		for (auto& child : m_Children)
+		{
+			child->Update();
+		}
+	}
+
+	void GameObject::FixedUpdate()
+	{
+		for (auto& component : m_Components)
+		{
+			component->FixedUpdate();
+		}
+		for (auto& child : m_Children)
+		{
+			child->FixedUpdate();
+		}
+	}
+
+	void GameObject::LateUpdate()
+	{
+		for (auto& component : m_Components)
+		{
+			component->LateUpdate();
+		}
+		for (auto& child : m_Children)
+		{
+			child->LateUpdate();
+		}
+	}
+
+	void GameObject::Render() const
+	{
+		for (auto& component : m_Components)
+		{
+			component->Render();
+		}
+		for (auto& child : m_Children)
+		{
+			child->Render();
+		}
+
+	}
+
+	void GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
+	{
+		// Check for valid parent
+		if (IsChild(parent) || parent == this || parent == m_Parent)
+		{
+			return;
+		}
+
+		// Transform Handling
+		if (keepWorldPosition)
+		{
+			if (parent == nullptr)
+			{
+				SetLocalTransform(GetWorldTransform());
+			}
+			else
+			{
+				SetLocalTransform(GetWorldTransform() - parent->GetWorldTransform());
+			}
 		}
 		else
 		{
-			SetLocalTransform(GetWorldTransform() - parent->GetWorldTransform());
+			SetWorldTransformDirty();
+		}
+
+		// Place "this" inside the already known shared_ptr so ownership can be transferred
+		std::shared_ptr<GameObject> thisPtr{};
+		if (m_Parent)
+
+		{
+			thisPtr = m_Parent->GetChildSharedPtr(this);
+		}
+		else
+		{
+			auto scene{ SceneManager::GetInstance().GetCurrentScene() };
+			thisPtr = scene->GetChildSharedPtr(this);
+		}
+
+		// Parent's child Handling
+		if (m_Parent)
+		{
+			m_Parent->RemoveChild(this);
+		}
+		else
+		{
+			auto scene{ SceneManager::GetInstance().GetCurrentScene() };
+			scene->DettatchFromRoot(this);
+		}
+
+
+		m_Parent = parent;
+
+		if (m_Parent)
+		{
+			m_Parent->AddChild(thisPtr);
+		}
+		// Attatch to root if nullptr was given as new parent
+		else
+		{
+			auto scene{ SceneManager::GetInstance().GetCurrentScene() };
+			scene->AttatchToRoot(thisPtr);
 		}
 	}
-	else
+
+	std::shared_ptr<GameObject> GameObject::GetChildSharedPtr(GameObject* child) const
 	{
+		for (auto& currentChild : m_Children)
+		{
+			if (currentChild.get() == child)
+			{
+				return currentChild;
+			}
+		}
+		return nullptr;
+	}
+
+	void GameObject::RemoveChild(GameObject* child)
+	{
+		m_Children.erase(std::find_if(m_Children.begin(), m_Children.end(), [&](const std::shared_ptr<GameObject>& sp)
+			{
+				return sp.get() == child;
+			}));
+	}
+
+	void GameObject::SetLocalTransform(Transform transform)
+	{
+		m_LocalTransform = transform;
 		SetWorldTransformDirty();
 	}
-	
-	// Place "this" inside the already known shared_ptr so ownership can be transferred
-	std::shared_ptr<GameObject> thisPtr{};
-	if (m_Parent)
 
+	void GameObject::AddLocalTransform(Transform transform)
 	{
-		thisPtr = m_Parent->GetChildSharedPtr(this);
-	}
-	else
-	{
-		auto scene{ SceneManager::GetInstance().GetCurrentScene() };
-		thisPtr = scene->GetChildSharedPtr(this);
+		m_LocalTransform += transform;
+		SetWorldTransformDirty();
 	}
 
-	// Parent's child Handling
-	if (m_Parent)
+	void GameObject::SetWorldTransformDirty()
 	{
-		m_Parent->RemoveChild(this);
-	}
-	else
-	{
-		auto scene{ SceneManager::GetInstance().GetCurrentScene() };
-		scene->DettatchFromRoot(this);
-	}
-
-	
-	m_Parent = parent;
-
-	if (m_Parent)
-	{
-		m_Parent->AddChild(thisPtr);
-	}
-	// Attatch to root if nullptr was given as new parent
-	else
-	{
-		auto scene{ SceneManager::GetInstance().GetCurrentScene()};
-		scene->AttatchToRoot(thisPtr);
-	}
-}
-
-std::shared_ptr<GameObject> GameObject::GetChildSharedPtr(GameObject* child) const
-{
-	for (auto& currentChild : m_Children)
-	{
-		if (currentChild.get() == child)
+		m_IsTransformDirty = true;
+		for (auto& child : m_Children)
 		{
-			return currentChild;
+			child->SetWorldTransformDirty();
 		}
 	}
-	return nullptr;
-}
 
-void GameObject::RemoveChild(GameObject* child)
-{
-	m_Children.erase(std::find_if(m_Children.begin(), m_Children.end(), [&](const std::shared_ptr<GameObject>& sp)
+	Transform GameObject::GetWorldTransform()
 	{
-		return sp.get() == child;
-	}));
-}
-
-void GameObject::SetLocalTransform(Transform transform)
-{
-	m_LocalTransform = transform;
-	SetWorldTransformDirty();
-}
-
-void GameObject::AddLocalTransform(Transform transform)
-{
-	m_LocalTransform += transform;
-	SetWorldTransformDirty();
-}
-
-void GameObject::SetWorldTransformDirty()
-{
-	m_IsTransformDirty = true;
-	for (auto& child : m_Children)
-	{
-		child->SetWorldTransformDirty();
-	}
-}
-
-Transform GameObject::GetWorldTransform()
-{
-	if (m_IsTransformDirty)
-	{
-		UpdateWorldTransform();
-	}
-	return m_WorldTransform;
-}
-
-void GameObject::AddChild(std::shared_ptr<GameObject> child)
-{
-	m_Children.emplace_back(child);
-}
-
-void GameObject::UpdateWorldTransform()
-{
-	if (m_IsTransformDirty)
-	{
-		if (m_Parent != nullptr)
+		if (m_IsTransformDirty)
 		{
-			m_WorldTransform = m_Parent->GetWorldTransform() + m_LocalTransform;
+			UpdateWorldTransform();
 		}
-		else
-		{
-			m_WorldTransform = m_LocalTransform;
-		}
-		m_IsTransformDirty = false;
+		return m_WorldTransform;
 	}
-}
 
-void GameObject::Delete()
-{
-	m_IsDeleted = true;
-	SetParent(nullptr);
-}
-
-bool GameObject::IsChild(GameObject* gameObject)
-{
-	if (gameObject == nullptr) return false;
-
-	for (auto& child : m_Children)
+	void GameObject::AddChild(std::shared_ptr<GameObject> child)
 	{
-		if (child.get() == gameObject)
-			return true;
+		m_Children.emplace_back(child);
 	}
-	return false;
-}
 
+	void GameObject::UpdateWorldTransform()
+	{
+		if (m_IsTransformDirty)
+		{
+			if (m_Parent != nullptr)
+			{
+				m_WorldTransform = m_Parent->GetWorldTransform() + m_LocalTransform;
+			}
+			else
+			{
+				m_WorldTransform = m_LocalTransform;
+			}
+			m_IsTransformDirty = false;
+		}
+	}
+
+	void GameObject::Delete()
+	{
+		m_IsDeleted = true;
+		SetParent(nullptr);
+	}
+
+	bool GameObject::IsChild(GameObject* gameObject)
+	{
+		if (gameObject == nullptr) return false;
+
+		for (auto& child : m_Children)
+		{
+			if (child.get() == gameObject)
+				return true;
+		}
+		return false;
+	}
+
+}

@@ -5,11 +5,11 @@
 
 class TextComponent;
 
-class FpsComponent final : public BaseComponent
+class FpsComponent final : public AE::BaseComponent
 {
 public:
 
-	FpsComponent(GameObject* const parentGameObject);
+	FpsComponent(AE::GameObject* const parentGameObject);
 
 	virtual ~FpsComponent() = default;
 	FpsComponent(const FpsComponent& other) = delete;

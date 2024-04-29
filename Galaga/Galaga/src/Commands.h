@@ -6,10 +6,10 @@
 #include "HealthComponent.h"
 #include "ScoreComponent.h"
 
-class MoveCommand : public EngineCommands::GameObjectCommand
+class MoveCommand : public AE::GameObjectCommand
 {
 public:
-	MoveCommand(GameObject* gameObject, glm::vec2 direction, float movementSpeed)
+	MoveCommand(AE::GameObject* gameObject, glm::vec2 direction, float movementSpeed)
 		: GameObjectCommand(gameObject)
 		, m_MovementSpeed{ movementSpeed }
 	{
@@ -19,8 +19,8 @@ public:
 
 	virtual void Execute() override
 	{
-		glm::vec2 addedPosition{ m_Direction * m_MovementSpeed * Time::GetInstance().GetDeltaTime() };
-		GetGameObject()->AddLocalTransform(Transform{ addedPosition });
+		glm::vec2 addedPosition{ m_Direction * m_MovementSpeed * AE::Time::GetInstance().GetDeltaTime() };
+		GetGameObject()->AddLocalTransform(AE::Transform{ addedPosition });
 	}
 
 private:
@@ -28,11 +28,11 @@ private:
 	float m_MovementSpeed;
 };
 
-class KillCommand : public EngineCommands::GameObjectCommand
+class KillCommand : public AE::GameObjectCommand
 {
 public:
 
-	KillCommand(GameObject* gameObject) : GameObjectCommand(gameObject) {}
+	KillCommand(AE::GameObject* gameObject) : GameObjectCommand(gameObject) {}
 
 	virtual void Execute() override
 	{
@@ -40,44 +40,44 @@ public:
 	}
 };
 
-class PickupSilverCommand : public EngineCommands::GameObjectCommand
+class PickupSilverCommand : public AE::GameObjectCommand
 {
 public:
 
-	PickupSilverCommand(GameObject* gameObject)
+	PickupSilverCommand(AE::GameObject* gameObject)
 		: GameObjectCommand(gameObject)
 	{}
 
 	virtual void Execute() override
 	{
-		GetGameObject()->NotifyAll(ObserverPattern::Event::SilverPickup);
+		GetGameObject()->NotifyAll(AE::Event::SilverPickup);
 	}
 };
-class PickupGoldCommand : public EngineCommands::GameObjectCommand
+class PickupGoldCommand : public AE::GameObjectCommand
 {
 public:
 
-	PickupGoldCommand(GameObject* gameObject)
+	PickupGoldCommand(AE::GameObject* gameObject)
 		: GameObjectCommand(gameObject)
 	{}
 
 	virtual void Execute() override
 	{
-		GetGameObject()->NotifyAll(ObserverPattern::Event::GoldPickup);
+		GetGameObject()->NotifyAll(AE::Event::GoldPickup);
 	}
 };
 
-class ShootCommand : public EngineCommands::GameObjectCommand
+class ShootCommand : public AE::GameObjectCommand
 {
 public:
 
-	ShootCommand(GameObject* gameObject)
+	ShootCommand(AE::GameObject* gameObject)
 		: GameObjectCommand(gameObject)
 	{}
 
 	virtual void Execute() override
 	{
-		GetGameObject()->NotifyAll(ObserverPattern::Event::BulletFired);
+		GetGameObject()->NotifyAll(AE::Event::BulletFired);
 	}
 };
 

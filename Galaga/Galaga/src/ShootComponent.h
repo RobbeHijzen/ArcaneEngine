@@ -4,11 +4,11 @@
 #include "GameObject.h"
 
 
-class ShootComponent : public BaseComponent
+class ShootComponent : public AE::BaseComponent
 {
 public:
 
-	ShootComponent(GameObject* pParent, glm::vec2 direction, float bulletSpeed = 150.f);
+	ShootComponent(AE::GameObject* pParent, glm::vec2 direction, float bulletSpeed = 150.f);
 
 	void FireBullet();
 
