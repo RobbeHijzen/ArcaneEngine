@@ -87,6 +87,9 @@
     <ClCompile Include="ServiceLocator.cpp">
       <Filter>ArcaneEngine\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="AudioClip.cpp">
+      <Filter>ArcaneEngine\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseComponent.h">
@@ -156,6 +159,9 @@
       <Filter>ArcaneEngine\Sound</Filter>
     </ClInclude>
     <ClInclude Include="ServiceLocator.h">
+      <Filter>ArcaneEngine\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioClip.h">
       <Filter>ArcaneEngine\Sound</Filter>
     </ClInclude>
   </ItemGroup>

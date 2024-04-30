@@ -11,10 +11,13 @@ namespace AE
     {
     public:
         AudioSystem_SDL();
-        ~AudioSystem_SDL();
 
-        virtual void PlaySound(int soundID, float volume) override;
-        virtual int LoadSound(std::string path) override;
+        virtual void PlaySound(int audioClipID) override;
+        virtual unsigned short CreateSoundClip(std::string path, unsigned short volume) override;
+
+        virtual void StartSoundQueue() override;
+
+        virtual void Stop() override;
 
     private:
 

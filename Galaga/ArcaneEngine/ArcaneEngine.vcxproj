@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArcaneEngine.cpp" />
+    <ClCompile Include="AudioClip.cpp" />
     <ClCompile Include="AudioSystem_SDL.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="Controller.cpp" />
@@ -39,6 +40,7 @@
   <ItemGroup>
     <ClInclude Include="ArcaneEngine.h" />
     <ClInclude Include="Audio.h" />
+    <ClInclude Include="AudioClip.h" />
     <ClInclude Include="AudioSystem_SDL.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="Command.h" />

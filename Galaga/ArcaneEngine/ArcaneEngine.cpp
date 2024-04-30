@@ -2,6 +2,8 @@
 #include "ServiceLocator.h"
 #include "AudioSystem_SDL.h"
 
+#include <thread>
+
 SDL_Window* g_window{};
 
 using namespace std::chrono;
@@ -74,6 +76,9 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 {
 	ServiceLocator::ProvideAudio(std::move(std::make_unique<AudioSystem_SDL>()));
 
+	auto audioSystem{ ServiceLocator::GetAudio()};
+	std::jthread soundThread{&AudioSystem::StartSoundQueue, audioSystem};
+
 	load();
 
 	// Initialize singletons
@@ -131,4 +136,8 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 			std::this_thread::sleep_for(sleepTime);
 		}
 	}
+
+	audioSystem->Stop();
+	if(soundThread.joinable())
+		soundThread.join();
 }

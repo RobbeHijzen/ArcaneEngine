@@ -72,7 +72,7 @@ void PickupObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 
 BulletObserver::BulletObserver()
 {
-	m_ShotSoundID = AE::ServiceLocator::GetAudio()->LoadSound("Galaga/galaga_shot.mp3");
+	m_ShotSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Galaga/galaga_shot.mp3", 70);
 }
 
 void BulletObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
@@ -83,7 +83,7 @@ void BulletObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 	{
 		if (auto comp = gameObject->GetComponent<ShootComponent>())
 		{
-			AE::ServiceLocator::GetAudio()->PlaySound(m_ShotSoundID, 70);
+			AE::ServiceLocator::GetAudio()->PlaySound(m_ShotSoundID);
 			comp->FireBullet();
 		}
 		break;

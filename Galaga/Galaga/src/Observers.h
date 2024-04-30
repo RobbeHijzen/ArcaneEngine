@@ -62,7 +62,7 @@ public:
 
 private:
 
-	int m_ShotSoundID{-1};
+	unsigned short m_ShotSoundID{};
 
 };
 
