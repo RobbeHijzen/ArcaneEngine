@@ -72,7 +72,7 @@ void PickupObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 
 BulletObserver::BulletObserver()
 {
-	m_ShotSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Galaga/galaga_shot.mp3", 70);
+	m_ShotSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Sounds/galaga_shot.mp3", 70);
 }
 
 void BulletObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)

@@ -63,22 +63,30 @@ public:
 			m_Cv.wait(lock, [&]{ return !m_ClipQueue.empty() || !m_Run; });
 			if (!m_Run) break;
 
-			AudioClip* audioClip{ m_ClipQueue.front()};
-			m_ClipQueue.pop();
+			std::vector<AudioClip*> toPlayClips{};
+			while (!m_ClipQueue.empty())
+			{
+				toPlayClips.emplace_back(m_ClipQueue.front());
+				m_ClipQueue.pop();
 
+			}
 			lock.unlock();
 
-			if (!audioClip->IsLoaded())
+			for (const auto audioClip : toPlayClips)
 			{
-				if (!LoadSound(audioClip))
+				if (!audioClip->IsLoaded())
 				{
-					continue;
+					if (!LoadSound(audioClip))
+					{
+						continue;
+					}
 				}
+
+				auto soundChunk{ m_SoundChunks[audioClip->GetSoundID()] };
+				Mix_VolumeChunk(soundChunk, static_cast<int>(audioClip->GetVolume()));
+				Mix_PlayChannel(-1, soundChunk, 0);
 			}
 
-			auto soundChunk{ m_SoundChunks[audioClip->GetSoundID()]};
-			Mix_VolumeChunk(soundChunk, static_cast<int>(audioClip->GetVolume()));
-			Mix_PlayChannel(-1, soundChunk, 0);
 		}
 	}
 
@@ -93,6 +101,7 @@ private:
 	std::vector<std::unique_ptr<AudioClip>> m_AudioClips{};
 	std::vector<Mix_Chunk*> m_SoundChunks{};
 	std::queue<AudioClip*> m_ClipQueue{};
+
 
 	bool m_Run{ true };
 
