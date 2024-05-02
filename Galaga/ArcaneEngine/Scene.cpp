@@ -8,10 +8,6 @@ namespace AE
 
 	unsigned int Scene::m_idCounter = 0;
 
-	Scene::Scene(const std::string& name) : m_Name(name)
-	{
-	}
-
 	Scene::~Scene() = default;
 
 	void Scene::Add(std::shared_ptr<GameObject> object)
@@ -19,7 +15,7 @@ namespace AE
 		m_GameObjects.emplace_back(object);
 	}
 
-	void Scene::RemoveAll()
+	void Scene::DeleteAll()
 	{
 		m_GameObjects.clear();
 	}

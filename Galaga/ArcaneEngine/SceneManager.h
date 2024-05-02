@@ -10,12 +10,12 @@ namespace AE
 	class SceneManager final : public Singleton<SceneManager>
 	{
 	public:
-		Scene& CreateScene(const std::string& name);
-
-
+		Scene& CreateScene();
 		Scene* GetCurrentScene() { return m_Scenes[m_CurrentSceneIndex].get(); }
 
-		void RemoveDeletedObjects();
+		int GetCurrentSceneIndex() const { return m_CurrentSceneIndex; }
+		void IncrementScene();
+		void SetScene(int newSceneIndex);
 
 		void GameStart();
 
@@ -23,12 +23,15 @@ namespace AE
 		void FixedUpdate();
 		void LateUpdate();
 		void Render();
+
+		void RemoveDeletedObjects();
+
 	private:
 
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;
 
 		std::vector<std::shared_ptr<Scene>> m_Scenes;
-		int m_CurrentSceneIndex{ -1 };
+		int m_CurrentSceneIndex{ 0 };
 	};
 }

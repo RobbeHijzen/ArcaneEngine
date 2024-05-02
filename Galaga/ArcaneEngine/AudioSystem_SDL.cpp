@@ -68,7 +68,6 @@ public:
 			{
 				toPlayClips.emplace_back(m_ClipQueue.front());
 				m_ClipQueue.pop();
-
 			}
 			lock.unlock();
 

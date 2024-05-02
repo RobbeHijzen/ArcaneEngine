@@ -1,9 +1,28 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
+#include <cassert>
 
 namespace AE
 {
+	void SceneManager::IncrementScene()
+	{
+		m_Scenes[m_CurrentSceneIndex]->DeleteAll();
+		m_CurrentSceneIndex = (m_CurrentSceneIndex + 1) % m_Scenes.size();
+
+		GameStart();
+	}
+
+	void SceneManager::SetScene(int newSceneIndex)
+	{
+		assert(newSceneIndex < m_Scenes.size() && newSceneIndex >= 0);
+
+		m_Scenes[m_CurrentSceneIndex]->DeleteAll();
+		m_CurrentSceneIndex = newSceneIndex;
+
+		GameStart();
+	}
+
 	void SceneManager::GameStart()
 	{
 		m_Scenes[m_CurrentSceneIndex]->GameStart();
@@ -29,17 +48,17 @@ namespace AE
 		m_Scenes[m_CurrentSceneIndex]->Render();
 	}
 
-	Scene& SceneManager::CreateScene(const std::string& name)
-	{
-		const auto& scene = std::shared_ptr<Scene>(new Scene(name));
-		m_Scenes.push_back(scene);
-		++m_CurrentSceneIndex;
-
-		return *scene;
-	}
-
 	void SceneManager::RemoveDeletedObjects()
 	{
 		m_Scenes[m_CurrentSceneIndex]->RemoveDeletedObjects();
 	}
+
+	Scene& SceneManager::CreateScene()
+	{
+		const auto& scene = std::shared_ptr<Scene>(new Scene());
+		m_Scenes.emplace_back(scene);
+
+		return *scene;
+	}
+
 }

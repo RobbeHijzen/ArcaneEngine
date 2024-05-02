@@ -7,7 +7,7 @@ namespace AE
 
 	class Scene final
 	{
-		friend Scene& SceneManager::CreateScene(const std::string& name);
+		friend Scene& SceneManager::CreateScene();
 	public:
 
 		~Scene();
@@ -18,7 +18,7 @@ namespace AE
 
 
 		void Add(std::shared_ptr<GameObject> object);
-		void RemoveAll();
+		void DeleteAll();
 
 
 		void RemoveDeletedObjects();
@@ -35,7 +35,8 @@ namespace AE
 		std::shared_ptr<GameObject> GetChildSharedPtr(GameObject* child);
 
 	private:
-		explicit Scene(const std::string& name);
+
+		explicit Scene() = default;
 
 		std::string m_Name;
 		std::vector<std::shared_ptr<GameObject>> m_GameObjects{};
