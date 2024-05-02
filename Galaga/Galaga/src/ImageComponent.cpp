@@ -2,18 +2,26 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 
-ImageComponent::ImageComponent(AE::GameObject* parentGameObject, const std::string& fileName, float destWidth, float destHeight)
+ImageComponent::ImageComponent(AE::GameObject* parentGameObject, const std::string& fileName, glm::vec2 sourceArea, glm::vec2 destArea)
 	: BaseComponent(parentGameObject)
-	, m_DestWidth{destWidth}
-	, m_DestHeight{destHeight}
+	, m_DestArea{ destArea }
+	, m_SourceArea{ sourceArea }
 {
 	m_Texture = AE::ResourceManager::GetInstance().LoadTexture(fileName);
 }
 
-ImageComponent::ImageComponent(AE::GameObject* parentGameObject, const std::string& fileName)
-	: ImageComponent(parentGameObject, fileName, 0.f, 0.f)
+ImageComponent::ImageComponent(AE::GameObject* parentGameObject, const std::string& fileName, glm::vec2 sourceArea)
+	: ImageComponent(parentGameObject, fileName, sourceArea, {})
 {
 	m_UseDestSizes = false;
+}
+
+
+ImageComponent::ImageComponent(AE::GameObject* parentGameObject, const std::string& fileName)
+	: ImageComponent(parentGameObject, fileName, {}, {})
+{
+	m_UseDestSizes = false;
+	m_UseSourceSizes = false;
 }
 
 void ImageComponent::Update()
@@ -30,7 +38,7 @@ void ImageComponent::Render() const
 
 		if (m_UseDestSizes)
 		{
-			AE::Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y, m_DestWidth, m_DestHeight);
+			AE::Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y, m_DestArea);
 		}
 		else
 		{

@@ -4,8 +4,7 @@ namespace AE
 {
 	enum class Event
 	{
-		PrintTest,
-
+		GameStart,
 		ScoreChanged,
 
 		EnemyDied,

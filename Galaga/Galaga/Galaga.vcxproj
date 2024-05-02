@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ScrollingImageComponent.h" />
     <ClInclude Include="src\ProjectileMovementComponent.h" />
     <ClInclude Include="src\ShootComponent.h" />
     <ClInclude Include="src\Commands.h" />
-    <ClInclude Include="src\FpsComponent.h" />
     <ClInclude Include="src\HealthComponent.h" />
     <ClInclude Include="src\ImageComponent.h" />
     <ClInclude Include="src\Observers.h" />
@@ -30,9 +30,9 @@
     <ClInclude Include="src\TextComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ScrollingImageComponent.cpp" />
     <ClCompile Include="src\ProjectileMovementComponent.cpp" />
     <ClCompile Include="src\ShootComponent.cpp" />
-    <ClCompile Include="src\FpsComponent.cpp" />
     <ClCompile Include="src\HealthComponent.cpp" />
     <ClCompile Include="src\ImageComponent.cpp" />
     <ClCompile Include="src\Main.cpp" />

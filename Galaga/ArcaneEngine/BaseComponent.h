@@ -23,7 +23,10 @@ namespace AE
 		virtual void LateUpdate() {};
 		virtual void Render() const {};
 
-		inline void SetLocalPosition(float x, float y, float z = 0.f) { m_LocalTransform.SetPosition(x, y, z); }
+		Transform GetLocalTransform() const { return m_LocalTransform; }
+
+		void SetLocalPosition(float x, float y, float z = 0.f) { m_LocalTransform.SetPosition(x, y, z); }
+		void AddLocalPosition(float x, float y, float z = 0.f) { m_LocalTransform += {x, y, z}; }
 
 	protected:
 

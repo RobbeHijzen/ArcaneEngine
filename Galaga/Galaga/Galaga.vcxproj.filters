@@ -4,9 +4,6 @@
     <ClInclude Include="src\Commands.h">
       <Filter>Galaga\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="src\FpsComponent.h">
-      <Filter>Galaga\Components</Filter>
-    </ClInclude>
     <ClInclude Include="src\HealthComponent.h">
       <Filter>Galaga\Components</Filter>
     </ClInclude>
@@ -28,11 +25,11 @@
     <ClInclude Include="src\ProjectileMovementComponent.h">
       <Filter>Galaga\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\ScrollingImageComponent.h">
+      <Filter>Galaga\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\FpsComponent.cpp">
-      <Filter>Galaga\Components</Filter>
-    </ClCompile>
     <ClCompile Include="src\HealthComponent.cpp">
       <Filter>Galaga\Components</Filter>
     </ClCompile>
@@ -55,6 +52,9 @@
       <Filter>Galaga\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\ProjectileMovementComponent.cpp">
+      <Filter>Galaga\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ScrollingImageComponent.cpp">
       <Filter>Galaga\Components</Filter>
     </ClCompile>
   </ItemGroup>

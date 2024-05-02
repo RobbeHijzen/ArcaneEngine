@@ -9,21 +9,11 @@
 #include "ServiceLocator.h"
 
 
-void PrintObserver::OnNotify(AE::Event event, AE::GameObject*)
-{
-	switch (event)
-	{
-		case AE::Event::PrintTest:
-		{
-			std::cout << "Test Printed\n";
-		}
-	}
-}
-
 void HealthDisplayObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 {
 	switch (event)
 	{
+	case AE::Event::GameStart:
 	case AE::Event::PlayerDied:
 	{
 		int newHealth{ gameObject->GetComponent<HealthComponent>()->GetHealth() };
@@ -72,7 +62,7 @@ void PickupObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 
 BulletObserver::BulletObserver()
 {
-	m_ShotSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Sounds/galaga_shot.mp3", 70);
+	m_ShotSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Audio/PlayerShoot.mp3", 70);
 }
 
 void BulletObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)

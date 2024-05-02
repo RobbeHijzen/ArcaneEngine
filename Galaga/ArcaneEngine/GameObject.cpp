@@ -33,6 +33,8 @@ namespace AE
 		{
 			child->GameStart();
 		}
+
+		NotifyAll(Event::GameStart);
 	}
 
 	void GameObject::Update()

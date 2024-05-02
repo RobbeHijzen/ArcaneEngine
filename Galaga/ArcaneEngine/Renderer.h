@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include "Singleton.h"
+#include "Transform.h"
 
 namespace AE
 {
@@ -20,7 +21,7 @@ namespace AE
 		void Destroy();
 
 		void RenderTexture(const Texture2D& texture, float x, float y) const;
-		void RenderTexture(const Texture2D& texture, float x, float y, float width, float height) const;
+		void RenderTexture(const Texture2D& texture, float x, float y, glm::vec2 dest) const;
 
 		SDL_Renderer* GetSDLRenderer() const;
 
