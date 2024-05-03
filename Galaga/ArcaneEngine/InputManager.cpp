@@ -33,5 +33,15 @@ bool InputManager::ProcessInput()
 	return true;
 }
 
+void AE::InputManager::RemoveAllBindings()
+{
+	m_Keyboard->RemoveAllBindings();
+
+	for (auto& controller : m_Controllers)
+	{
+		controller->RemoveAllBindings();
+	}
+}
+
 
 

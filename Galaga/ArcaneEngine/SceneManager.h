@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include "Singleton.h"
+#include "SceneInfo.h"
 
 namespace AE
 {
@@ -10,7 +11,7 @@ namespace AE
 	class SceneManager final : public Singleton<SceneManager>
 	{
 	public:
-		Scene& CreateScene();
+		Scene& CreateScene(std::unique_ptr<SceneInfo>&& sceneInfo);
 		Scene* GetCurrentScene() { return m_Scenes[m_CurrentSceneIndex].get(); }
 
 		int GetCurrentSceneIndex() const { return m_CurrentSceneIndex; }

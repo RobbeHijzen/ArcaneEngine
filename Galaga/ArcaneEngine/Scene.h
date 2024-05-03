@@ -1,5 +1,6 @@
 #pragma once
 #include "SceneManager.h"
+#include "SceneInfo.h"
 
 namespace AE
 {
@@ -7,7 +8,7 @@ namespace AE
 
 	class Scene final
 	{
-		friend Scene& SceneManager::CreateScene();
+		friend Scene& SceneManager::CreateScene(std::unique_ptr<SceneInfo>&& sceneInfo);
 	public:
 
 		~Scene();
@@ -16,6 +17,9 @@ namespace AE
 		Scene& operator=(const Scene& other) = delete;
 		Scene& operator=(Scene&& other) = delete;
 
+
+		void Load();
+		bool IsLoaded() const { return m_IsLoaded; }
 
 		void Add(std::shared_ptr<GameObject> object);
 		void DeleteAll();
@@ -36,10 +40,13 @@ namespace AE
 
 	private:
 
-		explicit Scene() = default;
+		explicit Scene(std::unique_ptr<SceneInfo>&& sceneInfo) : m_SceneInfo{ std::move(sceneInfo) } {}
 
 		std::string m_Name;
 		std::vector<std::shared_ptr<GameObject>> m_GameObjects{};
+
+		std::unique_ptr<SceneInfo> m_SceneInfo;
+		bool m_IsLoaded{ false };
 
 		static unsigned int m_idCounter;
 	};

@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Level_01.h" />
+    <ClInclude Include="src\Level_02.h" />
     <ClInclude Include="src\ScrollingImageComponent.h" />
     <ClInclude Include="src\ProjectileMovementComponent.h" />
     <ClInclude Include="src\ShootComponent.h" />
@@ -30,6 +32,8 @@
     <ClInclude Include="src\TextComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Level_01.cpp" />
+    <ClCompile Include="src\Level_02.cpp" />
     <ClCompile Include="src\ScrollingImageComponent.cpp" />
     <ClCompile Include="src\ProjectileMovementComponent.cpp" />
     <ClCompile Include="src\ShootComponent.cpp" />

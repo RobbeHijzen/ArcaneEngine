@@ -164,5 +164,8 @@
     <ClInclude Include="AudioClip.h">
       <Filter>ArcaneEngine\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="SceneInfo.h">
+      <Filter>ArcaneEngine\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -17,6 +17,11 @@ namespace AE
 			m_InputBindings.emplace_back(std::make_unique<InputBindingKB>(key, inputType, std::move(command)));
 		}
 
+		void RemoveAllBindings() 
+		{ 
+			m_InputBindings.clear();
+		}
+
 	private:
 
 		std::vector<std::unique_ptr<InputBindingKB>> m_InputBindings{};

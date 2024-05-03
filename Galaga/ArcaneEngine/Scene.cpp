@@ -10,6 +10,12 @@ namespace AE
 
 	Scene::~Scene() = default;
 
+	void Scene::Load()
+	{
+		m_SceneInfo->Load(*this);
+		m_IsLoaded = true;
+	}
+
 	void Scene::Add(std::shared_ptr<GameObject> object)
 	{
 		m_GameObjects.emplace_back(object);

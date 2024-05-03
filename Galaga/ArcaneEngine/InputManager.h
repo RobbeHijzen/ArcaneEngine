@@ -33,6 +33,8 @@ namespace AE
 			m_Keyboard->BindAction(key, inputType, std::move(command));
 		}
 
+		void RemoveAllBindings();
+
 	private:
 
 		std::vector<std::unique_ptr<Controller>> m_Controllers{};

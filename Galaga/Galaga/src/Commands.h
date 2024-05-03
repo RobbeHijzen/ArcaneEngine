@@ -5,6 +5,7 @@
 #include "Time.h"
 #include "HealthComponent.h"
 #include "ScoreComponent.h"
+#include "SceneManager.h"
 
 class MoveCommand : public AE::GameObjectCommand
 {
@@ -78,6 +79,21 @@ public:
 	virtual void Execute() override
 	{
 		GetGameObject()->NotifyAll(AE::Event::BulletFired);
+	}
+};
+
+class LoadCommand : public AE::GameObjectCommand
+{
+public:
+
+	LoadCommand(AE::GameObject* gameObject)
+		: GameObjectCommand(gameObject)
+	{}
+
+	virtual void Execute() override
+	{
+		AE::SceneManager::GetInstance().IncrementScene();
+		//SceneManager::GetInstance().GetCurrentScene()->Load();
 	}
 };
 

@@ -15,6 +15,9 @@ public:
 	{
 		m_InputBindings.emplace_back(std::make_unique<InputBindingGP>(key, inputType, std::move(command)));
 	}
+
+	void RemoveAllBindings() { m_InputBindings.clear(); }
+
 private:
 
 	int m_ControllerIndex{ -1 };
@@ -118,5 +121,10 @@ void Controller::ProcessInput()
 void Controller::BindAction(int key, InputType inputType, std::unique_ptr<Command> command)
 {
 	m_pImpl->BindAction(key, inputType, std::move(command));
+}
+
+void AE::Controller::RemoveAllBindings()
+{
+	m_pImpl->RemoveAllBindings();
 }
 

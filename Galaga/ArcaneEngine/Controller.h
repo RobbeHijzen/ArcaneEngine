@@ -15,6 +15,8 @@ namespace AE
 		void ProcessInput();
 		void BindAction(int key, InputType inputType, std::unique_ptr<Command> command);
 
+		void RemoveAllBindings();
+
 	private:
 
 		class ControllerImpl;

@@ -50,6 +50,7 @@
     <ClInclude Include="InputHelperStructs.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="SceneInfo.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="ObserverEvents.h" />
