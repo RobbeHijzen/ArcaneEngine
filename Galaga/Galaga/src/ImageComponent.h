@@ -3,6 +3,7 @@
 #include <memory>
 #include "GameObject.h"
 #include "Transform.h"
+#include <SDL.h>
 
 class Texture2D;
 
@@ -10,8 +11,6 @@ class ImageComponent final : public AE::BaseComponent
 {
 public:
 
-	ImageComponent(AE::GameObject* parentGameObject, const std::string& fileName, glm::vec2 sourceArea, glm::vec2 destArea);
-	ImageComponent(AE::GameObject* parentGameObject, const std::string& fileName, glm::vec2 sourceArea);
 	ImageComponent(AE::GameObject* parentGameObject, const std::string& fileName);
 
 	virtual ~ImageComponent() = default;
@@ -20,19 +19,21 @@ public:
 	ImageComponent& operator=(const ImageComponent& other) = delete;
 	ImageComponent& operator=(ImageComponent&& other) = delete;
 
+	void SetSourceRect(SDL_Rect sourceRect);
+	void SetSourceRect(float x, float y, float w, float h);
+	void SetDestRect(float width, float height);
 
-	void Update() override;
 	void Render() const override;
 
 private:
 
 	std::shared_ptr<AE::Texture2D> m_Texture{};
 
-	bool m_UseDestSizes{ true };
-	bool m_UseSourceSizes{ true };
+	bool m_UseDestRect{ false };
+	bool m_UseSourceRect{ false };
 
 	glm::vec2 m_DestArea{};
-	glm::vec2 m_SourceArea{};
+	SDL_Rect m_SourceRect{};
 };
 
 

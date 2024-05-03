@@ -3,20 +3,38 @@
 #include "MyTime.h"
 #include "Transform.h"
 
-ScrollingImageComponent::ScrollingImageComponent(AE::GameObject* parentGameObject, const std::string& fileName, float scrollingSpeed, float destWidth, float destHeight)
+ScrollingImageComponent::ScrollingImageComponent(AE::GameObject* parentGameObject, const std::string& fileName, float scrollingSpeed)
 	: BaseComponent(parentGameObject)
 	, m_ScrollingSpeed{ scrollingSpeed }
-	, m_DestHeight{destHeight}
 {
 	// if scrollingspeed < 0 then set the scrolling will happen from bottom to top
 	m_ScrollSign = scrollingSpeed < 0.f ? 1 : -1;
 
-	m_FirstImage = std::make_shared<ImageComponent>(parentGameObject, fileName, glm::vec2{}, glm::vec2{ destWidth, destHeight });
+	m_FirstImage = std::make_shared<ImageComponent>(parentGameObject, fileName);
 	parentGameObject->AddComponent(m_FirstImage);
 	
-	m_SecondImage = std::make_shared<ImageComponent>(parentGameObject, fileName, glm::vec2{}, glm::vec2{ destWidth, destHeight });
-	m_SecondImage->SetLocalPosition(0.f, destHeight * m_ScrollSign);
+	m_SecondImage = std::make_shared<ImageComponent>(parentGameObject, fileName);
 	parentGameObject->AddComponent(m_SecondImage);
+}
+
+void ScrollingImageComponent::SetSourceRect(SDL_Rect sourceRect)
+{
+	m_FirstImage->SetSourceRect(sourceRect);
+	m_SecondImage->SetSourceRect(sourceRect);
+}
+void ScrollingImageComponent::SetSourceRect(float x, float y, float w, float h)
+{
+	m_FirstImage->SetSourceRect(x, y, w, h);
+	m_SecondImage->SetSourceRect(x, y, w, h);
+}
+
+void ScrollingImageComponent::SetDestRect(float width, float height)
+{
+	m_DestHeight = height;
+	m_SecondImage->SetLocalPosition(0.f, m_DestHeight * m_ScrollSign);
+
+	m_FirstImage->SetDestRect(width, height);
+	m_SecondImage->SetDestRect(width, height);
 }
 
 void ScrollingImageComponent::Update()

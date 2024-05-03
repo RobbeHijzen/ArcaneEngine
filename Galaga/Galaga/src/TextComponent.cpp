@@ -46,7 +46,7 @@ void TextComponent::Render() const
 		if (pOwner)
 		{
 			const auto& pos = m_LocalTransform.GetPosition() + pOwner->GetWorldTransform().GetPosition();
-			Renderer::GetInstance().RenderTexture(*m_TextTexture, pos.x, pos.y);
+			Renderer::GetInstance().RenderTexture(*m_TextTexture, {pos.x, pos.y});
 		}
 	}
 }

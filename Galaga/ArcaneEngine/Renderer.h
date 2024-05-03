@@ -20,8 +20,8 @@ namespace AE
 		void Render() const;
 		void Destroy();
 
-		void RenderTexture(const Texture2D& texture, float x, float y) const;
-		void RenderTexture(const Texture2D& texture, float x, float y, glm::vec2 dest) const;
+		void RenderTexture(const Texture2D& texture, glm::vec2 pos) const;
+		void RenderTexture(const Texture2D& texture, SDL_Rect destRect, SDL_Rect sourceRect, bool useDest, bool useSrc) const;
 
 		SDL_Renderer* GetSDLRenderer() const;
 

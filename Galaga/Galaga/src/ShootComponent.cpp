@@ -19,7 +19,9 @@ void ShootComponent::FireBullet()
 {
 	auto bullet = std::make_shared<AE::GameObject>();
 
-	bullet->AddComponent(std::make_shared<ImageComponent>(bullet.get(), "Galaga/GalagaBullet.png", glm::vec2{}, glm::vec2{ 55.f, 55.f }));
+	auto imageComp{ std::make_shared<ImageComponent>(bullet.get(), "Galaga/GalagaBullet.png")};
+	imageComp->SetDestRect(55.f, 55.f);
+	bullet->AddComponent(imageComp);
 	bullet->AddComponent(std::make_shared<ProjectileMovementComponent>(bullet.get(), m_BulletDirection, m_BulletSpeed, 5.f));
 
 	bullet->SetLocalTransform(GetOwner()->GetWorldTransform());

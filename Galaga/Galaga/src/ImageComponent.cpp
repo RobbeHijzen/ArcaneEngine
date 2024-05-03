@@ -2,31 +2,31 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 
-ImageComponent::ImageComponent(AE::GameObject* parentGameObject, const std::string& fileName, glm::vec2 sourceArea, glm::vec2 destArea)
+ImageComponent::ImageComponent(AE::GameObject* parentGameObject, const std::string& fileName)
 	: BaseComponent(parentGameObject)
-	, m_DestArea{ destArea }
-	, m_SourceArea{ sourceArea }
 {
 	m_Texture = AE::ResourceManager::GetInstance().LoadTexture(fileName);
 }
 
-ImageComponent::ImageComponent(AE::GameObject* parentGameObject, const std::string& fileName, glm::vec2 sourceArea)
-	: ImageComponent(parentGameObject, fileName, sourceArea, {})
+void ImageComponent::SetSourceRect(SDL_Rect sourceRect)
 {
-	m_UseDestSizes = false;
+	m_UseSourceRect = true;
+
+	m_SourceRect = sourceRect;
+}
+void ImageComponent::SetSourceRect(float x, float y, float w, float h)
+{
+	SetSourceRect(SDL_Rect{ int(x), int(y), int(w), int(h) });
 }
 
-
-ImageComponent::ImageComponent(AE::GameObject* parentGameObject, const std::string& fileName)
-	: ImageComponent(parentGameObject, fileName, {}, {})
+void ImageComponent::SetDestRect(float width, float height)
 {
-	m_UseDestSizes = false;
-	m_UseSourceSizes = false;
+	m_UseDestRect = true;
+
+	m_DestArea.x = width;
+	m_DestArea.y = height;
 }
 
-void ImageComponent::Update()
-{
-}
 
 void ImageComponent::Render() const
 {
@@ -35,14 +35,8 @@ void ImageComponent::Render() const
 	if (pParent)
 	{
 		const auto& pos = m_LocalTransform.GetPosition() + pParent->GetWorldTransform().GetPosition();
+		SDL_Rect destRect{ int(pos.x), int(pos.y), int(m_DestArea.x), int(m_DestArea.y)};
 
-		if (m_UseDestSizes)
-		{
-			AE::Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y, m_DestArea);
-		}
-		else
-		{
-			AE::Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
-		}
+		AE::Renderer::GetInstance().RenderTexture(*m_Texture, destRect, m_SourceRect, m_UseDestRect, m_UseSourceRect);
 	}
 }
