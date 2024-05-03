@@ -14,9 +14,9 @@ void ImageComponent::SetSourceRect(SDL_Rect sourceRect)
 
 	m_SourceRect = sourceRect;
 }
-void ImageComponent::SetSourceRect(float x, float y, float w, float h)
+void ImageComponent::SetSourceRect(int x, int y, int w, int h)
 {
-	SetSourceRect(SDL_Rect{ int(x), int(y), int(w), int(h) });
+	SetSourceRect(SDL_Rect{x, y, w, h});
 }
 
 void ImageComponent::SetDestRect(float width, float height)

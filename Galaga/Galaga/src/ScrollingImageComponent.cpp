@@ -22,7 +22,7 @@ void ScrollingImageComponent::SetSourceRect(SDL_Rect sourceRect)
 	m_FirstImage->SetSourceRect(sourceRect);
 	m_SecondImage->SetSourceRect(sourceRect);
 }
-void ScrollingImageComponent::SetSourceRect(float x, float y, float w, float h)
+void ScrollingImageComponent::SetSourceRect(int x, int y, int w, int h)
 {
 	m_FirstImage->SetSourceRect(x, y, w, h);
 	m_SecondImage->SetSourceRect(x, y, w, h);

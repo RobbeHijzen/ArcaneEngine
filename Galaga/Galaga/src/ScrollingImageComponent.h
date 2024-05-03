@@ -18,7 +18,7 @@ public:
 	ScrollingImageComponent& operator=(ScrollingImageComponent&& other) = delete;
 
 	void SetSourceRect(SDL_Rect sourceRect);
-	void SetSourceRect(float x, float y, float w, float h);
+	void SetSourceRect(int x, int y, int w, int h);
 	void SetDestRect(float width, float height);
 
 	void Update() override;

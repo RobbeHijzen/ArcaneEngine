@@ -19,12 +19,16 @@ void ShootComponent::FireBullet()
 {
 	auto bullet = std::make_shared<AE::GameObject>();
 
-	auto imageComp{ std::make_shared<ImageComponent>(bullet.get(), "Galaga/GalagaBullet.png")};
-	imageComp->SetDestRect(55.f, 55.f);
+	auto imageComp{ std::make_shared<ImageComponent>(bullet.get(), "Galaga2.png")};
+	imageComp->SetDestRect(35.f, 35.f);
+	imageComp->SetSourceRect(307, 136, 16, 16);
 	bullet->AddComponent(imageComp);
+	// Relative transform to visualize the bullet shooting from the barrel
+	bullet->SetLocalTransform(AE::Transform{ 7.5f, -17.f });
+
 	bullet->AddComponent(std::make_shared<ProjectileMovementComponent>(bullet.get(), m_BulletDirection, m_BulletSpeed, 5.f));
 
-	bullet->SetLocalTransform(GetOwner()->GetWorldTransform());
+	bullet->AddLocalTransform(GetOwner()->GetWorldTransform());
 
 	auto& scene{ AE::SceneManager::GetInstance()};
 	scene.GetCurrentScene()->Add(bullet);
