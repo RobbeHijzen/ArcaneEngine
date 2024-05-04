@@ -16,7 +16,13 @@ void Level_02::Load(Scene& scene)
 {
 	AddBackgroundImage(scene);
 	AddGalaga(scene);
+	AddEnemy(scene);
 	AddControlsExplainers(scene);
+
+	auto go = std::make_shared<AE::GameObject>();
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_RETURN, InputType::IsUpThisFrame, std::move(std::make_unique<LoadCommand>(go.get())));
+
+	scene.Add(go);
 }
 
 void Level_02::AddBackgroundImage(Scene& scene)
@@ -38,9 +44,14 @@ void Level_02::AddGalaga(Scene& scene)
 	galaga->AddComponent(std::make_shared<HealthComponent>(galaga.get(), 3));
 	galaga->AddComponent(std::make_shared<ScoreComponent>(galaga.get()));
 	galaga->AddComponent(std::make_shared<ShootComponent>(galaga.get(), glm::vec2{ 0.f, -1.f }, 300.f));
-	galaga->SetLocalTransform({ 200.f, 380.f });
+	
+	galaga->AddComponent(std::make_shared<HitboxComponent>(galaga.get(), 50.f, 50.f));
 
-	constexpr float galagaMoveSpeed{ 100.f };
+	galaga->SetLocalTransform({ 275.f, 380.f });
+
+	galaga->AddTag("Friendly");
+
+	constexpr float galagaMoveSpeed{ 130.f };
 	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_A, InputType::IsPressed, std::move(std::make_unique<MoveCommand>(galaga.get(), glm::vec2{ -1.f, 0.f }, galagaMoveSpeed)));
 	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_D, InputType::IsPressed, std::move(std::make_unique<MoveCommand>(galaga.get(), glm::vec2{ 1.f, 0.f }, galagaMoveSpeed)));
 
@@ -74,6 +85,24 @@ void Level_02::AddGalaga(Scene& scene)
 	galaga->AddObserver(std::move(std::make_unique<PickupObserver>()));
 	galaga->AddObserver(std::move(std::make_unique<ScoreDisplayObserver>(scoreTextComp.get())));
 
+}
+
+void Level_02::AddEnemy(AE::Scene& scene)
+{
+	auto enemy = std::make_shared<AE::GameObject>();
+	auto imageComp{ std::make_shared<ImageComponent>(enemy.get(), "Galaga2.png") };
+	imageComp->SetDestRect(40.f, 40.f);
+	imageComp->SetSourceRect(4, 21, 12, 12);
+	enemy->AddComponent(imageComp);
+	enemy->AddComponent(std::make_shared<HealthComponent>(enemy.get(), 3));
+	enemy->AddComponent(std::make_shared<HitboxComponent>(enemy.get(), 36.5f, 40.f));
+
+	enemy->SetLocalTransform({ 275.f, 50.f });
+
+	// Observers
+	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>()));
+
+	scene.Add(enemy);
 }
 
 void Level_02::AddControlsExplainers(Scene& scene)

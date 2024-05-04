@@ -26,8 +26,10 @@
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="HitboxComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="OverlapHandler.cpp" />
     <ClCompile Include="ServiceLocator.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -47,9 +49,11 @@
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HitboxComponent.h" />
     <ClInclude Include="InputHelperStructs.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="OverlapHandler.h" />
     <ClInclude Include="SceneInfo.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Observer.h" />

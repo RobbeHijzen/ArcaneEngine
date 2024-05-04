@@ -87,6 +87,9 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 	InputManager& input = InputManager::GetInstance();
 	Time& time = Time::GetInstance();
 
+	// Overlap handler
+	auto overlapHandler {std::make_unique<OverlapHandler>()};
+
 	// Set Time Variables
 
 	constexpr bool useVsync{ true };
@@ -127,6 +130,8 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 		// Update + Render
 		sceneManager.Update();
 		sceneManager.LateUpdate();
+
+		overlapHandler->CheckOverlapping();
 
 		renderer.Render();
 

@@ -5,6 +5,8 @@
 #include "Time.h"
 #include "HealthComponent.h"
 #include "ScoreComponent.h"
+#include "ShootComponent.h"
+
 #include "SceneManager.h"
 
 class MoveCommand : public AE::GameObjectCommand
@@ -74,12 +76,21 @@ public:
 
 	ShootCommand(AE::GameObject* gameObject)
 		: GameObjectCommand(gameObject)
-	{}
+	{
+		m_ShootComp = gameObject->GetComponent<ShootComponent>();
+	}
 
 	virtual void Execute() override
 	{
-		GetGameObject()->NotifyAll(AE::Event::BulletFired);
+		if (m_ShootComp)
+		{
+			m_ShootComp->FireBullet();
+		}
 	}
+
+private:
+	std::shared_ptr<ShootComponent> m_ShootComp{};
+
 };
 
 class LoadCommand : public AE::GameObjectCommand

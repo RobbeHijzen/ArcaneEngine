@@ -7,13 +7,14 @@ namespace AE
 		GameStart,
 		ScoreChanged,
 
-		EnemyDied,
-		PlayerDied,
+		ObjectLostHealth,
+		ObjectDied,
 
 		SilverPickup,
 		GoldPickup,
 
-		BulletFired
+		FireBullet,
+		OnOverlap
 	};
 
 }

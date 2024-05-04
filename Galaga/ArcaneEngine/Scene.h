@@ -38,6 +38,8 @@ namespace AE
 		void DettatchFromRoot(GameObject* gameObject);
 		std::shared_ptr<GameObject> GetChildSharedPtr(GameObject* child);
 
+		auto GetGameObjects() const { return m_GameObjects; }
+
 	private:
 
 		explicit Scene(std::unique_ptr<SceneInfo>&& sceneInfo) : m_SceneInfo{ std::move(sceneInfo) } {}

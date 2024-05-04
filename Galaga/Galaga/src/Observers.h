@@ -3,13 +3,6 @@
 
 #include "TextComponent.h"
 
-class PrintObserver : public AE::Observer
-{
-public:
-
-	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
-};
-
 class HealthDisplayObserver : public AE::Observer
 {
 public:
@@ -53,16 +46,36 @@ private:
 
 };
 
-class BulletObserver : public AE::Observer
+class ShootingObserver : public AE::Observer
 {
 public:
-	BulletObserver();
+	ShootingObserver();
 
 	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
 
 private:
 
 	unsigned short m_ShotSoundID{};
+
+};
+
+class BulletObserver : public AE::Observer
+{
+public:
+
+	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
+
+private:
+
+};
+
+class EnemyObserver : public AE::Observer
+{
+public:
+
+	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
+
+private:
 
 };
 

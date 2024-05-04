@@ -95,6 +95,13 @@ namespace AE
 
 		void NotifyAll(Event event) { m_pSubject->NotifyAll(event, this); }
 
+		void AddTag(std::string tag) { m_Tags.emplace_back(tag); }
+		bool HasTag(std::string tag)
+		{
+			auto it = std::find(m_Tags.begin(), m_Tags.end(), tag); 
+			return it != m_Tags.end();
+		}
+
 	private:
 
 		bool m_IsDeleted{ false };
@@ -118,5 +125,6 @@ namespace AE
 
 		std::unique_ptr<Subject> m_pSubject{ std::make_unique<Subject>() };
 
+		std::vector<std::string> m_Tags{};
 	};
 }

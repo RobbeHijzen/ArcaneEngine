@@ -45,4 +45,9 @@ namespace AE
 
 		glm::vec3 m_Position;
 	};
+
+	struct Rect
+	{
+		float x, y, w, h;
+	};
 }

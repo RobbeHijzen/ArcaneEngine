@@ -14,7 +14,7 @@ void HealthDisplayObserver::OnNotify(AE::Event event, AE::GameObject* gameObject
 	switch (event)
 	{
 	case AE::Event::GameStart:
-	case AE::Event::PlayerDied:
+	case AE::Event::ObjectLostHealth:
 	{
 		int newHealth{ gameObject->GetComponent<HealthComponent>()->GetHealth() };
 
@@ -60,22 +60,52 @@ void PickupObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 	}
 }
 
-BulletObserver::BulletObserver()
+ShootingObserver::ShootingObserver()
 {
 	m_ShotSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Audio/PlayerShoot.mp3", 70);
+}
+
+void ShootingObserver::OnNotify(AE::Event event, AE::GameObject*)
+{
+	switch (event)
+	{
+	case AE::Event::FireBullet:
+	{
+		AE::ServiceLocator::GetAudio()->PlaySound(m_ShotSoundID);
+
+		break;
+	}
+	}
 }
 
 void BulletObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 {
 	switch (event)
 	{
-	case AE::Event::BulletFired:
+	case AE::Event::OnOverlap:
 	{
-		if (auto comp = gameObject->GetComponent<ShootComponent>())
+		if (auto hitbox = gameObject->GetComponent<HitboxComponent>())
 		{
-			AE::ServiceLocator::GetAudio()->PlaySound(m_ShotSoundID);
-			comp->FireBullet();
+			auto overlappedGO{ hitbox->GetLatestOverlapGO()};
+			if (auto healthComp = overlappedGO->GetComponent<HealthComponent>())
+			{
+				healthComp->KillObject();
+				gameObject->Delete();
+			}
 		}
+		break;
+	}
+	}
+	
+}
+
+void EnemyObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
+{
+	switch (event)
+	{
+	case AE::Event::ObjectDied:
+	{
+		gameObject->Delete();
 		break;
 	}
 	}

@@ -17,12 +17,12 @@ ScrollingImageComponent::ScrollingImageComponent(AE::GameObject* parentGameObjec
 	parentGameObject->AddComponent(m_SecondImage);
 }
 
-void ScrollingImageComponent::SetSourceRect(SDL_Rect sourceRect)
+void ScrollingImageComponent::SetSourceRect(AE::Rect sourceRect)
 {
 	m_FirstImage->SetSourceRect(sourceRect);
 	m_SecondImage->SetSourceRect(sourceRect);
 }
-void ScrollingImageComponent::SetSourceRect(int x, int y, int w, int h)
+void ScrollingImageComponent::SetSourceRect(float x, float y, float w, float h)
 {
 	m_FirstImage->SetSourceRect(x, y, w, h);
 	m_SecondImage->SetSourceRect(x, y, w, h);

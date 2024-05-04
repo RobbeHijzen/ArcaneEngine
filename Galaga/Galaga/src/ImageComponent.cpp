@@ -8,15 +8,15 @@ ImageComponent::ImageComponent(AE::GameObject* parentGameObject, const std::stri
 	m_Texture = AE::ResourceManager::GetInstance().LoadTexture(fileName);
 }
 
-void ImageComponent::SetSourceRect(SDL_Rect sourceRect)
+void ImageComponent::SetSourceRect(AE::Rect sourceRect)
 {
 	m_UseSourceRect = true;
 
 	m_SourceRect = sourceRect;
 }
-void ImageComponent::SetSourceRect(int x, int y, int w, int h)
+void ImageComponent::SetSourceRect(float x, float y, float w, float h)
 {
-	SetSourceRect(SDL_Rect{x, y, w, h});
+	SetSourceRect(AE::Rect{x, y, w, h});
 }
 
 void ImageComponent::SetDestRect(float width, float height)
@@ -35,7 +35,7 @@ void ImageComponent::Render() const
 	if (pParent)
 	{
 		const auto& pos = m_LocalTransform.GetPosition() + pParent->GetWorldTransform().GetPosition();
-		SDL_Rect destRect{ int(pos.x), int(pos.y), int(m_DestArea.x), int(m_DestArea.y)};
+		AE::Rect destRect{ pos.x, pos.y, m_DestArea.x, m_DestArea.y};
 
 		AE::Renderer::GetInstance().RenderTexture(*m_Texture, destRect, m_SourceRect, m_UseDestRect, m_UseSourceRect);
 	}

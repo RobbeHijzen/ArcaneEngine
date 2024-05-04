@@ -37,6 +37,9 @@
     <Filter Include="ArcaneEngine\Sound">
       <UniqueIdentifier>{dbe9c985-3c4a-4f35-9873-c4051308c987}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ArcaneEngine\Collision">
+      <UniqueIdentifier>{170fab50-d2a0-44fb-9cd2-92da28510f31}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -89,6 +92,12 @@
     </ClCompile>
     <ClCompile Include="AudioClip.cpp">
       <Filter>ArcaneEngine\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="OverlapHandler.cpp">
+      <Filter>ArcaneEngine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="HitboxComponent.cpp">
+      <Filter>ArcaneEngine\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +175,12 @@
     </ClInclude>
     <ClInclude Include="SceneInfo.h">
       <Filter>ArcaneEngine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="OverlapHandler.h">
+      <Filter>ArcaneEngine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="HitboxComponent.h">
+      <Filter>ArcaneEngine\Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
