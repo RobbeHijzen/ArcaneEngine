@@ -40,6 +40,9 @@
     <Filter Include="ArcaneEngine\Collision">
       <UniqueIdentifier>{170fab50-d2a0-44fb-9cd2-92da28510f31}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ArcaneEngine\FSM">
+      <UniqueIdentifier>{c761700b-1a9a-44a8-a2cf-f5be966b2695}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -98,6 +101,9 @@
     </ClCompile>
     <ClCompile Include="HitboxComponent.cpp">
       <Filter>ArcaneEngine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMComponent.cpp">
+      <Filter>ArcaneEngine\FSM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +187,12 @@
     </ClInclude>
     <ClInclude Include="HitboxComponent.h">
       <Filter>ArcaneEngine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMState.h">
+      <Filter>ArcaneEngine\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMComponent.h">
+      <Filter>ArcaneEngine\FSM</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

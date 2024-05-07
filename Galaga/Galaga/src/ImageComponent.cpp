@@ -18,6 +18,10 @@ void ImageComponent::SetSourceRect(float x, float y, float w, float h)
 {
 	SetSourceRect(AE::Rect{x, y, w, h});
 }
+void ImageComponent::SetSourcePos(float x, float y)
+{
+	SetSourceRect(AE::Rect{ x, y, m_SourceRect.w, m_SourceRect.h });
+}
 
 void ImageComponent::SetDestRect(float width, float height)
 {

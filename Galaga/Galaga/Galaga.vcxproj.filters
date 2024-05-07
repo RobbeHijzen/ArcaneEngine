@@ -34,6 +34,9 @@
     <ClInclude Include="src\Level_01.h">
       <Filter>Galaga\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="src\StatesEnemyBoss.h">
+      <Filter>Galaga\FSMStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HealthComponent.cpp">
@@ -69,6 +72,9 @@
     <ClCompile Include="src\Level_01.cpp">
       <Filter>Galaga\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="src\StatesEnemyBoss.cpp">
+      <Filter>Galaga\FSMStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Galaga">
@@ -85,6 +91,9 @@
     </Filter>
     <Filter Include="Galaga\Scenes">
       <UniqueIdentifier>{bc617fe9-3899-46d3-8974-9879f490a0b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Galaga\FSMStates">
+      <UniqueIdentifier>{4407f83b-e91e-43b6-8ae0-2927442ba52a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

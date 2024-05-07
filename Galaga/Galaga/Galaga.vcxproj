@@ -30,6 +30,7 @@
     <ClInclude Include="src\Observers.h" />
     <ClInclude Include="src\ScoreComponent.h" />
     <ClInclude Include="src\TextComponent.h" />
+    <ClInclude Include="src\StatesEnemyBoss.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Level_01.cpp" />
@@ -43,6 +44,7 @@
     <ClCompile Include="src\Observers.cpp" />
     <ClCompile Include="src\ScoreComponent.cpp" />
     <ClCompile Include="src\TextComponent.cpp" />
+    <ClCompile Include="src\StatesEnemyBoss.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ArcaneEngine\ArcaneEngine.vcxproj">

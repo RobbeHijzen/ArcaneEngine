@@ -10,13 +10,15 @@
 #include "Observers.h"
 #include "Commands.h"
 
+#include "FSMComponent.h"
+#include "StatesEnemyBoss.h"
+
 using namespace AE;
 
 void Level_02::Load(Scene& scene)
 {
-	AddBackgroundImage(scene);
 	AddGalaga(scene);
-	AddEnemy(scene);
+	AddBossEnemy(scene);
 	AddControlsExplainers(scene);
 
 	auto go = std::make_shared<AE::GameObject>();
@@ -37,7 +39,7 @@ void Level_02::AddBackgroundImage(Scene& scene)
 void Level_02::AddGalaga(Scene& scene)
 {
 	auto galaga = std::make_shared<AE::GameObject>();
-	auto imageComp{ std::make_shared<ImageComponent>(galaga.get(), "Galaga2.png") };
+	auto imageComp{ std::make_shared<ImageComponent>(galaga.get(), "Galaga.png") };
 	imageComp->SetDestRect(50.f, 50.f);
 	imageComp->SetSourceRect(109, 1, 16, 16);
 	galaga->AddComponent(imageComp);
@@ -87,20 +89,24 @@ void Level_02::AddGalaga(Scene& scene)
 
 }
 
-void Level_02::AddEnemy(AE::Scene& scene)
+void Level_02::AddBossEnemy(AE::Scene& scene)
 {
 	auto enemy = std::make_shared<AE::GameObject>();
-	auto imageComp{ std::make_shared<ImageComponent>(enemy.get(), "Galaga2.png") };
+	auto imageComp{ std::make_shared<ImageComponent>(enemy.get(), "Galaga.png") };
 	imageComp->SetDestRect(40.f, 40.f);
-	imageComp->SetSourceRect(4, 21, 12, 12);
+	imageComp->SetSourceRect(1, 91, 16, 16);
 	enemy->AddComponent(imageComp);
-	enemy->AddComponent(std::make_shared<HealthComponent>(enemy.get(), 3));
-	enemy->AddComponent(std::make_shared<HitboxComponent>(enemy.get(), 36.5f, 40.f));
+	enemy->AddComponent(std::make_shared<HealthComponent>(enemy.get(), 2));
+	enemy->AddComponent(std::make_shared<HitboxComponent>(enemy.get(), 40.f, 40.f));
 
 	enemy->SetLocalTransform({ 275.f, 50.f });
 
 	// Observers
 	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>()));
+
+	// FSM
+	auto twoHealthState{std::make_unique<StatesEnemyBoss::TwoHealth>()};
+	enemy->AddComponent(std::make_shared<FSMComponent>(enemy.get(), std::move(twoHealthState)));
 
 	scene.Add(enemy);
 }

@@ -20,7 +20,7 @@ void ShootComponent::FireBullet()
 	auto bullet = std::make_shared<AE::GameObject>();
 	bullet->SetLocalTransform(GetOwner()->GetWorldTransform());
 
-	auto imageComp{ std::make_shared<ImageComponent>(bullet.get(), "Galaga2.png")};
+	auto imageComp{ std::make_shared<ImageComponent>(bullet.get(), "Galaga.png")};
 	imageComp->SetDestRect(35.f, 35.f);
 	imageComp->SetSourceRect(307, 136, 16, 16);
 	bullet->AddComponent(imageComp);

@@ -25,6 +25,7 @@
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Font.cpp" />
+    <ClCompile Include="FSMComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HitboxComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -45,6 +46,8 @@
     <ClInclude Include="AudioClip.h" />
     <ClInclude Include="AudioSystem_SDL.h" />
     <ClInclude Include="BaseComponent.h" />
+    <ClInclude Include="FSMComponent.h" />
+    <ClInclude Include="FSMState.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Font.h" />

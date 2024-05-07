@@ -21,6 +21,7 @@ public:
 
 	void SetSourceRect(AE::Rect sourceRect);
 	void SetSourceRect(float x, float y, float w, float h);
+	void SetSourcePos(float x, float y);
 	void SetDestRect(float width, float height);
 
 	void Render() const override;

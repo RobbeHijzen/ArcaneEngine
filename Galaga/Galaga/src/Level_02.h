@@ -13,7 +13,7 @@ private:
 
 	void AddBackgroundImage(AE::Scene& scene);
 	void AddGalaga(AE::Scene& scene);
-	void AddEnemy(AE::Scene& scene);
+	void AddBossEnemy(AE::Scene& scene);
 	void AddControlsExplainers(AE::Scene& scene);
 };
 
