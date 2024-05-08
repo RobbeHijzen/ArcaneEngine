@@ -60,7 +60,7 @@ AE::FSMState* StatesEnemyBoss::TractorBeam::Update(AE::GameObject* )
 //****
 // TwoHealth
 //****
-void StatesEnemyBoss::TwoHealth::OnEnter(AE::GameObject* gameObject)
+void StatesEnemyBoss::FullHealth::OnEnter(AE::GameObject* gameObject)
 {
 	if (auto imageComp = gameObject->GetComponent<ImageComponent>())
 	{
@@ -69,16 +69,16 @@ void StatesEnemyBoss::TwoHealth::OnEnter(AE::GameObject* gameObject)
 
 	m_HealthComp = gameObject->GetComponent<HealthComponent>();
 }
-void StatesEnemyBoss::TwoHealth::OnExit(AE::GameObject* )
+void StatesEnemyBoss::FullHealth::OnExit(AE::GameObject* )
 {
 }
-AE::FSMState* StatesEnemyBoss::TwoHealth::Update(AE::GameObject*)
+AE::FSMState* StatesEnemyBoss::FullHealth::Update(AE::GameObject*)
 {
 	if (m_HealthComp)
 	{
 		if (m_HealthComp->GetHealth() <= 1)
 		{
-			return new OneHealth();
+			return new HalfHealth();
 		}
 	}
 	return nullptr;
@@ -87,17 +87,17 @@ AE::FSMState* StatesEnemyBoss::TwoHealth::Update(AE::GameObject*)
 //****
 // OneHealth
 //****
-void StatesEnemyBoss::OneHealth::OnEnter(AE::GameObject* gameObject)
+void StatesEnemyBoss::HalfHealth::OnEnter(AE::GameObject* gameObject)
 {
 	if (auto imageComp = gameObject->GetComponent<ImageComponent>())
 	{
 		imageComp->SetSourcePos(1.f, 127.f);
 	}
 }
-void StatesEnemyBoss::OneHealth::OnExit(AE::GameObject* )
+void StatesEnemyBoss::HalfHealth::OnExit(AE::GameObject* )
 {
 }
-AE::FSMState* StatesEnemyBoss::OneHealth::Update(AE::GameObject* )
+AE::FSMState* StatesEnemyBoss::HalfHealth::Update(AE::GameObject* )
 {
 	return nullptr;
 }

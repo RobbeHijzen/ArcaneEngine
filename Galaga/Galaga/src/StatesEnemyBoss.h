@@ -56,7 +56,7 @@ namespace StatesEnemyBoss
 	//---------------
 	// Texture States
 	//---------------
-	class TwoHealth : public AE::FSMState
+	class FullHealth : public AE::FSMState
 	{
 	public:
 		virtual void OnEnter(AE::GameObject* gameObject);
@@ -66,7 +66,7 @@ namespace StatesEnemyBoss
 	private:
 		std::shared_ptr<HealthComponent> m_HealthComp{};
 	};
-	class OneHealth : public AE::FSMState
+	class HalfHealth : public AE::FSMState
 	{
 	public:
 		virtual void OnEnter(AE::GameObject* gameObject);

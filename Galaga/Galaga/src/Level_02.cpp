@@ -17,6 +17,7 @@ using namespace AE;
 
 void Level_02::Load(Scene& scene)
 {
+	AddBackgroundImage(scene);
 	AddGalaga(scene);
 	AddBossEnemy(scene);
 	AddControlsExplainers(scene);
@@ -105,7 +106,7 @@ void Level_02::AddBossEnemy(AE::Scene& scene)
 	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>()));
 
 	// FSM
-	auto twoHealthState{std::make_unique<StatesEnemyBoss::TwoHealth>()};
+	auto twoHealthState{std::make_unique<StatesEnemyBoss::FullHealth>()};
 	enemy->AddComponent(std::make_shared<FSMComponent>(enemy.get(), std::move(twoHealthState)));
 
 	scene.Add(enemy);
