@@ -18,12 +18,17 @@ public:
 	auto GetLatestOverlapGO() const { return m_LatestOverlapComp->GetOwner(); }
 	void AddIgnoreTag(std::string tag) { m_IgnoreTags.emplace_back(tag); }
 
+	bool IsActive() const { return m_IsActive; }
+	void SetActive(bool active) { m_IsActive = active; }
+
 private:
 
 	AE::Rect m_Hitbox{};
 
 	HitboxComponent* m_LatestOverlapComp{};
 	std::vector<std::string> m_IgnoreTags{};
+
+	bool m_IsActive{ true };
 
 	bool UsesIgnoreTag(std::vector<std::string> ignoreTags, AE::GameObject* go);
 

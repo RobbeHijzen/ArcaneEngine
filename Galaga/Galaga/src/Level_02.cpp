@@ -99,6 +99,7 @@ void Level_02::AddBossEnemy(AE::Scene& scene)
 	enemy->AddComponent(imageComp);
 	enemy->AddComponent(std::make_shared<HealthComponent>(enemy.get(), 2));
 	enemy->AddComponent(std::make_shared<HitboxComponent>(enemy.get(), 40.f, 40.f));
+	enemy->AddTag("Enemy");
 
 	enemy->SetLocalTransform({ 275.f, 50.f });
 
@@ -106,9 +107,13 @@ void Level_02::AddBossEnemy(AE::Scene& scene)
 	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>()));
 
 	// FSM
-	auto twoHealthState{std::make_unique<StatesEnemyBoss::FullHealth>()};
-	enemy->AddComponent(std::make_shared<FSMComponent>(enemy.get(), std::move(twoHealthState)));
+	auto idleState{ std::make_unique<StatesEnemyBoss::Idle>() };
+	enemy->AddComponent(std::make_shared<FSMComponent>(enemy.get(), std::move(idleState)));
 
+	auto fullHealthState{std::make_unique<StatesEnemyBoss::FullHealth>()};
+	enemy->AddComponent(std::make_shared<FSMComponent>(enemy.get(), std::move(fullHealthState)));
+
+	
 	scene.Add(enemy);
 }
 

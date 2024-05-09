@@ -99,6 +99,26 @@ void BulletObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 	
 }
 
+void BeamObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
+{
+	switch (event)
+	{
+	case AE::Event::OnOverlap:
+	{
+		if (auto hitbox = gameObject->GetComponent<HitboxComponent>())
+		{
+			auto overlappedGO{ hitbox->GetLatestOverlapGO() };
+			if (auto healthComp = overlappedGO->GetComponent<HealthComponent>())
+			{
+				healthComp->KillObject();
+				hitbox->SetActive(false);
+			}
+		}
+		break;
+	}
+	}
+}
+
 void EnemyObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 {
 	switch (event)

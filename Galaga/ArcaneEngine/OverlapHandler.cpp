@@ -15,12 +15,16 @@ void OverlapHandler::CheckOverlapping()
 
 		if (auto hitboxComp1 = go1->GetComponent<HitboxComponent>())
 		{
+			if (!hitboxComp1->IsActive()) continue;
+
 			for (int j{ i + 1 }; j < gameObjects.size(); ++j)
 			{
 				auto go2{ gameObjects[j] };
 
 				if (auto hitboxComp2 = go2->GetComponent<HitboxComponent>())
 				{
+					if (!hitboxComp2->IsActive()) continue;
+
 					// If here then both GameObjects have a HitboxComponent
 
 					if (AreOverlapping(hitboxComp1.get(), hitboxComp2.get()))

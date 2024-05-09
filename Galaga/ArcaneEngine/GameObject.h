@@ -45,6 +45,7 @@ namespace AE
 			}
 			return nullptr;
 		}
+		
 		template<typename T>
 		void RemoveComponent()
 		{
