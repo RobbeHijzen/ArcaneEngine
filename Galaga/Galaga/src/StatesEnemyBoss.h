@@ -13,6 +13,20 @@ namespace StatesEnemyBoss
 	//------------------
 	// Behavioral States
 	//------------------
+	class Return : public AE::FSMState
+	{
+	public:
+		virtual void OnEnter(AE::GameObject* gameObject) override;
+		virtual void OnExit(AE::GameObject* gameObject);
+		virtual AE::FSMState* Update(AE::GameObject* gameObject);
+
+	private:
+		float m_MoveSpeed{ 100.f };
+
+		glm::vec2 m_SeekDir{};
+		glm::vec2 m_SeekPos{ 275.f, 50.f };
+
+	};
 	class Idle : public AE::FSMState
 	{
 	public:
@@ -22,8 +36,8 @@ namespace StatesEnemyBoss
 
 	private:
 
-		float m_BombingRunChance{ 0.04f };  // chance to be chosen (1.f = 100%), per second
-		float m_TractorBeamChance{ 0.04f }; // chance to be chosen (1.f = 100%), per second
+		float m_BombingRunChance{ 0.06f };  // chance to be chosen (1.f = 100%), per second
+		float m_TractorBeamChance{ 0.06f }; // chance to be chosen (1.f = 100%), per second
 
 	};
 	class BombingRun : public AE::FSMState
@@ -63,8 +77,6 @@ namespace StatesEnemyBoss
 
 		float m_BeamDuration{3.f};
 		float m_CurrentDuration{ 0.f };
-
-		float m_BeamWidth{30.f};
 
 		std::shared_ptr<HitboxComponent> m_BeamHitbox{};
 		std::shared_ptr<AE::GameObject> m_BeamGO{};

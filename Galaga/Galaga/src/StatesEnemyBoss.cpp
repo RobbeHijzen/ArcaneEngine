@@ -18,7 +18,7 @@ static glm::vec2 GetSeekDirection(glm::vec2 seekPos, AE::GameObject* gameObject)
 	}
 	return glm::vec2{};
 }
-static bool HasReached(glm::vec2 seekPos, AE::GameObject* gameObject, float acceptanceRadius = 5.f)
+static bool HasReached(glm::vec2 seekPos, AE::GameObject* gameObject, float acceptanceRadius = 1.f)
 {
 	glm::vec2 difference{ seekPos - glm::vec2{gameObject->GetLocalTransform().GetPosition()} };
 	float distanceSq{glm::sqrt(difference.x * difference.x + difference.y * difference.y)};
@@ -26,6 +26,36 @@ static bool HasReached(glm::vec2 seekPos, AE::GameObject* gameObject, float acce
 	return distanceSq <= acceptanceRadius * acceptanceRadius;
 }
 
+
+//****
+// Return
+//****
+void StatesEnemyBoss::Return::OnEnter(AE::GameObject* gameObject)
+{
+	m_SeekDir = GetSeekDirection(m_SeekPos, gameObject);
+}
+void StatesEnemyBoss::Return::OnExit(AE::GameObject* )
+{
+}
+AE::FSMState* StatesEnemyBoss::Return::Update(AE::GameObject* gameObject)
+{
+	glm::vec2 addedPosition{ m_SeekDir * m_MoveSpeed * AE::Time::GetInstance().GetDeltaTime() };
+	addedPosition.y = std::abs(addedPosition.y); // so the enemy will move downwards
+
+	gameObject->AddLocalTransform(AE::Transform{ addedPosition });
+
+	if (gameObject->GetWorldTransform().GetPosition().y > 480.f)
+	{
+		gameObject->AddLocalTransform(AE::Transform{ 0.f, -580.f });
+		m_SeekDir = GetSeekDirection(m_SeekPos, gameObject);
+	}
+
+	if (HasReached(m_SeekPos, gameObject))
+	{
+		return new Idle();
+	}
+	return nullptr;
+}
 
 //****
 // Idle
@@ -70,12 +100,12 @@ AE::FSMState* StatesEnemyBoss::BombingRun::Update(AE::GameObject* )
 //****
 // TractorBeamSetup
 //****
-void StatesEnemyBoss::TractorBeamSetup::OnEnter(AE::GameObject* go)
+void StatesEnemyBoss::TractorBeamSetup::OnEnter(AE::GameObject* gameObject)
 {
 	float seekXValue{float(rand() % 540 + 50)};
 	m_SeekPos = glm::vec2{ seekXValue, m_StopHeight };
 
-	m_SeekDir = GetSeekDirection(m_SeekPos, go);
+	m_SeekDir = GetSeekDirection(m_SeekPos, gameObject);
 }
 void StatesEnemyBoss::TractorBeamSetup::OnExit(AE::GameObject* )
 {
@@ -112,7 +142,7 @@ AE::FSMState* StatesEnemyBoss::TractorBeam::Update(AE::GameObject*)
 		if (m_BeamHitbox)
 		{
 			m_BeamHitbox->SetActive(true);
-			return new Idle();
+			return new Return();
 		}
 	}
 
@@ -122,15 +152,21 @@ void StatesEnemyBoss::TractorBeam::SpawnBeam(AE::GameObject* go)
 {
 	m_BeamGO = std::make_shared<AE::GameObject>();
 	m_BeamGO->SetLocalTransform(go->GetWorldTransform());
-	m_BeamGO->AddLocalTransform(AE::Transform{ -10.f, 40.f });
+	m_BeamGO->AddLocalTransform(AE::Transform{ -20.f, 40.f });
 	m_BeamGO->AddObserver(std::move(std::make_unique<BeamObserver>()));
 
-	auto beamHitbox{ std::make_shared<HitboxComponent>(m_BeamGO.get(), 60.f, 150.f) };
+	auto beamHitbox{ std::make_shared<HitboxComponent>(m_BeamGO.get(), 80.f, 140.f) };
 	beamHitbox->SetActive(false);
 	beamHitbox->AddIgnoreTag("Enemy");
 	m_BeamHitbox = beamHitbox;
 
 	m_BeamGO->AddComponent(beamHitbox);
+
+	// Image
+	auto imageComp{ std::make_shared<ImageComponent>(m_BeamGO.get(), "TractorBeam.png") };
+	imageComp->SetDestRect(80.f, 140.f);
+	imageComp->SetSourceRect(816, 0, 48, 80);
+	m_BeamGO->AddComponent(imageComp);
 
 	AE::SceneManager::GetInstance().GetCurrentScene()->Add(m_BeamGO);
 }

@@ -24,7 +24,7 @@ void HitboxComponent::Update()
 
 void HitboxComponent::Render() const
 {
-	AE::Renderer::GetInstance().RenderTexture(*m_Texture, m_Hitbox, {}, true, false);
+	//AE::Renderer::GetInstance().RenderTexture(*m_Texture, m_Hitbox, {}, true, false);
 }
 
 void HitboxComponent::OnOverlap(HitboxComponent* otherComp)
