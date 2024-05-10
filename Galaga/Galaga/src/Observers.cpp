@@ -39,27 +39,6 @@ void ScoreDisplayObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 	}
 }
 
-void PickupObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
-{
-	switch (event)
-	{
-	case AE::Event::SilverPickup:
-	{
-		gameObject->GetComponent<ScoreComponent>()->IncreaseScore(SilverScoreValue);
-		gameObject->NotifyAll(AE::Event::ScoreChanged);
-
-		break;
-	}
-	case AE::Event::GoldPickup:
-	{
-		gameObject->GetComponent<ScoreComponent>()->IncreaseScore(GoldScoreValue);
-		gameObject->NotifyAll(AE::Event::ScoreChanged);
-
-		break;
-	}
-	}
-}
-
 ShootingObserver::ShootingObserver()
 {
 	m_ShotSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Audio/PlayerShoot.mp3", 10);
@@ -119,6 +98,12 @@ void BeamObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 	}
 }
 
+EnemyObserver::EnemyObserver(AE::GameObject* galaga, int scoreOnDeath)
+	: m_GalagaObject{galaga}
+	, m_ScoreOnDeath{scoreOnDeath}
+{
+}
+
 void EnemyObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 {
 	switch (event)
@@ -126,6 +111,14 @@ void EnemyObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 	case AE::Event::ObjectDied:
 	{
 		gameObject->Delete();
+		if (m_GalagaObject)
+		{
+			if (auto scoreComp = m_GalagaObject->GetComponent<ScoreComponent>())
+			{
+				scoreComp->IncreaseScore(m_ScoreOnDeath);
+			}
+		}
+
 		break;
 	}
 	}

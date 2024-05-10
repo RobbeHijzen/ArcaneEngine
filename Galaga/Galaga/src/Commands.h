@@ -31,44 +31,6 @@ private:
 	float m_MovementSpeed;
 };
 
-class KillCommand : public AE::GameObjectCommand
-{
-public:
-
-	KillCommand(AE::GameObject* gameObject) : GameObjectCommand(gameObject) {}
-
-	virtual void Execute() override
-	{
-		GetGameObject()->GetComponent<HealthComponent>()->KillObject();
-	}
-};
-
-class PickupSilverCommand : public AE::GameObjectCommand
-{
-public:
-
-	PickupSilverCommand(AE::GameObject* gameObject)
-		: GameObjectCommand(gameObject)
-	{}
-
-	virtual void Execute() override
-	{
-		GetGameObject()->NotifyAll(AE::Event::SilverPickup);
-	}
-};
-class PickupGoldCommand : public AE::GameObjectCommand
-{
-public:
-
-	PickupGoldCommand(AE::GameObject* gameObject)
-		: GameObjectCommand(gameObject)
-	{}
-
-	virtual void Execute() override
-	{
-		GetGameObject()->NotifyAll(AE::Event::GoldPickup);
-	}
-};
 
 class ShootCommand : public AE::GameObjectCommand
 {
@@ -104,7 +66,6 @@ public:
 	virtual void Execute() override
 	{
 		AE::SceneManager::GetInstance().IncrementScene();
-		//SceneManager::GetInstance().GetCurrentScene()->Load();
 	}
 };
 

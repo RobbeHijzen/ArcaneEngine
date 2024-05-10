@@ -79,7 +79,7 @@ AE::FSMState* StatesEnemyBoss::Idle::Update(AE::GameObject* )
 	randomnum = (float)rand() / RAND_MAX;
 	if (randomnum <= m_TractorBeamChance * dt)
 	{
-		return new BombingRun();
+		return new TractorBeamSetup();
 	}
 	return nullptr;
 }
@@ -183,11 +183,11 @@ void StatesEnemyBoss::TractorBeam::SpawnBeam(AE::GameObject* go)
 
 	m_BeamGO->AddComponent(beamHitbox);
 
-	// Image
-	auto imageComp{ std::make_shared<ImageComponent>(m_BeamGO.get(), "TractorBeam.png") };
-	imageComp->SetDestRect({ 0, 0, 80, 140 });
-	imageComp->SetSourceRect({ 816, 0, 48, 80 });
-	m_BeamGO->AddComponent(imageComp);
+	// Animation
+	auto animComp{ std::make_shared<AnimationComponent>(m_BeamGO.get(), "TractorBeam.png", 18, 3.f / 18) };
+	animComp->SetDestRect({ 0, 0, 80, 140 });
+	animComp->SetSourceRect({ 0, 0, 48, 80 });
+	m_BeamGO->AddComponent(animComp);
 
 	AE::SceneManager::GetInstance().GetCurrentScene()->Add(m_BeamGO);
 }
@@ -199,7 +199,7 @@ void StatesEnemyBoss::FullHealth::OnEnter(AE::GameObject* gameObject)
 {
 	if (auto imageComp = gameObject->GetComponent<ImageComponent>())
 	{
-		imageComp->SetSourcePos(1.f, 91.f);
+		imageComp->SetSourcePos(glm::vec2{ 1.f, 91.f });
 	}
 
 	m_HealthComp = gameObject->GetComponent<HealthComponent>();
@@ -226,7 +226,7 @@ void StatesEnemyBoss::HalfHealth::OnEnter(AE::GameObject* gameObject)
 {
 	if (auto imageComp = gameObject->GetComponent<ImageComponent>())
 	{
-		imageComp->SetSourcePos(1.f, 127.f);
+		imageComp->SetSourcePos(glm::vec2{ 1.f, 127.f });
 	}
 }
 void StatesEnemyBoss::HalfHealth::OnExit(AE::GameObject* )

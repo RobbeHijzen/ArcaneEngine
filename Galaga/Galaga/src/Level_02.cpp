@@ -68,10 +68,6 @@ AE::GameObject* Level_02::AddGalaga(Scene& scene)
 	InputManager::GetInstance().BindActionGP(1, INPUT_GAMEPAD_DPAD_LEFT, InputType::IsPressed, std::move(std::make_unique<MoveCommand>(galaga.get(), glm::vec2{ -1.f, 0.f }, galagaMoveSpeed)));
 	InputManager::GetInstance().BindActionGP(1, INPUT_GAMEPAD_DPAD_RIGHT, InputType::IsPressed, std::move(std::make_unique<MoveCommand>(galaga.get(), glm::vec2{ 1.f, 0.f }, galagaMoveSpeed)));
 
-	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_C, InputType::IsDownThisFrame, std::move(std::make_unique<KillCommand>(galaga.get())));
-	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_Z, InputType::IsDownThisFrame, std::move(std::make_unique<PickupSilverCommand>(galaga.get())));
-	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_X, InputType::IsDownThisFrame, std::move(std::make_unique<PickupGoldCommand>(galaga.get())));
-
 	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_SPACE, InputType::IsDownThisFrame, std::move(std::make_unique<ShootCommand>(galaga.get())));
 
 	scene.Add(galaga);
@@ -92,7 +88,6 @@ AE::GameObject* Level_02::AddGalaga(Scene& scene)
 	scene.Add(score);
 
 	galaga->AddObserver(std::move(std::make_unique<HealthDisplayObserver>(livesTextComp.get())));
-	galaga->AddObserver(std::move(std::make_unique<PickupObserver>()));
 	galaga->AddObserver(std::move(std::make_unique<ScoreDisplayObserver>(scoreTextComp.get())));
 
 	return galaga.get();
@@ -125,7 +120,7 @@ void Level_02::AddBossEnemy(AE::Scene& scene, AE::GameObject* galaga)
 	enemy->AddComponent(std::make_shared<HitboxComponent>(enemy.get(), 40.f, 40.f));
 
 	// Observers
-	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>()));
+	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>(galaga, 150)));
 
 	// FSM
 	auto idleState{ std::make_unique<StatesEnemyBoss::Idle>() };
@@ -149,27 +144,9 @@ void Level_02::AddControlsExplainers(Scene& scene)
 
 	auto controls2 = std::make_shared<AE::GameObject>();
 	controls2->AddComponent(std::make_shared<TextComponent>(controls2.get(),
-		"C: lose Health", font));
-	controls2->SetLocalTransform({ 10, 95 });
-
-	auto controls3 = std::make_shared<AE::GameObject>();
-	controls3->AddComponent(std::make_shared<TextComponent>(controls3.get(),
-		"Z: pick up silver", font));
-	controls3->SetLocalTransform({ 10, 115 });
-
-	auto controls4 = std::make_shared<AE::GameObject>();
-	controls4->AddComponent(std::make_shared<TextComponent>(controls4.get(),
-		"X: pick up gold", font));
-	controls4->SetLocalTransform({ 10, 135 });
-
-	auto controls5 = std::make_shared<AE::GameObject>();
-	controls5->AddComponent(std::make_shared<TextComponent>(controls5.get(),
 		"Space: shoot bullet", font));
-	controls5->SetLocalTransform({ 10, 155 });
+	controls2->SetLocalTransform({ 10, 95 });
 
 	scene.Add(controls1);
 	scene.Add(controls2);
-	scene.Add(controls3);
-	scene.Add(controls4);
-	scene.Add(controls5);
 }

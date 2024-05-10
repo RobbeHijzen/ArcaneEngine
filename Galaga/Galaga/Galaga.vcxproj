@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\AnimationComponent.h" />
     <ClInclude Include="src\Level_01.h" />
     <ClInclude Include="src\Level_02.h" />
     <ClInclude Include="src\ScrollingImageComponent.h" />
@@ -33,6 +34,7 @@
     <ClInclude Include="src\StatesEnemyBoss.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AnimationComponent.cpp" />
     <ClCompile Include="src\Level_01.cpp" />
     <ClCompile Include="src\Level_02.cpp" />
     <ClCompile Include="src\ScrollingImageComponent.cpp" />

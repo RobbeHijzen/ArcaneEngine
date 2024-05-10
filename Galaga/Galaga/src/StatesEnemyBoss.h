@@ -4,6 +4,7 @@
 #include "GameObject.h"
 
 #include "ImageComponent.h"
+#include "AnimationComponent.h"
 #include "HealthComponent.h"
 #include "HitboxComponent.h"
 
@@ -36,8 +37,8 @@ namespace StatesEnemyBoss
 
 	private:
 
-		float m_BombingRunChance{ 0.06f };  // chance to be chosen (1.f = 100%), per second
-		float m_TractorBeamChance{ 0.06f }; // chance to be chosen (1.f = 100%), per second
+		float m_BombingRunChance{ 0.1f };  // chance to be chosen (1.f = 100%), per second
+		float m_TractorBeamChance{ 0.2f }; // chance to be chosen (1.f = 100%), per second
 
 	};
 	class BombingRun : public AE::FSMState

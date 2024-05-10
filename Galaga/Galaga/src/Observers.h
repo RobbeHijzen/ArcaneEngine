@@ -19,17 +19,6 @@ private:
 
 };
 
-class PickupObserver : public AE::Observer
-{
-public:
-
-	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
-
-private:
-
-	int SilverScoreValue{10};
-	int GoldScoreValue{100};
-};
 class ScoreDisplayObserver : public AE::Observer
 {
 public:
@@ -83,9 +72,13 @@ class EnemyObserver : public AE::Observer
 {
 public:
 
+	EnemyObserver(AE::GameObject* galaga, int scoreOnDeath);
 	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
 
 private:
+
+	AE::GameObject* m_GalagaObject;
+	int m_ScoreOnDeath{};
 
 };
 

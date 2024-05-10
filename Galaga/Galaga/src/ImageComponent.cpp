@@ -14,9 +14,9 @@ void ImageComponent::SetSourceRect(AE::Rect sourceRect)
 	m_SourceRect = sourceRect;
 }
 
-void ImageComponent::SetSourcePos(float x, float y)
+void ImageComponent::SetSourcePos(glm::vec2 pos)
 {
-	SetSourceRect(AE::Rect{ x, y, m_SourceRect.w, m_SourceRect.h });
+	SetSourceRect(AE::Rect{ pos.x, pos.y, m_SourceRect.w, m_SourceRect.h });
 }
 
 void ImageComponent::SetDestRect(AE::Rect rect)

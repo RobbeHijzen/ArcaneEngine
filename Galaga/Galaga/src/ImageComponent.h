@@ -20,7 +20,7 @@ public:
 	ImageComponent& operator=(ImageComponent&& other) = delete;
 
 	void SetSourceRect(AE::Rect sourceRect);
-	void SetSourcePos(float x, float y);
+	void SetSourcePos(glm::vec2 pos);
 	void SetDestRect(AE::Rect rect);
 
 	void Render() const override;
