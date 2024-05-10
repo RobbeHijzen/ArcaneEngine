@@ -62,7 +62,7 @@ void PickupObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 
 ShootingObserver::ShootingObserver()
 {
-	m_ShotSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Audio/PlayerShoot.mp3", 70);
+	m_ShotSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Audio/PlayerShoot.mp3", 10);
 }
 
 void ShootingObserver::OnNotify(AE::Event event, AE::GameObject*)
