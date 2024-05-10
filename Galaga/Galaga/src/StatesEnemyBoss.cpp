@@ -185,8 +185,8 @@ void StatesEnemyBoss::TractorBeam::SpawnBeam(AE::GameObject* go)
 
 	// Image
 	auto imageComp{ std::make_shared<ImageComponent>(m_BeamGO.get(), "TractorBeam.png") };
-	imageComp->SetDestRect(80.f, 140.f);
-	imageComp->SetSourceRect(816, 0, 48, 80);
+	imageComp->SetDestRect({ 0, 0, 80, 140 });
+	imageComp->SetSourceRect({ 816, 0, 48, 80 });
 	m_BeamGO->AddComponent(imageComp);
 
 	AE::SceneManager::GetInstance().GetCurrentScene()->Add(m_BeamGO);

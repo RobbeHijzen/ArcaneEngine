@@ -21,8 +21,8 @@ void ShootComponent::FireBullet()
 
 	// Image Component
 	auto imageComp{ std::make_shared<ImageComponent>(bullet.get(), "Galaga.png")};
-	imageComp->SetDestRect(35.f, 35.f);
-	imageComp->SetSourceRect(307, 136, 16, 16);
+	imageComp->SetDestRect({ 0, 0, 35.f, 35.f });
+	imageComp->SetSourceRect({ 307, 136, 16, 16 });
 	bullet->AddComponent(imageComp);
 
 	// Projectile Component

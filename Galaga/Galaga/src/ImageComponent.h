@@ -20,9 +20,8 @@ public:
 	ImageComponent& operator=(ImageComponent&& other) = delete;
 
 	void SetSourceRect(AE::Rect sourceRect);
-	void SetSourceRect(float x, float y, float w, float h);
 	void SetSourcePos(float x, float y);
-	void SetDestRect(float width, float height);
+	void SetDestRect(AE::Rect rect);
 
 	void Render() const override;
 
@@ -33,7 +32,7 @@ private:
 	bool m_UseDestRect{ false };
 	bool m_UseSourceRect{ false };
 
-	glm::vec2 m_DestArea{};
+	AE::Rect m_DestRect{};
 	AE::Rect m_SourceRect{};
 };
 

@@ -32,7 +32,7 @@ void Level_02::AddBackgroundImage(Scene& scene)
 {
 	auto backgroundImage = std::make_shared<AE::GameObject>();
 	auto scrollingComp{ std::make_shared<ScrollingImageComponent>(backgroundImage.get(), "Background.png", 50.f) };
-	scrollingComp->SetDestRect(640.f, 480.f);
+	scrollingComp->SetDestRect({ 0, 0, 640, 480 });
 	backgroundImage->AddComponent(scrollingComp);
 	scene.Add(backgroundImage);
 }
@@ -41,8 +41,8 @@ AE::GameObject* Level_02::AddGalaga(Scene& scene)
 {
 	auto galaga = std::make_shared<AE::GameObject>();
 	auto imageComp{ std::make_shared<ImageComponent>(galaga.get(), "Galaga.png") };
-	imageComp->SetDestRect(50.f, 50.f);
-	imageComp->SetSourceRect(109, 1, 16, 16);
+	imageComp->SetDestRect({0, 0, 50, 50 });
+	imageComp->SetSourceRect({ 109, 1, 16, 16 });
 	galaga->AddComponent(imageComp);
 	galaga->AddComponent(std::make_shared<HealthComponent>(galaga.get(), 3));
 	galaga->AddComponent(std::make_shared<ScoreComponent>(galaga.get()));
@@ -106,8 +106,8 @@ void Level_02::AddBossEnemy(AE::Scene& scene, AE::GameObject* galaga)
 
 	// Image Component
 	auto imageComp{ std::make_shared<ImageComponent>(enemy.get(), "Galaga.png") };
-	imageComp->SetDestRect(40.f, 40.f);
-	imageComp->SetSourceRect(1, 91, 16, 16);
+	imageComp->SetDestRect({0, 0, 40, 40 });
+	imageComp->SetSourceRect({ 1, 91, 16, 16 });
 	enemy->AddComponent(imageComp);
 
 	// Shoot Component

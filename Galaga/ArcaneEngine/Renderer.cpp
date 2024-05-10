@@ -54,26 +54,24 @@ void Renderer::Destroy()
 
 void AE::Renderer::RenderTexture(const Texture2D& texture, glm::vec2 pos) const
 {
-	RenderTexture(texture, AE::Rect{ pos.x, pos.y }, {}, false, false);
+	SDL_Rect destRectSDL{ (int)pos.x, (int)pos.y};
+
+	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &destRectSDL.w, &destRectSDL.h);
+	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &destRectSDL);
+}
+void AE::Renderer::RenderTexture(const Texture2D& texture, AE::Rect destRect) const
+{
+	SDL_Rect destRectSDL{ (int)destRect.x, (int)destRect.y, (int)destRect.w, (int)destRect.h };
+
+	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &destRectSDL);
 }
 
-void Renderer::RenderTexture(const Texture2D& texture, AE::Rect destRect, AE::Rect sourceRect, bool useDest, bool useSrc) const
+void Renderer::RenderTexture(const Texture2D& texture, AE::Rect destRect, AE::Rect sourceRect) const
 {
 	SDL_Rect destRectSDL{ (int)destRect.x, (int)destRect.y, (int)destRect.w, (int)destRect.h };
 	SDL_Rect sourceRectSDL{ (int)sourceRect.x, (int)sourceRect.y, (int)sourceRect.w, (int)sourceRect.h };
 
-	if (useSrc)
-	{
-		if (!useDest)
-			SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &destRectSDL.w, &destRectSDL.h);
-		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &sourceRectSDL, &destRectSDL);
-	}
-	else
-	{
-		if (!useDest)
-			SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &destRectSDL.w, &destRectSDL.h);
-		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &destRectSDL);
-	}
+	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &sourceRectSDL, &destRectSDL);
 }
 
 SDL_Renderer* Renderer::GetSDLRenderer() const { return m_renderer; }

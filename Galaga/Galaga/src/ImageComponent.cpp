@@ -11,24 +11,18 @@ ImageComponent::ImageComponent(AE::GameObject* parentGameObject, const std::stri
 void ImageComponent::SetSourceRect(AE::Rect sourceRect)
 {
 	m_UseSourceRect = true;
-
 	m_SourceRect = sourceRect;
 }
-void ImageComponent::SetSourceRect(float x, float y, float w, float h)
-{
-	SetSourceRect(AE::Rect{x, y, w, h});
-}
+
 void ImageComponent::SetSourcePos(float x, float y)
 {
 	SetSourceRect(AE::Rect{ x, y, m_SourceRect.w, m_SourceRect.h });
 }
 
-void ImageComponent::SetDestRect(float width, float height)
+void ImageComponent::SetDestRect(AE::Rect rect)
 {
 	m_UseDestRect = true;
-
-	m_DestArea.x = width;
-	m_DestArea.y = height;
+	m_DestRect = rect;
 }
 
 
@@ -38,9 +32,16 @@ void ImageComponent::Render() const
 
 	if (pParent)
 	{
-		const auto& pos = m_LocalTransform.GetPosition() + pParent->GetWorldTransform().GetPosition();
-		AE::Rect destRect{ pos.x, pos.y, m_DestArea.x, m_DestArea.y};
+		const auto& parentPos = GetLocalTransform().GetPosition() + pParent->GetWorldTransform().GetPosition();
+		AE::Rect destRect{ m_DestRect};
+		destRect.x += parentPos.x;
+		destRect.y += parentPos.y;
 
-		AE::Renderer::GetInstance().RenderTexture(*m_Texture, destRect, m_SourceRect, m_UseDestRect, m_UseSourceRect);
+		if(m_UseSourceRect)
+			AE::Renderer::GetInstance().RenderTexture(*m_Texture, destRect, m_SourceRect);
+		else if(m_UseDestRect)
+			AE::Renderer::GetInstance().RenderTexture(*m_Texture, destRect);
+		else
+			AE::Renderer::GetInstance().RenderTexture(*m_Texture, glm::vec2{destRect.x, destRect.y});
 	}
 }

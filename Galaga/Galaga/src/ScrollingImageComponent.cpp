@@ -22,19 +22,14 @@ void ScrollingImageComponent::SetSourceRect(AE::Rect sourceRect)
 	m_FirstImage->SetSourceRect(sourceRect);
 	m_SecondImage->SetSourceRect(sourceRect);
 }
-void ScrollingImageComponent::SetSourceRect(float x, float y, float w, float h)
-{
-	m_FirstImage->SetSourceRect(x, y, w, h);
-	m_SecondImage->SetSourceRect(x, y, w, h);
-}
 
-void ScrollingImageComponent::SetDestRect(float width, float height)
+void ScrollingImageComponent::SetDestRect(AE::Rect destRect)
 {
-	m_DestHeight = height;
+	m_DestHeight = destRect.h;
 	m_SecondImage->SetLocalPosition(0.f, m_DestHeight * m_ScrollSign);
 
-	m_FirstImage->SetDestRect(width, height);
-	m_SecondImage->SetDestRect(width, height);
+	m_FirstImage->SetDestRect(destRect);
+	m_SecondImage->SetDestRect(destRect);
 }
 
 void ScrollingImageComponent::Update()

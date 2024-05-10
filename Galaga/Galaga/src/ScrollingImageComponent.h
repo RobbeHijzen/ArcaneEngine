@@ -18,8 +18,7 @@ public:
 	ScrollingImageComponent& operator=(ScrollingImageComponent&& other) = delete;
 
 	void SetSourceRect(AE::Rect sourceRect);
-	void SetSourceRect(float x, float y, float w, float h);
-	void SetDestRect(float width, float height);
+	void SetDestRect(AE::Rect destRect);
 
 	void Update() override;
 
