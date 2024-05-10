@@ -12,8 +12,8 @@ public:
 private:
 
 	void AddBackgroundImage(AE::Scene& scene);
-	void AddGalaga(AE::Scene& scene);
-	void AddBossEnemy(AE::Scene& scene);
+	AE::GameObject* AddGalaga(AE::Scene& scene);
+	void AddBossEnemy(AE::Scene& scene, AE::GameObject* galaga);
 	void AddControlsExplainers(AE::Scene& scene);
 };
 

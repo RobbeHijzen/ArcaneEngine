@@ -18,8 +18,8 @@ using namespace AE;
 void Level_02::Load(Scene& scene)
 {
 	AddBackgroundImage(scene);
-	AddGalaga(scene);
-	AddBossEnemy(scene);
+	auto galaga{ AddGalaga(scene) };
+	AddBossEnemy(scene, galaga);
 	AddControlsExplainers(scene);
 
 	auto go = std::make_shared<AE::GameObject>();
@@ -37,7 +37,7 @@ void Level_02::AddBackgroundImage(Scene& scene)
 	scene.Add(backgroundImage);
 }
 
-void Level_02::AddGalaga(Scene& scene)
+AE::GameObject* Level_02::AddGalaga(Scene& scene)
 {
 	auto galaga = std::make_shared<AE::GameObject>();
 	auto imageComp{ std::make_shared<ImageComponent>(galaga.get(), "Galaga.png") };
@@ -46,8 +46,15 @@ void Level_02::AddGalaga(Scene& scene)
 	galaga->AddComponent(imageComp);
 	galaga->AddComponent(std::make_shared<HealthComponent>(galaga.get(), 3));
 	galaga->AddComponent(std::make_shared<ScoreComponent>(galaga.get()));
-	galaga->AddComponent(std::make_shared<ShootComponent>(galaga.get(), glm::vec2{ 0.f, -1.f }, 300.f));
+
+	// Shoot component
+	auto shootComp{ std::make_shared<ShootComponent>(galaga.get())};
+	shootComp->SetBulletSpawnOffset({ 7.5f, -17.f });
+	shootComp->AddIgnoreTag("Friendly");
+
+	galaga->AddComponent(shootComp);
 	
+	// Hitbox
 	galaga->AddComponent(std::make_shared<HitboxComponent>(galaga.get(), 50.f, 50.f));
 
 	galaga->SetLocalTransform({ 275.f, 380.f });
@@ -88,20 +95,34 @@ void Level_02::AddGalaga(Scene& scene)
 	galaga->AddObserver(std::move(std::make_unique<PickupObserver>()));
 	galaga->AddObserver(std::move(std::make_unique<ScoreDisplayObserver>(scoreTextComp.get())));
 
+	return galaga.get();
 }
 
-void Level_02::AddBossEnemy(AE::Scene& scene)
+void Level_02::AddBossEnemy(AE::Scene& scene, AE::GameObject* galaga)
 {
 	auto enemy = std::make_shared<AE::GameObject>();
+	enemy->SetLocalTransform({ 275.f, 50.f });
+	enemy->AddTag("Enemy");
+
+	// Image Component
 	auto imageComp{ std::make_shared<ImageComponent>(enemy.get(), "Galaga.png") };
 	imageComp->SetDestRect(40.f, 40.f);
 	imageComp->SetSourceRect(1, 91, 16, 16);
 	enemy->AddComponent(imageComp);
+
+	// Shoot Component
+	auto shootComp{ std::make_shared<ShootComponent>(enemy.get())};
+	shootComp->SetBulletDirection(glm::vec2{ 0.f, 1.f });
+	shootComp->SetBulletSpeed(200.f);
+	shootComp->SetSeekTarget(galaga);
+	shootComp->AddIgnoreTag("Enemy");
+	shootComp->SetBulletSpawnOffset(glm::vec2{2.5f, 30.f});
+
+	enemy->AddComponent(shootComp);
+
+	// Other Components
 	enemy->AddComponent(std::make_shared<HealthComponent>(enemy.get(), 2));
 	enemy->AddComponent(std::make_shared<HitboxComponent>(enemy.get(), 40.f, 40.f));
-	enemy->AddTag("Enemy");
-
-	enemy->SetLocalTransform({ 275.f, 50.f });
 
 	// Observers
 	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>()));

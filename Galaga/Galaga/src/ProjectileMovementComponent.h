@@ -6,7 +6,7 @@
 class ProjectileMovementComponent : public AE::BaseComponent
 {
 public:
-	ProjectileMovementComponent(AE::GameObject* pParent, glm::vec2 direction, float speed, float lifeTime = 0.f)
+	ProjectileMovementComponent(AE::GameObject* pParent, glm::vec2 direction, float speed, float lifeTime = 5.f)
 		: BaseComponent(pParent)
 		, m_Speed{speed}
 		, m_LifeTime{lifeTime}

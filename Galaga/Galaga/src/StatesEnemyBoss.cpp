@@ -4,6 +4,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "Observers.h"
+#include "ShootComponent.h"
 
 //****
 // Helper Functions
@@ -73,12 +74,12 @@ AE::FSMState* StatesEnemyBoss::Idle::Update(AE::GameObject* )
 	auto randomnum{ (float) rand() / RAND_MAX};
 	if (randomnum <= m_BombingRunChance * dt)
 	{
-		return new TractorBeamSetup();
+		return new BombingRun();
 	}
 	randomnum = (float)rand() / RAND_MAX;
 	if (randomnum <= m_TractorBeamChance * dt)
 	{
-		return new TractorBeamSetup();
+		return new BombingRun();
 	}
 	return nullptr;
 }
@@ -86,15 +87,35 @@ AE::FSMState* StatesEnemyBoss::Idle::Update(AE::GameObject* )
 //****
 // BombingRun
 //****
-void StatesEnemyBoss::BombingRun::OnEnter(AE::GameObject* )
+void StatesEnemyBoss::BombingRun::OnEnter(AE::GameObject* gameObject)
 {
+	m_SeekPos.x = rand() % 2 ? 0.f : 640.f;
+	m_SeekDir = GetSeekDirection(m_SeekPos, gameObject);
 }
 void StatesEnemyBoss::BombingRun::OnExit(AE::GameObject* )
 {
 }
-AE::FSMState* StatesEnemyBoss::BombingRun::Update(AE::GameObject* )
+AE::FSMState* StatesEnemyBoss::BombingRun::Update(AE::GameObject* gameObject)
 {
+	glm::vec2 addedPosition{ m_SeekDir * m_MoveSpeed * AE::Time::GetInstance().GetDeltaTime() };
+	gameObject->AddLocalTransform(AE::Transform{ addedPosition });
+
+	float yHeight{ gameObject->GetWorldTransform().GetPosition().y };
+	if (m_CanShoot && yHeight >= m_ShootHeight)
+	{
+		m_CanShoot = false;
+		if (auto shootComp = gameObject->GetComponent<ShootComponent>())
+		{
+			shootComp->FireBullet();
+		}
+	}
+
+	if (yHeight > 480.f) return new Return();
 	return nullptr;
+}
+
+void StatesEnemyBoss::BombingRun::ShootBullet()
+{
 }
 
 //****

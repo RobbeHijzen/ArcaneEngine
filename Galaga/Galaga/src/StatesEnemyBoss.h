@@ -21,7 +21,7 @@ namespace StatesEnemyBoss
 		virtual AE::FSMState* Update(AE::GameObject* gameObject);
 
 	private:
-		float m_MoveSpeed{ 100.f };
+		float m_MoveSpeed{ 130.f };
 
 		glm::vec2 m_SeekDir{};
 		glm::vec2 m_SeekPos{ 275.f, 50.f };
@@ -49,6 +49,16 @@ namespace StatesEnemyBoss
 
 	private:
 
+		bool m_CanShoot{ true };
+		float m_ShootHeight{ 125.f };
+
+		float m_MoveSpeed{ 130.f };
+
+		glm::vec2 m_SeekDir{};
+		glm::vec2 m_SeekPos{ 0.f, 480.f };
+
+		void ShootBullet();
+
 	};
 	class TractorBeamSetup : public AE::FSMState
 	{
@@ -59,7 +69,7 @@ namespace StatesEnemyBoss
 
 	private:
 
-		float m_MoveSpeed{ 100.f };
+		float m_MoveSpeed{ 130.f };
 		float m_StopHeight{ 300.f };
 
 		glm::vec2 m_SeekDir{};
