@@ -83,6 +83,7 @@ AE::GameObject* GameLevel::AddGalaga(Scene& scene)
 
 	galaga->AddObserver(std::move(std::make_unique<HealthDisplayObserver>("Galaga.png", AE::Rect{ 109, 1, 16, 16 }, AE::Rect{ 20, 410, 35, 35 })));
 	galaga->AddObserver(std::move(std::make_unique<ScoreDisplayObserver>(scoreTextComp.get())));
+	galaga->AddObserver(std::move(std::make_unique<GalagaObserver>()));
 
 	return galaga.get();
 }

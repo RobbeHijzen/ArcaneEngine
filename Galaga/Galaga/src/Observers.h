@@ -91,4 +91,14 @@ private:
 
 };
 
+class GalagaObserver : public AE::Observer
+{
+public:
+
+	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
+
+private:
+
+};
+
 

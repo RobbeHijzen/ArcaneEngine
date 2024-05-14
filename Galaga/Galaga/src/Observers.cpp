@@ -135,6 +135,7 @@ EnemyObserver::EnemyObserver(AE::GameObject* galaga, int scoreOnDeath)
 {
 }
 
+
 void EnemyObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 {
 	switch (event)
@@ -150,6 +151,18 @@ void EnemyObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 			}
 		}
 
+		break;
+	}
+	}
+}
+
+void GalagaObserver::OnNotify(AE::Event event, AE::GameObject* )
+{
+	switch (event)
+	{
+	case AE::Event::ObjectDied:
+	{
+		AE::SceneManager::GetInstance().IncrementScene();
 		break;
 	}
 	}
