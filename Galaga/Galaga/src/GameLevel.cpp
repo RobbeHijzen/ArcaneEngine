@@ -44,7 +44,7 @@ AE::GameObject* GameLevel::AddGalaga(Scene& scene)
 	imageComp->SetDestRect({0, 0, 50, 50 });
 	imageComp->SetSourceRect({ 109, 1, 16, 16 });
 	galaga->AddComponent(imageComp);
-	galaga->AddComponent(std::make_shared<HealthComponent>(galaga.get(), 3));
+	galaga->AddComponent(std::make_shared<HealthComponent>(galaga.get(), 4));
 	galaga->AddComponent(std::make_shared<ScoreComponent>(galaga.get()));
 
 	// Shoot component
