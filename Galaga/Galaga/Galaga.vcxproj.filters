@@ -28,10 +28,10 @@
     <ClInclude Include="src\ScrollingImageComponent.h">
       <Filter>Galaga\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Level_02.h">
+    <ClInclude Include="src\GameLevel.h">
       <Filter>Galaga\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="src\Level_01.h">
+    <ClInclude Include="src\StartScreenLevel.h">
       <Filter>Galaga\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="src\StatesEnemyBoss.h">
@@ -69,10 +69,10 @@
     <ClCompile Include="src\ScrollingImageComponent.cpp">
       <Filter>Galaga\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\Level_02.cpp">
+    <ClCompile Include="src\GameLevel.cpp">
       <Filter>Galaga\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="src\Level_01.cpp">
+    <ClCompile Include="src\StartScreenLevel.cpp">
       <Filter>Galaga\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="src\StatesEnemyBoss.cpp">

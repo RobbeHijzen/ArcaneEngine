@@ -45,40 +45,45 @@ namespace AE
 
 	void Scene::GameStart()
 	{
-		for (auto& gameObject : m_GameObjects)
+		for (int index{}; index < m_GameObjects.size(); ++index)
 		{
+			auto gameObject{m_GameObjects[index]};
 			gameObject->GameStart();
 		}
 	}
 
 	void Scene::Update()
 	{
-		for (auto& gameObject : m_GameObjects)
+		for (int index{}; index < m_GameObjects.size(); ++index)
 		{
+			auto gameObject{ m_GameObjects[index] };
 			gameObject->Update();
 		}
 	}
 
 	void Scene::FixedUpdate()
 	{
-		for (auto& gameObject : m_GameObjects)
+		for (int index{}; index < m_GameObjects.size(); ++index)
 		{
+			auto gameObject{ m_GameObjects[index] };
 			gameObject->FixedUpdate();
 		}
 	}
 
 	void Scene::LateUpdate()
 	{
-		for (auto& gameObject : m_GameObjects)
+		for (int index{}; index < m_GameObjects.size(); ++index)
 		{
+			auto gameObject{ m_GameObjects[index] };
 			gameObject->LateUpdate();
 		}
 	}
 
 	void Scene::Render() const
 	{
-		for (auto& gameObject : m_GameObjects)
+		for (int index{}; index < m_GameObjects.size(); ++index)
 		{
+			auto gameObject{ m_GameObjects[index] };
 			gameObject->Render();
 		}
 	}

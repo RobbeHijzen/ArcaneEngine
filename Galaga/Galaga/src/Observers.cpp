@@ -1,6 +1,7 @@
 #include "Observers.h"
 
 #include "GameObject.h"
+#include "SceneManager.h"
 
 #include "HealthComponent.h"
 #include "ScoreComponent.h"
@@ -17,11 +18,41 @@ void HealthDisplayObserver::OnNotify(AE::Event event, AE::GameObject* gameObject
 	case AE::Event::ObjectLostHealth:
 	{
 		int newHealth{ gameObject->GetComponent<HealthComponent>()->GetHealth() };
-
-		std::string newText{"#Lives: " + std::to_string(newHealth)};
-		m_pTextComponent->SetText(newText);
-
+		CreateImages(newHealth);
 	}
+	}
+}
+
+void HealthDisplayObserver::CreateImages(int health)
+{
+	health -= 1; // Because the health display should be one less than the actual health
+	int size{static_cast<int>( m_HealthImageGameObjects.size() )};
+
+	if (health < size && size > 0)
+	{
+		for (int index{ size - 1 }; index >= health; --index)
+		{
+			m_HealthImageGameObjects[index]->Delete();
+			m_HealthImageGameObjects.pop_back();
+		}
+	}
+	else if (health > size)
+	{
+		for (int index{}; index < health; ++index)
+		{
+			auto go{std::make_shared<AE::GameObject>()};
+			auto imageComp{ std::make_shared<ImageComponent>(go.get(), m_ImageFileName) };
+			imageComp->SetSourceRect(m_SourceRect);
+
+			auto destRect{ m_DestRect };
+			destRect.x += m_DestRect.w * index;
+			imageComp->SetDestRect(destRect);
+			
+			go->AddComponent(imageComp);
+			m_HealthImageGameObjects.emplace_back(go.get());
+			
+			AE::SceneManager::GetInstance().GetCurrentScene()->Add(go);
+		}
 	}
 }
 

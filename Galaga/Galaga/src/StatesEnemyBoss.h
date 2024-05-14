@@ -37,8 +37,8 @@ namespace StatesEnemyBoss
 
 	private:
 
-		float m_BombingRunChance{ 0.1f };  // chance to be chosen (1.f = 100%), per second
-		float m_TractorBeamChance{ 0.2f }; // chance to be chosen (1.f = 100%), per second
+		float m_BombingRunChance{ 0.1f };  // chance to be chosen per second (1.f = 100%)
+		float m_TractorBeamChance{ 0.2f }; // chance to be chosen per second (1.f = 100%)
 
 	};
 	class BombingRun : public AE::FSMState

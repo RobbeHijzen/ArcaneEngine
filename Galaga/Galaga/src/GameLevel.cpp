@@ -1,4 +1,4 @@
-#include "Level_02.h"
+#include "GameLevel.h"
 
 #include "TextComponent.h"
 #include "ImageComponent.h"
@@ -15,7 +15,7 @@
 
 using namespace AE;
 
-void Level_02::Load(Scene& scene)
+void GameLevel::Load(Scene& scene)
 {
 	AddBackgroundImage(scene);
 	auto galaga{ AddGalaga(scene) };
@@ -28,7 +28,7 @@ void Level_02::Load(Scene& scene)
 	scene.Add(go);
 }
 
-void Level_02::AddBackgroundImage(Scene& scene)
+void GameLevel::AddBackgroundImage(Scene& scene)
 {
 	auto backgroundImage = std::make_shared<AE::GameObject>();
 	auto scrollingComp{ std::make_shared<ScrollingImageComponent>(backgroundImage.get(), "Background.png", 50.f) };
@@ -37,7 +37,7 @@ void Level_02::AddBackgroundImage(Scene& scene)
 	scene.Add(backgroundImage);
 }
 
-AE::GameObject* Level_02::AddGalaga(Scene& scene)
+AE::GameObject* GameLevel::AddGalaga(Scene& scene)
 {
 	auto galaga = std::make_shared<AE::GameObject>();
 	auto imageComp{ std::make_shared<ImageComponent>(galaga.get(), "Galaga.png") };
@@ -75,25 +75,19 @@ AE::GameObject* Level_02::AddGalaga(Scene& scene)
 
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 19);
 
-	auto health = std::make_shared<AE::GameObject>();
-	auto livesTextComp{ std::make_shared<TextComponent>(health.get(), "#Lives: 3", font) };
-	health->AddComponent(livesTextComp);
-	health->SetLocalTransform({ 10, 220 });
-	scene.Add(health);
-
 	auto score = std::make_shared<AE::GameObject>();
 	auto scoreTextComp{ std::make_shared<TextComponent>(score.get(), "#Score: 0", font) };
 	score->AddComponent(scoreTextComp);
 	score->SetLocalTransform({ 10, 240 });
 	scene.Add(score);
 
-	galaga->AddObserver(std::move(std::make_unique<HealthDisplayObserver>(livesTextComp.get())));
+	galaga->AddObserver(std::move(std::make_unique<HealthDisplayObserver>("Galaga.png", AE::Rect{ 109, 1, 16, 16 }, AE::Rect{ 20, 410, 35, 35 })));
 	galaga->AddObserver(std::move(std::make_unique<ScoreDisplayObserver>(scoreTextComp.get())));
 
 	return galaga.get();
 }
 
-void Level_02::AddBossEnemy(AE::Scene& scene, AE::GameObject* galaga)
+void GameLevel::AddBossEnemy(AE::Scene& scene, AE::GameObject* galaga)
 {
 	auto enemy = std::make_shared<AE::GameObject>();
 	enemy->SetLocalTransform({ 275.f, 50.f });
@@ -133,7 +127,7 @@ void Level_02::AddBossEnemy(AE::Scene& scene, AE::GameObject* galaga)
 	scene.Add(enemy);
 }
 
-void Level_02::AddControlsExplainers(Scene& scene)
+void GameLevel::AddControlsExplainers(Scene& scene)
 {
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 16);
 

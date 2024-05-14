@@ -8,5 +8,4 @@ void ScoreComponent::IncreaseScore(int scoreAmount)
 	m_Score += scoreAmount;
 
 	GetOwner()->NotifyAll(AE::Event::ScoreChanged);
-
 }
