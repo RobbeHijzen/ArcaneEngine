@@ -18,7 +18,10 @@ void FSMComponent::Update()
 	if (auto newState = m_CurrentState->Update(owner))
 	{
 		m_CurrentState->OnExit(owner);
-		m_CurrentState.reset(newState);
+
+		m_CurrentState.reset();
+		m_CurrentState = std::move(newState);
+
 		m_CurrentState->OnEnter(owner);
 	}
 }

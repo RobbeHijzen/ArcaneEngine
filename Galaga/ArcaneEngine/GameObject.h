@@ -79,6 +79,7 @@ namespace AE
 		void SetWorldTransformDirty();
 
 		Transform GetWorldTransform();
+		Transform GetSpawnTransform() const { return m_SpawnTransform; }
 
 		// Deleting
 		void Delete();
@@ -106,6 +107,8 @@ namespace AE
 	private:
 
 		bool m_IsDeleted{ false };
+
+		Transform m_SpawnTransform{};
 
 		Transform m_LocalTransform{};
 		Transform m_WorldTransform{};

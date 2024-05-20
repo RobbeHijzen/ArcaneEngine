@@ -1,5 +1,5 @@
 #pragma once
-
+#include <memory>
 
 namespace AE
 {
@@ -12,7 +12,7 @@ namespace AE
 
 		virtual void OnEnter(GameObject* gameObject) = 0;
 		virtual void OnExit(GameObject* gameObject) = 0;
-		virtual FSMState* Update(GameObject* gameObject) = 0;
+		virtual std::unique_ptr<FSMState> Update(GameObject* gameObject) = 0;
 
 	};
 }

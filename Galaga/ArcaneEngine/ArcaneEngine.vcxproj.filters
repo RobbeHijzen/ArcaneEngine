@@ -43,6 +43,9 @@
     <Filter Include="ArcaneEngine\FSM">
       <UniqueIdentifier>{c761700b-1a9a-44a8-a2cf-f5be966b2695}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ArcaneEngine\FSM\EngineStates">
+      <UniqueIdentifier>{3f404a11-5b3c-4d62-9684-b1efd878e709}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -104,6 +107,9 @@
     </ClCompile>
     <ClCompile Include="FSMComponent.cpp">
       <Filter>ArcaneEngine\FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineStates.cpp">
+      <Filter>ArcaneEngine\FSM\EngineStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="FSMComponent.h">
       <Filter>ArcaneEngine\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineStates.h">
+      <Filter>ArcaneEngine\FSM\EngineStates</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

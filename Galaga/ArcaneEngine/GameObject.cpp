@@ -174,6 +174,7 @@ namespace AE
 
 	void GameObject::SetLocalTransform(Transform transform)
 	{
+		m_SpawnTransform = transform;
 		m_LocalTransform = transform;
 		SetWorldTransformDirty();
 	}

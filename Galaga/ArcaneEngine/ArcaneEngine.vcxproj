@@ -31,6 +31,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="OverlapHandler.cpp" />
+    <ClCompile Include="EngineStates.cpp" />
     <ClCompile Include="ServiceLocator.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -58,6 +59,7 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="OverlapHandler.h" />
     <ClInclude Include="SceneInfo.h" />
+    <ClInclude Include="EngineStates.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="ObserverEvents.h" />
