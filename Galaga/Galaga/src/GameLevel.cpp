@@ -32,7 +32,7 @@ void GameLevel::AddBackgroundImage(Scene& scene)
 {
 	auto backgroundImage = std::make_shared<AE::GameObject>();
 	auto scrollingComp{ std::make_shared<ScrollingImageComponent>(backgroundImage.get(), "Background.png", 50.f) };
-	scrollingComp->SetDestRect({ 0, 0, 640, 480 });
+	scrollingComp->SetDestRect({ 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT });
 	backgroundImage->AddComponent(scrollingComp);
 	scene.Add(backgroundImage);
 }
@@ -57,8 +57,7 @@ AE::GameObject* GameLevel::AddGalaga(Scene& scene)
 	// Hitbox
 	galaga->AddComponent(std::make_shared<HitboxComponent>(galaga.get(), 50.f, 50.f));
 
-	galaga->SetLocalTransform({ 275.f, 380.f });
-
+	galaga->SetLocalTransform({ WINDOW_WIDTH / 2.f - 25.f, WINDOW_HEIGHT - 100.f });
 	galaga->AddTag("Friendly");
 
 	constexpr float galagaMoveSpeed{ 130.f };
@@ -91,7 +90,7 @@ AE::GameObject* GameLevel::AddGalaga(Scene& scene)
 void GameLevel::AddBossEnemy(AE::Scene& scene, AE::GameObject* galaga)
 {
 	auto enemy = std::make_shared<AE::GameObject>();
-	enemy->SetLocalTransform({ 275.f, 50.f });
+	enemy->SetLocalTransform({ WINDOW_WIDTH / 2.f - 20.f, 50.f });
 	enemy->AddTag("Enemy");
 
 	// Image Component

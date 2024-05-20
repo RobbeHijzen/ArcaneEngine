@@ -58,8 +58,6 @@ namespace StatesEnemyBoss
 		glm::vec2 m_SeekDir{};
 		glm::vec2 m_SeekPos{ 0.f, 480.f };
 
-		void ShootBullet();
-
 	};
 	class TractorBeamSetup : public AE::FSMState
 	{

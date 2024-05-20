@@ -22,6 +22,9 @@
 #include "BaseComponent.h"
 #include "GameObject.h"
 
+constexpr auto WINDOW_WIDTH = 640;
+constexpr auto WINDOW_HEIGHT = 480;
+
 namespace AE
 {
 	class ArcaneEngine

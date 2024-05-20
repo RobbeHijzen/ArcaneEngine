@@ -41,15 +41,7 @@ void StatesEnemyBoss::Return::OnExit(AE::GameObject* )
 AE::FSMState* StatesEnemyBoss::Return::Update(AE::GameObject* gameObject)
 {
 	glm::vec2 addedPosition{ m_SeekDir * m_MoveSpeed * AE::Time::GetInstance().GetDeltaTime() };
-	addedPosition.y = std::abs(addedPosition.y); // so the enemy will move downwards
-
 	gameObject->AddLocalTransform(AE::Transform{ addedPosition });
-
-	if (gameObject->GetWorldTransform().GetPosition().y > 480.f)
-	{
-		gameObject->AddLocalTransform(AE::Transform{ 0.f, -580.f });
-		m_SeekDir = GetSeekDirection(m_SeekPos, gameObject);
-	}
 
 	if (HasReached(m_SeekPos, gameObject))
 	{
@@ -110,12 +102,12 @@ AE::FSMState* StatesEnemyBoss::BombingRun::Update(AE::GameObject* gameObject)
 		}
 	}
 
-	if (yHeight > 480.f) return new Return();
+	if (yHeight > WINDOW_HEIGHT)
+	{
+		gameObject->AddLocalTransform(AE::Transform{ 0.f, -(WINDOW_HEIGHT + 100.f)});
+		return new Return();
+	}
 	return nullptr;
-}
-
-void StatesEnemyBoss::BombingRun::ShootBullet()
-{
 }
 
 //****
@@ -123,7 +115,8 @@ void StatesEnemyBoss::BombingRun::ShootBullet()
 //****
 void StatesEnemyBoss::TractorBeamSetup::OnEnter(AE::GameObject* gameObject)
 {
-	float seekXValue{float(rand() % 540 + 50)};
+	int xOffsetFromSides{ 50 };
+	float seekXValue{float(rand() % (WINDOW_WIDTH - 2 * xOffsetFromSides) + xOffsetFromSides)};
 	m_SeekPos = glm::vec2{ seekXValue, m_StopHeight };
 
 	m_SeekDir = GetSeekDirection(m_SeekPos, gameObject);
