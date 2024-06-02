@@ -4,7 +4,6 @@
 #include "ImageComponent.h"
 #include "ScrollingImageComponent.h"
 #include "HealthComponent.h"
-#include "ScoreComponent.h"
 #include "ShootComponent.h"
 
 #include "Observers.h"
@@ -20,7 +19,6 @@ void SoloLevel::Load(Scene& scene)
 	AddBackgroundImage(scene);
 	auto galaga{ AddGalaga(scene) };
 	AddBossEnemy(scene, galaga);
-	AddControlsExplainers(scene);
 
 	auto go = std::make_shared<AE::GameObject>();
 	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_RETURN, InputType::IsUpThisFrame, std::move(std::make_unique<LoadCommand>(go.get(), "DeathScreen")));
@@ -46,7 +44,6 @@ AE::GameObject* SoloLevel::AddGalaga(Scene& scene)
 	imageComp->SetSourceRect({ 109, 1, 16, 16 });
 	galaga->AddComponent(imageComp);
 	galaga->AddComponent(std::make_shared<HealthComponent>(galaga.get(), 4));
-	galaga->AddComponent(std::make_shared<ScoreComponent>(galaga.get()));
 
 	// Shoot component
 	auto shootComp{ std::make_shared<ShootComponent>(galaga.get())};
@@ -74,16 +71,16 @@ AE::GameObject* SoloLevel::AddGalaga(Scene& scene)
 	scene.Add(galaga);
 
 
-	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 19);
+	auto font = ResourceManager::GetInstance().LoadFont("ArcadeFont.ttf", 19);
 
 	auto score = std::make_shared<AE::GameObject>();
-	auto scoreTextComp{ std::make_shared<TextComponent>(score.get(), "#Score: 0", font) };
+	auto scoreTextComp{ std::make_shared<TextComponent>(score.get(), "0", font) };
 	score->AddComponent(scoreTextComp);
-	score->SetLocalTransform({ 10, 240 });
+	score->SetLocalTransform({ 10, 10 });
 	scene.Add(score);
 
-	galaga->AddObserver(std::move(std::make_unique<HealthDisplayObserver>("Galaga.png", AE::Rect{ 109, 1, 16, 16 }, AE::Rect{ 20, 410, 35, 35 })));
-	galaga->AddObserver(std::move(std::make_unique<ScoreDisplayObserver>(scoreTextComp.get())));
+	galaga->AddObserver(std::move(std::make_unique<HealthDisplayObserver>("Galaga.png", AE::Rect{ 109, 1, 16, 16 }, AE::Rect{ 20, 440, 35, 35 })));
+	AE::SceneManager::GetInstance().GetGameInstance()->AddObserver(std::move(std::make_unique<ScoreDisplayObserver>(scoreTextComp)));
 	galaga->AddObserver(std::move(std::make_unique<GalagaObserver>()));
 
 	return galaga.get();
@@ -127,22 +124,4 @@ void SoloLevel::AddBossEnemy(AE::Scene& scene, AE::GameObject* galaga)
 
 	
 	scene.Add(enemy);
-}
-
-void SoloLevel::AddControlsExplainers(Scene& scene)
-{
-	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 16);
-
-	auto controls1 = std::make_shared<AE::GameObject>();
-	controls1->AddComponent(std::make_shared<TextComponent>(controls1.get(),
-		"AD: move sideways", font));
-	controls1->SetLocalTransform({ 10, 75 });
-
-	auto controls2 = std::make_shared<AE::GameObject>();
-	controls2->AddComponent(std::make_shared<TextComponent>(controls2.get(),
-		"Space: shoot bullet", font));
-	controls2->SetLocalTransform({ 10, 95 });
-
-	scene.Add(controls1);
-	scene.Add(controls2);
 }

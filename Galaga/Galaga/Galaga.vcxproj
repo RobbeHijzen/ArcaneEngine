@@ -39,7 +39,6 @@
     <ClInclude Include="src\HealthComponent.h" />
     <ClInclude Include="src\ImageComponent.h" />
     <ClInclude Include="src\Observers.h" />
-    <ClInclude Include="src\ScoreComponent.h" />
     <ClInclude Include="src\TextComponent.h" />
     <ClInclude Include="src\StatesEnemyBoss.h" />
     <ClInclude Include="src\VersusLevel.h" />
@@ -65,7 +64,6 @@
     <ClCompile Include="src\ImageComponent.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Observers.cpp" />
-    <ClCompile Include="src\ScoreComponent.cpp" />
     <ClCompile Include="src\TextComponent.cpp" />
     <ClCompile Include="src\StatesEnemyBoss.cpp" />
     <ClCompile Include="src\VersusLevel.cpp" />

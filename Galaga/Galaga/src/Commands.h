@@ -4,7 +4,6 @@
 
 #include "Time.h"
 #include "HealthComponent.h"
-#include "ScoreComponent.h"
 #include "ShootComponent.h"
 #include "ButtonBoxComponent.h"
 

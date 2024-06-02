@@ -10,9 +10,6 @@
     <ClInclude Include="src\ImageComponent.h">
       <Filter>Galaga\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\ScoreComponent.h">
-      <Filter>Galaga\Components</Filter>
-    </ClInclude>
     <ClInclude Include="src\TextComponent.h">
       <Filter>Galaga\Components</Filter>
     </ClInclude>
@@ -79,9 +76,6 @@
       <Filter>Galaga\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\ImageComponent.cpp">
-      <Filter>Galaga\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ScoreComponent.cpp">
       <Filter>Galaga\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\TextComponent.cpp">

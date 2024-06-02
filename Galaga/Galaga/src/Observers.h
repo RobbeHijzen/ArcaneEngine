@@ -32,7 +32,7 @@ class ScoreDisplayObserver : public AE::Observer
 {
 public:
 
-	ScoreDisplayObserver(TextComponent* textComp)
+	ScoreDisplayObserver(std::shared_ptr<TextComponent> textComp)
 		: m_pTextComponent{ textComp }
 	{}
 
@@ -40,7 +40,7 @@ public:
 
 private:
 
-	TextComponent* m_pTextComponent{};
+	std::shared_ptr<TextComponent> m_pTextComponent{};
 
 };
 

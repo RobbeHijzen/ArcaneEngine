@@ -30,6 +30,10 @@ namespace AE
 				}
 			}
 		}
+		void ClearObservers()
+		{
+			m_Observers.clear();
+		}
 
 		void NotifyAll(Event event, GameObject* gameObject)
 		{

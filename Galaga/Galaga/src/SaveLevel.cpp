@@ -182,7 +182,7 @@ void SaveLevel::AddButtons(AE::Scene& scene, const std::vector<ScoreInfo>& highs
 
 	auto spaceImageComp{ std::make_shared<ImageComponent>(spaceButton.get(), "keyboard.png") };
 	spaceImageComp->SetSourceRect({ 226, 251, 359, 43 });
-	spaceImageComp->SetDestRect({ 0, 0, int(359 / 1.34f), 32 });
+	spaceImageComp->SetDestRect({ 0, 0, 268, 32 });
 	spaceButton->AddComponent(spaceImageComp);
 
 	scene.Add(spaceButton);
@@ -203,7 +203,7 @@ void SaveLevel::AddButtons(AE::Scene& scene, const std::vector<ScoreInfo>& highs
 
 	auto backImageComp{ std::make_shared<ImageComponent>(backButton.get(), "keyboard.png") };
 	backImageComp->SetSourceRect({ 661, 67, 75, 42 });
-	backImageComp->SetDestRect({ 0, 0, int(75 / 1.34f), 32 });
+	backImageComp->SetDestRect({ 0, 0, 56, 32 });
 	backButton->AddComponent(backImageComp);
 
 	scene.Add(backButton);
@@ -233,39 +233,37 @@ void SaveLevel::AddButtons(AE::Scene& scene, const std::vector<ScoreInfo>& highs
 	scene.Add(enterButton);
 
 	// Buttons
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 0, 280}, "q", {109, 113, 43, 43}, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 1, 280}, "w", {158, 113, 43, 43}, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 2, 280}, "e", {206, 113, 43, 43}, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 3, 280}, "r", {254, 113, 43, 43}, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 4, 280}, "t", {303, 113, 43, 43}, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 5, 280}, "y", {352, 113, 43, 43}, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 6, 280}, "u", {400, 113, 43, 43}, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 7, 280}, "i", {449, 113, 43, 43}, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 8, 280}, "o", {497, 113, 43, 43}, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 9, 280}, "p", {546, 113, 43, 43}, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(backButtonComp.get());
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 0, 280}, "q", {109, 113, 43, 43}, "keyboard.png"), {34, 34});
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 1, 280}, "w", {158, 113, 43, 43}, "keyboard.png"), {34, 34});
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 2, 280}, "e", {206, 113, 43, 43}, "keyboard.png"), {34, 34});
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 3, 280}, "r", {254, 113, 43, 43}, "keyboard.png"), {34, 34});
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 4, 280}, "t", {303, 113, 43, 43}, "keyboard.png"), {34, 34});
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 5, 280}, "y", {352, 113, 43, 43}, "keyboard.png"), {34, 34});
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 6, 280}, "u", {400, 113, 43, 43}, "keyboard.png"), {34, 34});
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 7, 280}, "i", {449, 113, 43, 43}, "keyboard.png"), {34, 34});
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 8, 280}, "o", {497, 113, 43, 43}, "keyboard.png"), {34, 34});
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, {110 + 40 * 9, 280}, "p", {546, 113, 43, 43}, "keyboard.png"), {34, 34});
+	buttonBoxComp->AddHorizontalButton(backButtonComp.get(), { 58, 34 });
 
-	buttonBoxComp->AddVerticalButton(  MakeButton(scene, { 128 + 40 * 0, 320 }, "a", { 129, 160, 43, 43 }, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 128 + 40 * 1, 320 }, "s", { 178, 160, 43, 43 }, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 128 + 40 * 2, 320 }, "d", { 227, 160, 43, 43 }, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 128 + 40 * 3, 320 }, "f", { 276, 160, 43, 43 }, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 128 + 40 * 4, 320 }, "g", { 324, 160, 43, 43 }, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 128 + 40 * 5, 320 }, "h", { 373, 160, 43, 43 }, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 128 + 40 * 6, 320 }, "j", { 422, 160, 43, 43 }, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 128 + 40 * 7, 320 }, "k", { 471, 160, 43, 43 }, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 128 + 40 * 8, 320 }, "l", { 520, 160, 43, 43 }, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(enterButtonComp.get());
+	buttonBoxComp->AddVerticalButton(  MakeButton(scene, { 128 + 40 * 0, 320 }, "a", { 129, 160, 43, 43 }, "keyboard.png"), { 34, 34 });
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 128 + 40 * 1, 320 }, "s", { 178, 160, 43, 43 }, "keyboard.png"), { 34, 34 });
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 128 + 40 * 2, 320 }, "d", { 227, 160, 43, 43 }, "keyboard.png"), { 34, 34 });
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 128 + 40 * 3, 320 }, "f", { 276, 160, 43, 43 }, "keyboard.png"), { 34, 34 });
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 128 + 40 * 4, 320 }, "g", { 324, 160, 43, 43 }, "keyboard.png"), { 34, 34 });
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 128 + 40 * 5, 320 }, "h", { 373, 160, 43, 43 }, "keyboard.png"), { 34, 34 });
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 128 + 40 * 6, 320 }, "j", { 422, 160, 43, 43 }, "keyboard.png"), { 34, 34 });
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 128 + 40 * 7, 320 }, "k", { 471, 160, 43, 43 }, "keyboard.png"), { 34, 34 });
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 128 + 40 * 8, 320 }, "l", { 520, 160, 43, 43 }, "keyboard.png"), { 34, 34 });
+	buttonBoxComp->AddHorizontalButton(enterButtonComp.get(), {56, 34});
 
-	buttonBoxComp->AddVerticalButton(  MakeButton(scene, { 142 + 40 * 0, 360 }, "z", { 144, 206, 43, 43 }, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 142 + 40 * 1, 360 }, "x", { 192, 206, 43, 43 }, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 142 + 40 * 2, 360 }, "c", { 241, 206, 43, 43 }, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 142 + 40 * 3, 360 }, "v", { 290, 206, 43, 43 }, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 142 + 40 * 4, 360 }, "b", { 338, 206, 43, 43 }, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 142 + 40 * 5, 360 }, "n", { 387, 206, 43, 43 }, "keyboard.png"));
-	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 142 + 40 * 6, 360 }, "m", { 435, 206, 43, 43 }, "keyboard.png"));
-	
-	buttonBoxComp->AddVerticalButton(spaceButtonComp.get());
-	
+	buttonBoxComp->AddVerticalButton(  MakeButton(scene, { 142 + 40 * 0, 360 }, "z", { 144, 206, 43, 43 }, "keyboard.png"), { 34, 34 });
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 142 + 40 * 1, 360 }, "x", { 192, 206, 43, 43 }, "keyboard.png"), { 34, 34 });
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 142 + 40 * 2, 360 }, "c", { 241, 206, 43, 43 }, "keyboard.png"), { 34, 34 });
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 142 + 40 * 3, 360 }, "v", { 290, 206, 43, 43 }, "keyboard.png"), { 34, 34 });
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 142 + 40 * 4, 360 }, "b", { 338, 206, 43, 43 }, "keyboard.png"), { 34, 34 });
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 142 + 40 * 5, 360 }, "n", { 387, 206, 43, 43 }, "keyboard.png"), { 34, 34 });
+	buttonBoxComp->AddHorizontalButton(MakeButton(scene, { 142 + 40 * 6, 360 }, "m", { 435, 206, 43, 43 }, "keyboard.png"), { 34, 34 });
+	buttonBoxComp->AddVerticalButton(spaceButtonComp.get(), { 270, 34 });
 }
 ButtonComponent* SaveLevel::MakeButton(AE::Scene& scene, glm::vec2 pos, std::string addition, AE::Rect sourceRect, std::string texture)
 {

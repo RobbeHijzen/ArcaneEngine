@@ -168,7 +168,12 @@ void LeaderboardLevel::AddButtons(AE::Scene& scene)
 	menuButton->AddLocalTransform({ 200.f, 370.f });
 
 	auto menuButtonComp{ std::make_shared<ButtonComponent>(menuButton.get(), []()
-											{ AE::SceneManager::GetInstance().SetScene("StartScreen"); }) };
+											{ 
+												GalagaGameInstance* gameInstance{ dynamic_cast<GalagaGameInstance*>(AE::SceneManager::GetInstance().GetGameInstance()) };
+												gameInstance->ResetStats();
+
+												AE::SceneManager::GetInstance().SetScene("StartScreen"); 
+											}) };
 	menuButton->AddComponent(menuButtonComp);
 
 	auto menuTextComp{ std::make_shared<TextComponent>(menuButton.get(), "Return to Menu", font) };

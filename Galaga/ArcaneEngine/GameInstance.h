@@ -1,4 +1,5 @@
 #pragma once
+#include "Subject.h"
 
 namespace AE
 {
@@ -7,8 +8,22 @@ namespace AE
 	public:
 		virtual ~GameInstance() {}
 
-	private:
+		void NotifyAll(Event event) { m_pSubject->NotifyAll(event, nullptr); }
+		void AddObserver(std::unique_ptr<Observer> observer)
+		{
+			m_pSubject->AddObserver(std::move(observer));
+		}
+		void RemoveObserver(Observer* observer)
+		{
+			m_pSubject->RemoveObserver(observer);
+		}
+		void ClearObservers()
+		{
+			m_pSubject->ClearObservers();
+		}
 
+	private:
+		std::unique_ptr<Subject> m_pSubject{ std::make_unique<Subject>() };
 	};
 
 }

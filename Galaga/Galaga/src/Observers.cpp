@@ -4,7 +4,6 @@
 #include "SceneManager.h"
 
 #include "HealthComponent.h"
-#include "ScoreComponent.h"
 #include "ShootComponent.h"
 
 #include "ServiceLocator.h"
@@ -57,15 +56,16 @@ void HealthDisplayObserver::CreateImages(int health)
 	}
 }
 
-void ScoreDisplayObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
+void ScoreDisplayObserver::OnNotify(AE::Event event, AE::GameObject* )
 {
 	switch (event)
 	{
 	case AE::Event::ScoreChanged:
 	{
-		int newScore{ gameObject->GetComponent<ScoreComponent>()->GetScore() };
+		GalagaGameInstance* gameInstance{ dynamic_cast<GalagaGameInstance*>(AE::SceneManager::GetInstance().GetGameInstance()) };
+		if (!gameInstance) return;
 
-		std::string newText{ "#Score: " + std::to_string(newScore) };
+		std::string newText{ std::to_string(gameInstance->GetScore())};
 		m_pTextComponent->SetText(newText);
 	}
 	}
@@ -146,10 +146,10 @@ void EnemyObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 		gameObject->Delete();
 		if (m_GalagaObject)
 		{
-			if (auto scoreComp = m_GalagaObject->GetComponent<ScoreComponent>())
-			{
-				scoreComp->IncreaseScore(m_ScoreOnDeath);
-			}
+			GalagaGameInstance* gameInstance{ dynamic_cast<GalagaGameInstance*>(AE::SceneManager::GetInstance().GetGameInstance()) };
+			if (!gameInstance) return;
+
+			gameInstance->IncreaseScore(m_ScoreOnDeath, gameObject);
 		}
 
 		break;
@@ -165,7 +165,7 @@ void EnemyObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 	}
 }
 
-void GalagaObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
+void GalagaObserver::OnNotify(AE::Event event, AE::GameObject* )
 {
 	switch (event)
 	{
@@ -181,15 +181,6 @@ void GalagaObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 
 		gameInstance->IncrementShotsFired();
 		break;
-	}
-	case AE::Event::ScoreChanged:
-	{
-		int newScore{ gameObject->GetComponent<ScoreComponent>()->GetScore() };
-
-		GalagaGameInstance* gameInstance{ dynamic_cast<GalagaGameInstance*>(AE::SceneManager::GetInstance().GetGameInstance()) };
-		if (!gameInstance) return;
-
-		gameInstance->SetScore(newScore);
 	}
 
 	}

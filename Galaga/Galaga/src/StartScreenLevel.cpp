@@ -12,7 +12,7 @@ void StartScreenLevel::Load(AE::Scene& scene)
 	AddBackgroundImage(scene);
 	AddLogoImage(scene);
 	AddButtons(scene);
-
+	AddControls(scene);
 }
 
 void StartScreenLevel::AddBackgroundImage(AE::Scene& scene)
@@ -100,8 +100,64 @@ void StartScreenLevel::AddButtons(AE::Scene& scene)
 
 	scene.Add(button_03);
 
+	// Button 04
+	auto button_04 = std::make_shared<AE::GameObject>();
+	button_04->AddLocalTransform({ 215.f, 340.f });
+
+	auto buttonComp_04{ std::make_shared<ButtonComponent>(button_04.get(), []()
+											{ AE::SceneManager::GetInstance().SetScene("HighscoreScreen"); }) };
+	button_04->AddComponent(buttonComp_04);
+
+	auto textComp_04{ std::make_shared<TextComponent>(button_04.get(), "Highscores", font) };
+	button_04->AddComponent(textComp_04);
+
+	scene.Add(button_04);
+
 
 	buttonBoxComp->AddVerticalButton(buttonComp_01.get());
 	buttonBoxComp->AddVerticalButton(buttonComp_02.get());
 	buttonBoxComp->AddVerticalButton(buttonComp_03.get());
+	buttonBoxComp->AddVerticalButton(buttonComp_04.get());
+}
+
+void StartScreenLevel::AddControls(AE::Scene& scene)
+{
+	// Font
+	auto fontBig = AE::ResourceManager::GetInstance().LoadFont("ArcadeFont.ttf", 13);
+	auto fontMedium = AE::ResourceManager::GetInstance().LoadFont("ArcadeFont.ttf", 11);
+	auto fontSmall = AE::ResourceManager::GetInstance().LoadFont("ArcadeFont.ttf", 9);
+
+	// Controls text
+	auto go = std::make_shared<AE::GameObject>();
+
+	auto text_01{ std::make_shared<TextComponent>(go.get(), "--Controls--", fontBig, glm::u8vec3{255, 0, 0}) };
+	text_01->AddLocalPosition(450.f, 380.f);
+
+	auto text_02{ std::make_shared<TextComponent>(go.get(), "Action", fontMedium, glm::u8vec3{255, 255, 255}) };
+	text_02->AddLocalPosition(440.f, 410.f);
+
+	auto text_03{ std::make_shared<TextComponent>(go.get(), "Gamepad", fontMedium, glm::u8vec3{255, 255, 255}) };
+	text_03->AddLocalPosition(535.f, 410.f);
+
+
+	auto text_04{ std::make_shared<TextComponent>(go.get(), "Move", fontSmall, glm::u8vec3{0, 255, 255}) };
+	text_04->AddLocalPosition(450.f, 440.f);
+
+	auto text_05{ std::make_shared<TextComponent>(go.get(), "Left/Right", fontSmall, glm::u8vec3{255, 255, 0}) };
+	text_05->AddLocalPosition(525.f, 440.f);
+
+	auto text_06{ std::make_shared<TextComponent>(go.get(), "Shoot", fontSmall, glm::u8vec3{0, 255, 255}) };
+	text_06->AddLocalPosition(445.f, 460.f);
+
+	auto text_07{ std::make_shared<TextComponent>(go.get(), "A", fontMedium, glm::u8vec3{255, 255, 0}) };
+	text_07->AddLocalPosition(565.f, 460.f);
+
+	go->AddComponent(text_01);
+	go->AddComponent(text_02);
+	go->AddComponent(text_03);
+	go->AddComponent(text_04);
+	go->AddComponent(text_05);
+	go->AddComponent(text_06);
+	go->AddComponent(text_07);
+	scene.Add(go);
 }

@@ -44,19 +44,41 @@ void ButtonBoxComponent::MoveSelection(glm::i32vec2 dir)
 	}
 }
 
+void ButtonBoxComponent::AddHorizontalButton(ButtonComponent* button, glm::vec2 buttonSize)
+{
+	if (m_Buttons.size() == 0) { m_Buttons.resize(1); m_ButtonFollowSizeInfo.resize(1); }
+	m_Buttons[m_Buttons.size() - 1].emplace_back(button);
+	m_ButtonFollowSizeInfo[m_Buttons.size() - 1].emplace_back(std::pair<bool, glm::vec2>{true, buttonSize});
+}
+
 void ButtonBoxComponent::AddHorizontalButton(ButtonComponent* button)
 {
-	if(m_Buttons.size() == 0) m_Buttons.resize(1);
+	if (m_Buttons.size() == 0) { m_Buttons.resize(1); m_ButtonFollowSizeInfo.resize(1); }
 	m_Buttons[m_Buttons.size() - 1].emplace_back(button);
+	m_ButtonFollowSizeInfo[m_Buttons.size() - 1].emplace_back(std::pair<bool, glm::vec2>{false, {}});
+}
+
+void ButtonBoxComponent::AddVerticalButton(ButtonComponent* button, glm::vec2 buttonSize)
+{
+	m_Buttons.emplace_back(std::vector<ButtonComponent*>{button});
+	m_ButtonFollowSizeInfo.emplace_back(std::vector<std::pair<bool, glm::vec2>>{{true, buttonSize}});
 }
 
 void ButtonBoxComponent::AddVerticalButton(ButtonComponent* button)
 {
-	m_Buttons.emplace_back(std::vector<ButtonComponent*>{ button });
+	m_Buttons.emplace_back(std::vector<ButtonComponent*>{button});
+	m_ButtonFollowSizeInfo.emplace_back(std::vector<std::pair<bool, glm::vec2>>{{false, {}}});
 }
 
 void ButtonBoxComponent::MoveImageToSelection()
 {
 	glm::vec3 newPos{ m_Buttons[m_CurrentlySelectedRow][m_CurrentlySelectedCol]->GetWorldTransform().GetPosition() };
 	m_SelectionImageComp->SetLocalPosition(newPos.x + m_SelectionOffset.x, newPos.y + m_SelectionOffset.y);
+
+	if (m_ButtonFollowSizeInfo[m_CurrentlySelectedRow][m_CurrentlySelectedCol].first)
+	{
+		glm::vec2 size{ m_ButtonFollowSizeInfo[m_CurrentlySelectedRow][m_CurrentlySelectedCol].second };
+		AE::Rect newDestRect{ 0.f,0.f, size.x, size.y };
+		m_SelectionImageComp->SetDestRect(newDestRect);
+	}
 }
