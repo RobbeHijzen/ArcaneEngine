@@ -23,7 +23,8 @@ void SoloLevel::Load(Scene& scene)
 	AddControlsExplainers(scene);
 
 	auto go = std::make_shared<AE::GameObject>();
-	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_RETURN, InputType::IsUpThisFrame, std::move(std::make_unique<LoadCommand>(go.get(), "StartScreen")));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_RETURN, InputType::IsUpThisFrame, std::move(std::make_unique<LoadCommand>(go.get(), "DeathScreen")));
+	InputManager::GetInstance().BindActionGP(0, INPUT_GAMEPAD_Y, InputType::IsUpThisFrame, std::move(std::make_unique<LoadCommand>(go.get(), "DeathScreen")));
 
 	scene.Add(go);
 }
@@ -68,6 +69,7 @@ AE::GameObject* SoloLevel::AddGalaga(Scene& scene)
 	InputManager::GetInstance().BindActionGP(0, INPUT_GAMEPAD_DPAD_RIGHT, InputType::IsPressed, std::move(std::make_unique<MoveCommand>(galaga.get(), glm::vec2{ 1.f, 0.f }, galagaMoveSpeed)));
 
 	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_SPACE, InputType::IsDownThisFrame, std::move(std::make_unique<ShootCommand>(galaga.get())));
+	InputManager::GetInstance().BindActionGP(0, INPUT_GAMEPAD_A, InputType::IsDownThisFrame, std::move(std::make_unique<ShootCommand>(galaga.get())));
 
 	scene.Add(galaga);
 

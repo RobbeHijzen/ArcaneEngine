@@ -17,7 +17,7 @@ class TextComponent final : public AE::BaseComponent
 {
 public:
 
-	TextComponent(AE::GameObject* parentGameObject, const std::string& text, std::shared_ptr<AE::Font> font);
+	TextComponent(AE::GameObject* parentGameObject, const std::string& text, std::shared_ptr<AE::Font> font, glm::u8vec3 color = {255, 255, 255});
 	
 	virtual ~TextComponent() = default;
 	TextComponent(const TextComponent& other) = delete;
@@ -39,5 +39,7 @@ private:
 	std::string m_Text;
 	std::shared_ptr<AE::Font> m_Font;
 	std::shared_ptr<AE::Texture2D> m_TextTexture;
+
+	glm::u8vec3 m_Color{};
 };
 

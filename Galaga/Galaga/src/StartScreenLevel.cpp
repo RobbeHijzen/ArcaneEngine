@@ -19,7 +19,7 @@ void StartScreenLevel::AddBackgroundImage(AE::Scene& scene)
 {
 	auto go = std::make_shared<AE::GameObject>();
 	auto imageComp{ std::make_shared<ImageComponent>(go.get(), "Background.png") };
-	imageComp->SetDestRect({ 0, 0, 640, 480 });
+	imageComp->SetDestRect({ 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT });
 	
 	go->AddComponent(imageComp);
 	scene.Add(go);
@@ -69,7 +69,7 @@ void StartScreenLevel::AddButtons(AE::Scene& scene)
 											{ AE::SceneManager::GetInstance().SetScene("SoloLevel"); })};
 	button_01->AddComponent(buttonComp_01);
 	
-	auto textComp_01{std::make_shared<TextComponent>(button_01.get(), "Solo", font)};
+	auto textComp_01{ std::make_shared<TextComponent>(button_01.get(), "Solo", font) };
 	button_01->AddComponent(textComp_01);
 
 	scene.Add(button_01);
@@ -78,7 +78,8 @@ void StartScreenLevel::AddButtons(AE::Scene& scene)
 	auto button_02 = std::make_shared<AE::GameObject>();
 	button_02->AddLocalTransform({ 270.f, 220.f });
 
-	auto buttonComp_02{ std::make_shared<ButtonComponent>(button_02.get(), []() { std::cout << "Button 2 Pressed\n"; }) };
+	auto buttonComp_02{ std::make_shared<ButtonComponent>(button_02.get(), []()
+											{ AE::SceneManager::GetInstance().SetScene("CoopLevel"); }) };
 	button_02->AddComponent(buttonComp_02);
 
 	auto textComp_02{ std::make_shared<TextComponent>(button_02.get(), "Coop", font) };
@@ -90,7 +91,8 @@ void StartScreenLevel::AddButtons(AE::Scene& scene)
 	auto button_03 = std::make_shared<AE::GameObject>();
 	button_03->AddLocalTransform({ 252.f, 270.f });
 
-	auto buttonComp_03{ std::make_shared<ButtonComponent>(button_03.get(), []() { std::cout << "Button 3 Pressed\n"; }) };
+	auto buttonComp_03{ std::make_shared<ButtonComponent>(button_03.get(), []() 
+											{ AE::SceneManager::GetInstance().SetScene("VersusLevel"); }) };
 	button_03->AddComponent(buttonComp_03);
 
 	auto textComp_03{ std::make_shared<TextComponent>(button_03.get(), "Versus", font) };

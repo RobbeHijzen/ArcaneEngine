@@ -8,19 +8,21 @@
 
 using namespace AE;
 
-TextComponent::TextComponent(AE::GameObject* parentGameObject, const std::string& text, std::shared_ptr<Font> font)
+TextComponent::TextComponent(AE::GameObject* parentGameObject, const std::string& text, std::shared_ptr<Font> font, glm::u8vec3 color)
 	: BaseComponent(parentGameObject)
 	, m_NeedsUpdate(true)
 	, m_Text(text)
 	, m_Font(std::move(font))
 	, m_TextTexture(nullptr)
+	, m_Color{color}
 { }
 
 void TextComponent::Update()
 {
 	if (m_NeedsUpdate)
 	{
-		const SDL_Color color = { 255,255,255,255 }; // only white text is supported now
+		if (m_Text.empty()) return;
+		const SDL_Color color = { m_Color.x, m_Color.y, m_Color.z, 255 }; // only white text is supported now
 		const auto surf = TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), color);
 		if (surf == nullptr)
 		{
@@ -41,6 +43,8 @@ void TextComponent::Render() const
 {
 	if (m_TextTexture != nullptr)
 	{
+		if (m_Text.empty()) return;
+
 		auto pOwner{ GetOwner()};
 
 		if (pOwner)

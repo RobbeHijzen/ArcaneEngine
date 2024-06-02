@@ -26,6 +26,7 @@
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FSMComponent.cpp" />
+    <ClCompile Include="GameInstance.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HitboxComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="Command.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Font.h" />
+    <ClInclude Include="GameInstance.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HitboxComponent.h" />
     <ClInclude Include="InputHelperStructs.h" />

@@ -52,6 +52,27 @@
     <ClInclude Include="src\ButtonComponent.h">
       <Filter>Galaga\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\CoopLevel.h">
+      <Filter>Galaga\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeathScreenLevel.h">
+      <Filter>Galaga\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LeaderboardLevel.h">
+      <Filter>Galaga\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VersusLevel.h">
+      <Filter>Galaga\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GalagaGameInstance.h">
+      <Filter>Galaga\GameInstance</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HighscoreLevel.h">
+      <Filter>Galaga\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SaveLevel.h">
+      <Filter>Galaga\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HealthComponent.cpp">
@@ -105,6 +126,27 @@
     <ClCompile Include="src\ButtonComponent.cpp">
       <Filter>Galaga\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\CoopLevel.cpp">
+      <Filter>Galaga\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeathScreenLevel.cpp">
+      <Filter>Galaga\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LeaderboardLevel.cpp">
+      <Filter>Galaga\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VersusLevel.cpp">
+      <Filter>Galaga\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GalagaGameInstance.cpp">
+      <Filter>Galaga\GameInstance</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HighscoreLevel.cpp">
+      <Filter>Galaga\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SaveLevel.cpp">
+      <Filter>Galaga\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Galaga">
@@ -124,6 +166,9 @@
     </Filter>
     <Filter Include="Galaga\FSMStates">
       <UniqueIdentifier>{4407f83b-e91e-43b6-8ae0-2927442ba52a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Galaga\GameInstance">
+      <UniqueIdentifier>{82caf558-72cf-4619-a573-47092e520de0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

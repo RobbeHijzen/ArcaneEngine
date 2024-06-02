@@ -111,6 +111,9 @@
     <ClCompile Include="EngineStates.cpp">
       <Filter>ArcaneEngine\FSM\EngineStates</Filter>
     </ClCompile>
+    <ClCompile Include="GameInstance.cpp">
+      <Filter>ArcaneEngine\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseComponent.h">
@@ -202,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="EngineStates.h">
       <Filter>ArcaneEngine\FSM\EngineStates</Filter>
+    </ClInclude>
+    <ClInclude Include="GameInstance.h">
+      <Filter>ArcaneEngine\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

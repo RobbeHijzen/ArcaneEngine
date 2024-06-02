@@ -4,6 +4,7 @@
 #include <memory>
 #include "Singleton.h"
 #include "SceneInfo.h"
+#include "GameInstance.h"
 
 namespace AE
 {
@@ -26,6 +27,9 @@ namespace AE
 
 		void RemoveDeletedObjects();
 
+		void SetGameInstance(std::unique_ptr<GameInstance> gameInstance) { m_GameInstance = std::move(gameInstance); }
+		GameInstance* GetGameInstance() const { return m_GameInstance.get(); }
+
 	private:
 
 		friend class Singleton<SceneManager>;
@@ -33,5 +37,7 @@ namespace AE
 
 		std::vector<std::shared_ptr<Scene>> m_Scenes;
 		int m_CurrentSceneIndex{ 0 };
+
+		std::unique_ptr<GameInstance> m_GameInstance{};
 	};
 }

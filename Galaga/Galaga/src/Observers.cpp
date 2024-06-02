@@ -8,6 +8,7 @@
 #include "ShootComponent.h"
 
 #include "ServiceLocator.h"
+#include "GalagaGameInstance.h"
 
 
 void HealthDisplayObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
@@ -153,10 +154,18 @@ void EnemyObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 
 		break;
 	}
+	case AE::Event::ObjectLostHealth:
+	{
+		GalagaGameInstance* gameInstance{ dynamic_cast<GalagaGameInstance*>(AE::SceneManager::GetInstance().GetGameInstance()) };
+		if (!gameInstance) return;
+
+		gameInstance->IncrementShotsHit();
+		break;
+	}
 	}
 }
 
-void GalagaObserver::OnNotify(AE::Event event, AE::GameObject* )
+void GalagaObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 {
 	switch (event)
 	{
@@ -165,5 +174,23 @@ void GalagaObserver::OnNotify(AE::Event event, AE::GameObject* )
 		AE::SceneManager::GetInstance().SetScene("DeathScreen");
 		break;
 	}
+	case AE::Event::FireBullet:
+	{
+		GalagaGameInstance* gameInstance{ dynamic_cast<GalagaGameInstance*>(AE::SceneManager::GetInstance().GetGameInstance()) };
+		if (!gameInstance) return;
+
+		gameInstance->IncrementShotsFired();
+		break;
+	}
+	case AE::Event::ScoreChanged:
+	{
+		int newScore{ gameObject->GetComponent<ScoreComponent>()->GetScore() };
+
+		GalagaGameInstance* gameInstance{ dynamic_cast<GalagaGameInstance*>(AE::SceneManager::GetInstance().GetGameInstance()) };
+		if (!gameInstance) return;
+
+		gameInstance->SetScore(newScore);
+	}
+
 	}
 }
