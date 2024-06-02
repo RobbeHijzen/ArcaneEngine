@@ -3,7 +3,7 @@
 #include "SceneInfo.h"
 #include "Scene.h"
 
-class GameLevel : public AE::SceneInfo
+class SoloLevel : public AE::SceneInfo
 {
 public:
 

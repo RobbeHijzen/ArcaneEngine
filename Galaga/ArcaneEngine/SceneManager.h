@@ -11,12 +11,11 @@ namespace AE
 	class SceneManager final : public Singleton<SceneManager>
 	{
 	public:
-		Scene& CreateScene(std::unique_ptr<SceneInfo>&& sceneInfo);
+		Scene& CreateScene(std::unique_ptr<SceneInfo>&& sceneInfo, std::string sceneName);
 		Scene* GetCurrentScene() { return m_Scenes[m_CurrentSceneIndex].get(); }
 
 		int GetCurrentSceneIndex() const { return m_CurrentSceneIndex; }
-		void IncrementScene();
-		void SetScene(int newSceneIndex);
+		void SetScene(std::string sceneName);
 
 		void GameStart();
 

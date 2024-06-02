@@ -6,16 +6,26 @@
 #include "Observers.h"
 #include "ShootComponent.h"
 
+//****
+// Spawning
+//****
+std::unique_ptr<AE::FSMState> StatesEnemyBoss::Spawning::Update(AE::GameObject* )
+{
+	if (m_SeekPositions.size() > 0)
+	{
+		glm::vec2 nextSeekPos{ m_SeekPositions.front() };
+		m_SeekPositions.pop();
+
+		auto nextState{ std::make_unique<Spawning>(m_SeekPositions) };
+		return std::move(std::make_unique<AE::States::Seek>(std::move(nextState), nextSeekPos));
+	}
+
+	return std::move(std::make_unique<Idle>());
+}
 
 //****
 // Idle
 //****
-void StatesEnemyBoss::Idle::OnEnter(AE::GameObject* )
-{
-}
-void StatesEnemyBoss::Idle::OnExit(AE::GameObject* )
-{
-}
 std::unique_ptr<AE::FSMState> StatesEnemyBoss::Idle::Update(AE::GameObject* )
 {
 	float dt{AE::Time::GetInstance().GetDeltaTime()};
@@ -47,9 +57,6 @@ void StatesEnemyBoss::BombingRun::OnEnter(AE::GameObject* gameObject)
 	m_SeekPos.x = rand() % 2 ? 0.f : WINDOW_WIDTH;
 	m_SeekDir = glm::normalize(m_SeekPos - glm::vec2{gameObject->GetLocalTransform().GetPosition()});
 
-}
-void StatesEnemyBoss::BombingRun::OnExit(AE::GameObject* )
-{
 }
 std::unique_ptr<AE::FSMState> StatesEnemyBoss::BombingRun::Update(AE::GameObject* gameObject)
 {
@@ -139,9 +146,6 @@ void StatesEnemyBoss::FullHealth::OnEnter(AE::GameObject* gameObject)
 
 	m_HealthComp = gameObject->GetComponent<HealthComponent>();
 }
-void StatesEnemyBoss::FullHealth::OnExit(AE::GameObject* )
-{
-}
 std::unique_ptr<AE::FSMState> StatesEnemyBoss::FullHealth::Update(AE::GameObject*)
 {
 	if (m_HealthComp)
@@ -163,9 +167,6 @@ void StatesEnemyBoss::HalfHealth::OnEnter(AE::GameObject* gameObject)
 	{
 		imageComp->SetSourcePos(glm::vec2{ 1.f, 127.f });
 	}
-}
-void StatesEnemyBoss::HalfHealth::OnExit(AE::GameObject* )
-{
 }
 std::unique_ptr<AE::FSMState> StatesEnemyBoss::HalfHealth::Update(AE::GameObject* )
 {

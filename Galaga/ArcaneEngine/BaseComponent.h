@@ -24,6 +24,7 @@ namespace AE
 		virtual void Render() const {};
 
 		Transform GetLocalTransform() const { return m_LocalTransform; }
+		Transform GetWorldTransform() const;
 
 		void SetLocalPosition(float x, float y, float z = 0.f) { m_LocalTransform.SetPosition(x, y, z); }
 		void AddLocalPosition(float x, float y, float z = 0.f) { m_LocalTransform += {x, y, z}; }

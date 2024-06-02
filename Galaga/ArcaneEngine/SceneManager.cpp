@@ -6,28 +6,23 @@
 
 namespace AE
 {
-	void SceneManager::IncrementScene()
+	void SceneManager::SetScene(std::string sceneName)
 	{
-		m_Scenes[m_CurrentSceneIndex]->DeleteAll();
-		InputManager::GetInstance().RemoveAllBindings();
+		for (int index{}; index < m_Scenes.size(); ++index)
+		{
+			auto scene{m_Scenes[index]};
+			if (scene->GetSceneName() == sceneName)
+			{
+				m_Scenes[m_CurrentSceneIndex]->DeleteAll();
+				InputManager::GetInstance().RemoveAllBindings();
 
-		m_CurrentSceneIndex = (m_CurrentSceneIndex + 1) % m_Scenes.size();
-		m_Scenes[m_CurrentSceneIndex]->Load();
+				m_CurrentSceneIndex = index;
+				m_Scenes[m_CurrentSceneIndex]->Load();
 
-		GameStart();
-	}
-
-	void SceneManager::SetScene(int newSceneIndex)
-	{
-		assert(newSceneIndex < m_Scenes.size() && newSceneIndex >= 0);
-
-		m_Scenes[m_CurrentSceneIndex]->DeleteAll();
-		InputManager::GetInstance().RemoveAllBindings();
-
-		m_CurrentSceneIndex = newSceneIndex;
-		m_Scenes[m_CurrentSceneIndex]->Load();
-
-		GameStart();
+				GameStart();
+				break;
+			}
+		}
 	}
 
 	void SceneManager::GameStart()
@@ -84,9 +79,9 @@ namespace AE
 		}
 	}
 
-	Scene& SceneManager::CreateScene(std::unique_ptr<SceneInfo>&& sceneInfo)
+	Scene& SceneManager::CreateScene(std::unique_ptr<SceneInfo>&& sceneInfo, std::string sceneName)
 	{
-		const auto& scene = std::shared_ptr<Scene>(new Scene(std::move(sceneInfo)));
+		const auto& scene = std::shared_ptr<Scene>(new Scene(std::move(sceneInfo), sceneName));
 		m_Scenes.emplace_back(scene);
 
 		return *scene;

@@ -7,18 +7,34 @@
 #include "HealthComponent.h"
 #include "HitboxComponent.h"
 
+#include <queue>
 
 namespace StatesEnemyBoss
 {
 	//------------------
 	// Behavioral States
 	//------------------
+	class Spawning : public AE::FSMState
+	{
+	public:
+		Spawning(std::queue<glm::vec2> seekPositions)
+			: m_SeekPositions{ seekPositions } {}
+
+		virtual void OnEnter(AE::GameObject* ) override {};
+		virtual void OnExit(AE::GameObject* ) override {};
+		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject) override;
+
+	private:
+
+		std::queue<glm::vec2> m_SeekPositions{};
+	};
+
 	class Idle : public AE::FSMState
 	{
 	public:
-		virtual void OnEnter(AE::GameObject* gameObject) override;
-		virtual void OnExit(AE::GameObject* gameObject);
-		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject);
+		virtual void OnEnter(AE::GameObject* ) override {};
+		virtual void OnExit(AE::GameObject* ) override {};
+		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject) override;
 
 	private:
 
@@ -29,9 +45,9 @@ namespace StatesEnemyBoss
 	class BombingRun : public AE::FSMState
 	{
 	public:
-		virtual void OnEnter(AE::GameObject* gameObject);
-		virtual void OnExit(AE::GameObject* gameObject);
-		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject);
+		virtual void OnEnter(AE::GameObject* gameObject) override;
+		virtual void OnExit(AE::GameObject* ) override {};
+		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject) override;
 
 	private:
 
@@ -47,9 +63,9 @@ namespace StatesEnemyBoss
 	class TractorBeam : public AE::FSMState
 	{
 	public:
-		virtual void OnEnter(AE::GameObject* gameObject);
-		virtual void OnExit(AE::GameObject* gameObject);
-		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject);
+		virtual void OnEnter(AE::GameObject* gameObject) override;
+		virtual void OnExit(AE::GameObject* gameObject) override;
+		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject) override;
 
 	private:
 
@@ -69,9 +85,9 @@ namespace StatesEnemyBoss
 	class FullHealth : public AE::FSMState
 	{
 	public:
-		virtual void OnEnter(AE::GameObject* gameObject);
-		virtual void OnExit(AE::GameObject* gameObject);
-		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject);
+		virtual void OnEnter(AE::GameObject* gameObject) override;
+		virtual void OnExit(AE::GameObject* ) override {};
+		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject) override;
 
 	private:
 		std::shared_ptr<HealthComponent> m_HealthComp{};
@@ -79,9 +95,9 @@ namespace StatesEnemyBoss
 	class HalfHealth : public AE::FSMState
 	{
 	public:
-		virtual void OnEnter(AE::GameObject* gameObject);
-		virtual void OnExit(AE::GameObject* gameObject);
-		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject);
+		virtual void OnEnter(AE::GameObject* gameObject) override;
+		virtual void OnExit(AE::GameObject* ) override {};
+		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject) override;
 
 	private:
 	};

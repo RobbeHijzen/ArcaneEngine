@@ -6,6 +6,7 @@
 #include "HealthComponent.h"
 #include "ScoreComponent.h"
 #include "ShootComponent.h"
+#include "ButtonBoxComponent.h"
 
 #include "SceneManager.h"
 
@@ -59,13 +60,54 @@ class LoadCommand : public AE::GameObjectCommand
 {
 public:
 
-	LoadCommand(AE::GameObject* gameObject)
+	LoadCommand(AE::GameObject* gameObject, std::string newSceneName)
+		: GameObjectCommand(gameObject)
+		, m_SceneName{newSceneName}
+	{}
+
+	virtual void Execute() override
+	{
+		AE::SceneManager::GetInstance().SetScene(m_SceneName);
+	}
+private:
+	std::string m_SceneName{};
+};
+
+class ButtonPressCommand : public AE::GameObjectCommand
+{
+public:
+
+	ButtonPressCommand(AE::GameObject* gameObject)
 		: GameObjectCommand(gameObject)
 	{}
 
 	virtual void Execute() override
 	{
-		AE::SceneManager::GetInstance().IncrementScene();
+		if (auto buttonBoxComp = GetGameObject()->GetComponent<ButtonBoxComponent>())
+		{
+			buttonBoxComp->PressCurrentButton();
+		}
 	}
+};
+class ButtonMoveSelectionCommand : public AE::GameObjectCommand
+{
+public:
+
+	ButtonMoveSelectionCommand(AE::GameObject* gameObject, glm::i32vec2 moveDir)
+		: GameObjectCommand(gameObject)
+		, m_MoveDir{moveDir}
+	{}
+
+	virtual void Execute() override
+	{
+		if (auto buttonBoxComp = GetGameObject()->GetComponent<ButtonBoxComponent>())
+		{
+			buttonBoxComp->MoveSelection(m_MoveDir);
+		}
+	}
+
+private:
+	glm::i32vec2 m_MoveDir{};
+	
 };
 

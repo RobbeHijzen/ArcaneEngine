@@ -11,6 +11,7 @@ public:
 private:
 
 	void AddBackgroundImage(AE::Scene& scene);
-
+	void AddLogoImage(AE::Scene& scene);
+	void AddButtons(AE::Scene& scene);
 };
 

@@ -162,7 +162,7 @@ void GalagaObserver::OnNotify(AE::Event event, AE::GameObject* )
 	{
 	case AE::Event::ObjectDied:
 	{
-		AE::SceneManager::GetInstance().IncrementScene();
+		AE::SceneManager::GetInstance().SetScene("DeathScreen");
 		break;
 	}
 	}

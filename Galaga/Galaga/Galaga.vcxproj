@@ -19,9 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ButtonBoxComponent.h" />
+    <ClInclude Include="src\ButtonComponent.h" />
+    <ClInclude Include="src\EnemyManagerComponent.h" />
+    <ClInclude Include="src\EnemySpawnerComponent.h" />
     <ClInclude Include="src\AnimationComponent.h" />
     <ClInclude Include="src\StartScreenLevel.h" />
-    <ClInclude Include="src\GameLevel.h" />
+    <ClInclude Include="src\SoloLevel.h" />
     <ClInclude Include="src\ScrollingImageComponent.h" />
     <ClInclude Include="src\ProjectileMovementComponent.h" />
     <ClInclude Include="src\ShootComponent.h" />
@@ -34,9 +38,13 @@
     <ClInclude Include="src\StatesEnemyBoss.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ButtonBoxComponent.cpp" />
+    <ClCompile Include="src\ButtonComponent.cpp" />
+    <ClCompile Include="src\EnemyManagerComponent.cpp" />
+    <ClCompile Include="src\EnemySpawnerComponent.cpp" />
     <ClCompile Include="src\AnimationComponent.cpp" />
     <ClCompile Include="src\StartScreenLevel.cpp" />
-    <ClCompile Include="src\GameLevel.cpp" />
+    <ClCompile Include="src\SoloLevel.cpp" />
     <ClCompile Include="src\ScrollingImageComponent.cpp" />
     <ClCompile Include="src\ProjectileMovementComponent.cpp" />
     <ClCompile Include="src\ShootComponent.cpp" />

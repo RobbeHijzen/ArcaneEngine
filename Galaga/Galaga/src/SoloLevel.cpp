@@ -1,4 +1,4 @@
-#include "GameLevel.h"
+#include "SoloLevel.h"
 
 #include "TextComponent.h"
 #include "ImageComponent.h"
@@ -15,7 +15,7 @@
 
 using namespace AE;
 
-void GameLevel::Load(Scene& scene)
+void SoloLevel::Load(Scene& scene)
 {
 	AddBackgroundImage(scene);
 	auto galaga{ AddGalaga(scene) };
@@ -23,12 +23,12 @@ void GameLevel::Load(Scene& scene)
 	AddControlsExplainers(scene);
 
 	auto go = std::make_shared<AE::GameObject>();
-	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_RETURN, InputType::IsUpThisFrame, std::move(std::make_unique<LoadCommand>(go.get())));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_RETURN, InputType::IsUpThisFrame, std::move(std::make_unique<LoadCommand>(go.get(), "StartScreen")));
 
 	scene.Add(go);
 }
 
-void GameLevel::AddBackgroundImage(Scene& scene)
+void SoloLevel::AddBackgroundImage(Scene& scene)
 {
 	auto backgroundImage = std::make_shared<AE::GameObject>();
 	auto scrollingComp{ std::make_shared<ScrollingImageComponent>(backgroundImage.get(), "Background.png", 50.f) };
@@ -37,7 +37,7 @@ void GameLevel::AddBackgroundImage(Scene& scene)
 	scene.Add(backgroundImage);
 }
 
-AE::GameObject* GameLevel::AddGalaga(Scene& scene)
+AE::GameObject* SoloLevel::AddGalaga(Scene& scene)
 {
 	auto galaga = std::make_shared<AE::GameObject>();
 	auto imageComp{ std::make_shared<ImageComponent>(galaga.get(), "Galaga.png") };
@@ -64,8 +64,8 @@ AE::GameObject* GameLevel::AddGalaga(Scene& scene)
 	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_A, InputType::IsPressed, std::move(std::make_unique<MoveCommand>(galaga.get(), glm::vec2{ -1.f, 0.f }, galagaMoveSpeed)));
 	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_D, InputType::IsPressed, std::move(std::make_unique<MoveCommand>(galaga.get(), glm::vec2{ 1.f, 0.f }, galagaMoveSpeed)));
 
-	InputManager::GetInstance().BindActionGP(1, INPUT_GAMEPAD_DPAD_LEFT, InputType::IsPressed, std::move(std::make_unique<MoveCommand>(galaga.get(), glm::vec2{ -1.f, 0.f }, galagaMoveSpeed)));
-	InputManager::GetInstance().BindActionGP(1, INPUT_GAMEPAD_DPAD_RIGHT, InputType::IsPressed, std::move(std::make_unique<MoveCommand>(galaga.get(), glm::vec2{ 1.f, 0.f }, galagaMoveSpeed)));
+	InputManager::GetInstance().BindActionGP(0, INPUT_GAMEPAD_DPAD_LEFT, InputType::IsPressed, std::move(std::make_unique<MoveCommand>(galaga.get(), glm::vec2{ -1.f, 0.f }, galagaMoveSpeed)));
+	InputManager::GetInstance().BindActionGP(0, INPUT_GAMEPAD_DPAD_RIGHT, InputType::IsPressed, std::move(std::make_unique<MoveCommand>(galaga.get(), glm::vec2{ 1.f, 0.f }, galagaMoveSpeed)));
 
 	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_SPACE, InputType::IsDownThisFrame, std::move(std::make_unique<ShootCommand>(galaga.get())));
 
@@ -87,7 +87,7 @@ AE::GameObject* GameLevel::AddGalaga(Scene& scene)
 	return galaga.get();
 }
 
-void GameLevel::AddBossEnemy(AE::Scene& scene, AE::GameObject* galaga)
+void SoloLevel::AddBossEnemy(AE::Scene& scene, AE::GameObject* galaga)
 {
 	auto enemy = std::make_shared<AE::GameObject>();
 	enemy->SetLocalTransform({ WINDOW_WIDTH / 2.f - 20.f, 50.f });
@@ -127,7 +127,7 @@ void GameLevel::AddBossEnemy(AE::Scene& scene, AE::GameObject* galaga)
 	scene.Add(enemy);
 }
 
-void GameLevel::AddControlsExplainers(Scene& scene)
+void SoloLevel::AddControlsExplainers(Scene& scene)
 {
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 16);
 

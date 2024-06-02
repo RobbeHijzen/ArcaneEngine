@@ -8,7 +8,7 @@ namespace AE
 
 	class Scene final
 	{
-		friend Scene& SceneManager::CreateScene(std::unique_ptr<SceneInfo>&& sceneInfo);
+		friend Scene& SceneManager::CreateScene(std::unique_ptr<SceneInfo>&& sceneInfo, std::string sceneName);
 	public:
 
 		~Scene();
@@ -39,10 +39,14 @@ namespace AE
 		std::shared_ptr<GameObject> GetChildSharedPtr(GameObject* child);
 
 		auto GetGameObjects() const { return m_GameObjects; }
+		std::string GetSceneName() const { return m_Name; }
 
 	private:
 
-		explicit Scene(std::unique_ptr<SceneInfo>&& sceneInfo) : m_SceneInfo{ std::move(sceneInfo) } {}
+		explicit Scene(std::unique_ptr<SceneInfo>&& sceneInfo, std::string sceneName) 
+			: m_SceneInfo{ std::move(sceneInfo) } 
+			, m_Name{sceneName}
+		{}
 
 		std::string m_Name;
 		std::vector<std::shared_ptr<GameObject>> m_GameObjects{};

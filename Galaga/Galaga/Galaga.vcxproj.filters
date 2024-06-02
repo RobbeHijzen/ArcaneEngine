@@ -28,7 +28,7 @@
     <ClInclude Include="src\ScrollingImageComponent.h">
       <Filter>Galaga\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameLevel.h">
+    <ClInclude Include="src\SoloLevel.h">
       <Filter>Galaga\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="src\StartScreenLevel.h">
@@ -38,6 +38,18 @@
       <Filter>Galaga\FSMStates</Filter>
     </ClInclude>
     <ClInclude Include="src\AnimationComponent.h">
+      <Filter>Galaga\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EnemySpawnerComponent.h">
+      <Filter>Galaga\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EnemyManagerComponent.h">
+      <Filter>Galaga\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ButtonBoxComponent.h">
+      <Filter>Galaga\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ButtonComponent.h">
       <Filter>Galaga\Components</Filter>
     </ClInclude>
   </ItemGroup>
@@ -69,7 +81,7 @@
     <ClCompile Include="src\ScrollingImageComponent.cpp">
       <Filter>Galaga\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameLevel.cpp">
+    <ClCompile Include="src\SoloLevel.cpp">
       <Filter>Galaga\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="src\StartScreenLevel.cpp">
@@ -79,6 +91,18 @@
       <Filter>Galaga\FSMStates</Filter>
     </ClCompile>
     <ClCompile Include="src\AnimationComponent.cpp">
+      <Filter>Galaga\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EnemySpawnerComponent.cpp">
+      <Filter>Galaga\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EnemyManagerComponent.cpp">
+      <Filter>Galaga\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ButtonBoxComponent.cpp">
+      <Filter>Galaga\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ButtonComponent.cpp">
       <Filter>Galaga\Components</Filter>
     </ClCompile>
   </ItemGroup>
