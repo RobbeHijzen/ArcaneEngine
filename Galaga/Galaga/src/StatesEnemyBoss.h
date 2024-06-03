@@ -6,6 +6,7 @@
 #include "AnimationComponent.h"
 #include "HealthComponent.h"
 #include "HitboxComponent.h"
+#include "EnemySpawningStructs.h"
 
 #include <queue>
 
@@ -14,21 +15,7 @@ namespace StatesEnemyBoss
 	//------------------
 	// Behavioral States
 	//------------------
-	class Spawning : public AE::FSMState
-	{
-	public:
-		Spawning(std::queue<glm::vec2> seekPositions)
-			: m_SeekPositions{ seekPositions } {}
-
-		virtual void OnEnter(AE::GameObject* ) override {};
-		virtual void OnExit(AE::GameObject* ) override {};
-		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject) override;
-
-	private:
-
-		std::queue<glm::vec2> m_SeekPositions{};
-	};
-
+	
 	class Idle : public AE::FSMState
 	{
 	public:

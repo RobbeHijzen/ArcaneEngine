@@ -19,6 +19,10 @@ namespace AE
 	void Scene::Add(std::shared_ptr<GameObject> object)
 	{
 		m_GameObjects.emplace_back(object);
+		if (m_InGame)
+		{
+			object->GameStart();
+		}
 	}
 
 	void Scene::DeleteAll()
@@ -45,6 +49,7 @@ namespace AE
 
 	void Scene::GameStart()
 	{
+		m_InGame = true;
 		for (int index{}; index < m_GameObjects.size(); ++index)
 		{
 			auto gameObject{m_GameObjects[index]};

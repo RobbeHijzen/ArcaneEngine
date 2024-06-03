@@ -55,6 +55,7 @@ namespace AE
 		bool m_IsLoaded{ false };
 
 		static unsigned int m_idCounter;
+		bool m_InGame{};
 	};
 }
 

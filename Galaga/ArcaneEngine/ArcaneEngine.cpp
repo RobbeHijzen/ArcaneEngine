@@ -129,6 +129,7 @@ void ArcaneEngine::Run(const std::function<void()>& load)
 
 		// Update + Render
 		sceneManager.Update();
+		TimeManager::GetInstance().Update();
 		sceneManager.LateUpdate();
 
 		overlapHandler->CheckOverlapping();

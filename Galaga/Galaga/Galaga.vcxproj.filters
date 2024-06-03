@@ -31,16 +31,13 @@
     <ClInclude Include="src\StartScreenLevel.h">
       <Filter>Galaga\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="src\StatesEnemyBoss.h">
-      <Filter>Galaga\FSMStates</Filter>
-    </ClInclude>
     <ClInclude Include="src\AnimationComponent.h">
       <Filter>Galaga\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\EnemySpawnerComponent.h">
       <Filter>Galaga\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\EnemyManagerComponent.h">
+    <ClInclude Include="src\SpawnerManagerComponent.h">
       <Filter>Galaga\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\ButtonBoxComponent.h">
@@ -70,6 +67,10 @@
     <ClInclude Include="src\SaveLevel.h">
       <Filter>Galaga\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="src\StatesEnemyBoss.h">
+      <Filter>Galaga\FSMStates\EnemyStates</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StatesEnemy.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HealthComponent.cpp">
@@ -102,16 +103,13 @@
     <ClCompile Include="src\StartScreenLevel.cpp">
       <Filter>Galaga\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="src\StatesEnemyBoss.cpp">
-      <Filter>Galaga\FSMStates</Filter>
-    </ClCompile>
     <ClCompile Include="src\AnimationComponent.cpp">
       <Filter>Galaga\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\EnemySpawnerComponent.cpp">
       <Filter>Galaga\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\EnemyManagerComponent.cpp">
+    <ClCompile Include="src\SpawnerManagerComponent.cpp">
       <Filter>Galaga\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\ButtonBoxComponent.cpp">
@@ -141,6 +139,13 @@
     <ClCompile Include="src\SaveLevel.cpp">
       <Filter>Galaga\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="src\EnemySpawningStructs.h">
+      <Filter>Galaga\FSMStates\EnemyStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StatesEnemyBoss.cpp">
+      <Filter>Galaga\FSMStates\EnemyStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StatesEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Galaga">
@@ -163,6 +168,9 @@
     </Filter>
     <Filter Include="Galaga\GameInstance">
       <UniqueIdentifier>{82caf558-72cf-4619-a573-47092e520de0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Galaga\FSMStates\EnemyStates">
+      <UniqueIdentifier>{7fafae63-dc58-405a-a9b5-8a9e6c5021ff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

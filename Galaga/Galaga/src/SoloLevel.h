@@ -13,6 +13,6 @@ private:
 
 	void AddBackgroundImage(AE::Scene& scene);
 	AE::GameObject* AddGalaga(AE::Scene& scene);
-	void AddBossEnemy(AE::Scene& scene, AE::GameObject* galaga);
+	void AddSpawnerManager(AE::Scene& scene, AE::GameObject* galaga);
 };
 

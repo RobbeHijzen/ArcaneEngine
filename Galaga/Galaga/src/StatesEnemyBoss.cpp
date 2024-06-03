@@ -7,23 +7,6 @@
 #include "ShootComponent.h"
 
 //****
-// Spawning
-//****
-std::unique_ptr<AE::FSMState> StatesEnemyBoss::Spawning::Update(AE::GameObject* )
-{
-	if (m_SeekPositions.size() > 0)
-	{
-		glm::vec2 nextSeekPos{ m_SeekPositions.front() };
-		m_SeekPositions.pop();
-
-		auto nextState{ std::make_unique<Spawning>(m_SeekPositions) };
-		return std::move(std::make_unique<AE::States::Seek>(std::move(nextState), nextSeekPos));
-	}
-
-	return std::move(std::make_unique<Idle>());
-}
-
-//****
 // Idle
 //****
 std::unique_ptr<AE::FSMState> StatesEnemyBoss::Idle::Update(AE::GameObject* )

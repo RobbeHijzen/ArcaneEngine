@@ -17,6 +17,7 @@
 #include "ResourceManager.h"
 #include "MyTime.h"
 #include "OverlapHandler.h"
+#include "TimeManager.h"
 
 #include "Command.h"
 #include "BaseComponent.h"

@@ -70,7 +70,6 @@ private:
 class BeamObserver : public AE::Observer
 {
 public:
-
 	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
 
 private:

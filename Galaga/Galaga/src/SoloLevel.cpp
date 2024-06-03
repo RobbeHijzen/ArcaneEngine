@@ -5,12 +5,14 @@
 #include "ScrollingImageComponent.h"
 #include "HealthComponent.h"
 #include "ShootComponent.h"
+#include "SpawnerManagerComponent.h"
 
 #include "Observers.h"
 #include "Commands.h"
 
 #include "FSMComponent.h"
 #include "StatesEnemyBoss.h"
+#include "StatesEnemy.h"
 
 using namespace AE;
 
@@ -18,7 +20,7 @@ void SoloLevel::Load(Scene& scene)
 {
 	AddBackgroundImage(scene);
 	auto galaga{ AddGalaga(scene) };
-	AddBossEnemy(scene, galaga);
+	AddSpawnerManager(scene, galaga);
 
 	auto go = std::make_shared<AE::GameObject>();
 	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_RETURN, InputType::IsUpThisFrame, std::move(std::make_unique<LoadCommand>(go.get(), "DeathScreen")));
@@ -80,48 +82,15 @@ AE::GameObject* SoloLevel::AddGalaga(Scene& scene)
 	scene.Add(score);
 
 	galaga->AddObserver(std::move(std::make_unique<HealthDisplayObserver>("Galaga.png", AE::Rect{ 109, 1, 16, 16 }, AE::Rect{ 20, 440, 35, 35 })));
-	AE::SceneManager::GetInstance().GetGameInstance()->AddObserver(std::move(std::make_unique<ScoreDisplayObserver>(scoreTextComp)));
+	galaga->AddObserver(std::move(std::make_unique<ScoreDisplayObserver>(scoreTextComp)));
 	galaga->AddObserver(std::move(std::make_unique<GalagaObserver>()));
 
 	return galaga.get();
 }
-
-void SoloLevel::AddBossEnemy(AE::Scene& scene, AE::GameObject* galaga)
+void SoloLevel::AddSpawnerManager(AE::Scene& scene, AE::GameObject* galaga)
 {
-	auto enemy = std::make_shared<AE::GameObject>();
-	enemy->SetLocalTransform({ WINDOW_WIDTH / 2.f - 20.f, 50.f });
-	enemy->AddTag("Enemy");
-
-	// Image Component
-	auto imageComp{ std::make_shared<ImageComponent>(enemy.get(), "Galaga.png") };
-	imageComp->SetDestRect({0, 0, 40, 40 });
-	imageComp->SetSourceRect({ 1, 91, 16, 16 });
-	enemy->AddComponent(imageComp);
-
-	// Shoot Component
-	auto shootComp{ std::make_shared<ShootComponent>(enemy.get())};
-	shootComp->SetBulletDirection(glm::vec2{ 0.f, 1.f });
-	shootComp->SetBulletSpeed(200.f);
-	shootComp->SetSeekTarget(galaga);
-	shootComp->AddIgnoreTag("Enemy");
-	shootComp->SetBulletSpawnOffset(glm::vec2{2.5f, 30.f});
-
-	enemy->AddComponent(shootComp);
-
-	// Other Components
-	enemy->AddComponent(std::make_shared<HealthComponent>(enemy.get(), 2));
-	enemy->AddComponent(std::make_shared<HitboxComponent>(enemy.get(), 40.f, 40.f));
-
-	// Observers
-	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>(galaga, 150)));
-
-	// FSM
-	auto idleState{ std::make_unique<StatesEnemyBoss::Idle>() };
-	enemy->AddComponent(std::make_shared<FSMComponent>(enemy.get(), std::move(idleState)));
-
-	auto fullHealthState{std::make_unique<StatesEnemyBoss::FullHealth>()};
-	enemy->AddComponent(std::make_shared<FSMComponent>(enemy.get(), std::move(fullHealthState)));
-
-	
-	scene.Add(enemy);
+	auto go = std::make_shared<AE::GameObject>();
+	auto spawnerManagerComp{ std::make_shared<SpawnerManagercomponent>(go.get(), galaga) };
+	go->AddComponent(spawnerManagerComp);
+	scene.Add(go);
 }

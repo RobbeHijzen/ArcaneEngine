@@ -72,6 +72,7 @@ void ButtonBoxComponent::AddVerticalButton(ButtonComponent* button)
 
 void ButtonBoxComponent::MoveImageToSelection()
 {
+	if (m_Buttons.size() == 0) return;
 	glm::vec3 newPos{ m_Buttons[m_CurrentlySelectedRow][m_CurrentlySelectedCol]->GetWorldTransform().GetPosition() };
 	m_SelectionImageComp->SetLocalPosition(newPos.x + m_SelectionOffset.x, newPos.y + m_SelectionOffset.y);
 

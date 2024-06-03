@@ -114,6 +114,12 @@
     <ClCompile Include="GameInstance.cpp">
       <Filter>ArcaneEngine\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>ArcaneEngine\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>ArcaneEngine\Time</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseComponent.h">
@@ -208,6 +214,12 @@
     </ClInclude>
     <ClInclude Include="GameInstance.h">
       <Filter>ArcaneEngine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>ArcaneEngine\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>ArcaneEngine\Time</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

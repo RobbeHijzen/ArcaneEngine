@@ -34,8 +34,8 @@ namespace AE
 
 	namespace StateHelpers
 	{
-		static bool HasReached(glm::vec2 seekPos, AE::GameObject* gameObject, float acceptanceRadius = 1.f);
-		static glm::vec2 GetSeekDirection(glm::vec2 seekPos, AE::GameObject* gameObject);
+		bool HasReached(glm::vec2 seekPos, AE::GameObject* gameObject, float acceptanceRadius = 1.f);
+		glm::vec2 GetSeekDirection(glm::vec2 seekPos, AE::GameObject* gameObject);
 
 	}
 }

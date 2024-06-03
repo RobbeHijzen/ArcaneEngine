@@ -149,7 +149,7 @@ void EnemyObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 			GalagaGameInstance* gameInstance{ dynamic_cast<GalagaGameInstance*>(AE::SceneManager::GetInstance().GetGameInstance()) };
 			if (!gameInstance) return;
 
-			gameInstance->IncreaseScore(m_ScoreOnDeath, gameObject);
+			gameInstance->IncreaseScore(m_ScoreOnDeath, m_GalagaObject);
 		}
 
 		break;

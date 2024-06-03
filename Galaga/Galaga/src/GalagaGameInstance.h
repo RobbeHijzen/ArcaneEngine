@@ -20,14 +20,12 @@ public:
 	{ 
 		m_Score += addedScore; 
 		gameObject->NotifyAll(AE::Event::ScoreChanged); 
-		NotifyAll(AE::Event::ScoreChanged); 
 	}
 	void IncrementShotsFired() { ++m_ShotsFired; }
 	void IncrementShotsHit() { ++m_ShotsHit; }
 
 	void ResetStats() 
 	{ 
-		ClearObservers();
 		m_Score = 0; 
 		m_ShotsFired = 0; 
 		m_ShotsHit = 0; 
