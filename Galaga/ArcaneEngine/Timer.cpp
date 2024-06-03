@@ -1,11 +1,15 @@
 #include "Timer.h"
 #include "MyTime.h"
 
-AE::Timer::Timer(std::function<void(int)> itFunc, float itTime, int itNum)
+AE::Timer::Timer(std::function<void(int)> itFunc, float itTime, int itNum, bool activateNow)
 	: m_ItFunc{itFunc}
 	, m_ItTime{itTime}
 	, m_ItNum{itNum}
 {
+	if (activateNow)
+	{
+		m_ItFunc(m_CurrentItNum++);
+	}
 }
 
 bool AE::Timer::Update()

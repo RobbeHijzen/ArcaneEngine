@@ -11,7 +11,7 @@ namespace AE
 	{
 	public:
 
-		int SetTimer(std::function<void(int)> itFunc, float itTime, int itNum, std::function<void()> endFunc = []() {});
+		int SetTimer(std::function<void(int)> itFunc, float itTime, int itNum, bool activateNow = false, std::function<void()> endFunc = []() {});
 		void ClearTimer(int index);
 		void Update();
 

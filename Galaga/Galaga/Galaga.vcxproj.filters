@@ -70,7 +70,12 @@
     <ClInclude Include="src\StatesEnemyBoss.h">
       <Filter>Galaga\FSMStates\EnemyStates</Filter>
     </ClInclude>
-    <ClInclude Include="src\StatesEnemy.h" />
+    <ClInclude Include="src\MovementImageComponent.h">
+      <Filter>Galaga\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StatesEnemy.h">
+      <Filter>Galaga\FSMStates\EnemyStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HealthComponent.cpp">
@@ -145,7 +150,12 @@
     <ClCompile Include="src\StatesEnemyBoss.cpp">
       <Filter>Galaga\FSMStates\EnemyStates</Filter>
     </ClCompile>
-    <ClCompile Include="src\StatesEnemy.cpp" />
+    <ClCompile Include="src\MovementImageComponent.cpp">
+      <Filter>Galaga\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StatesEnemy.cpp">
+      <Filter>Galaga\FSMStates\EnemyStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Galaga">

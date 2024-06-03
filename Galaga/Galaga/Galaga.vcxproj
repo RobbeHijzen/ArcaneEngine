@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\MovementImageComponent.h" />
     <ClInclude Include="src\SaveLevel.h" />
     <ClInclude Include="src\HighscoreLevel.h" />
     <ClInclude Include="src\GalagaGameInstance.h" />
@@ -45,6 +46,7 @@
     <ClInclude Include="src\StatesEnemy.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\MovementImageComponent.cpp" />
     <ClCompile Include="src\EnemySpawningStructs.h" />
     <ClCompile Include="src\SaveLevel.cpp" />
     <ClCompile Include="src\HighscoreLevel.cpp" />

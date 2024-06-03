@@ -53,9 +53,6 @@ private:
 	float m_CurrentSectionSpawnTimer{0.f};
 	float m_SectionSpawnInterval{0.5f};
 
-	int m_PhaseSpawnTimerIndex{};
-	bool m_PhaseTimerHasBeenCleared{ false };
-
 	// Seek Positions
 
 	// Middle Points
@@ -68,10 +65,10 @@ private:
 		// one spawning phase has an int(spawner index) and two types of enemies (std::pair), can be the same
 	{
 		{ 0, {SpawningTypes::Bees, SpawningTypes::Butterflies}},
-		{ 1, {SpawningTypes::Butterflies, SpawningTypes::Bosses}},
-		{ 2, {SpawningTypes::Butterflies, SpawningTypes::Butterflies}},
+		{ 0, {SpawningTypes::Butterflies, SpawningTypes::Bosses}},
+		{ 0, {SpawningTypes::Butterflies, SpawningTypes::Butterflies}},
 		{ 0, {SpawningTypes::Bees, SpawningTypes::Bees}},
-		{ 1, {SpawningTypes::Bees, SpawningTypes::Bees}}
+		{ 0, {SpawningTypes::Bees, SpawningTypes::Bees}}
 	};
 
 

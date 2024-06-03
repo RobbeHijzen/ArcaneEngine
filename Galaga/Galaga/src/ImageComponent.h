@@ -25,6 +25,8 @@ public:
 
 	void Render() const override;
 
+	AE::Rect GetSourceRect() const { return m_SourceRect; }
+
 private:
 
 	std::shared_ptr<AE::Texture2D> m_Texture{};

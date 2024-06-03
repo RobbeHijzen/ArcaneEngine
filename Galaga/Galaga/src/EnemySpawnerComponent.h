@@ -15,8 +15,8 @@ public:
 	{
 	}
 
-	void SpawnBeeEnemy(glm::vec2 endPos);
-	void SpawnButterflyEnemy(glm::vec2 endPos);
+	void SpawnBeeEnemy(std::queue<EnemySeekInfo> seekInfo);
+	void SpawnButterflyEnemy(std::queue<EnemySeekInfo> seekInfo);
 	void SpawnBossEnemy(std::queue<EnemySeekInfo> seekInfo);
 
 private:

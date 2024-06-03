@@ -6,6 +6,7 @@
 #include "ImageComponent.h"
 #include "ShootComponent.h"
 #include "HealthComponent.h"
+#include "MovementImageComponent.h"
 
 #include "FSMComponent.h"
 #include "StatesEnemyBoss.h"
@@ -13,14 +14,82 @@
 
 #include <queue>
 
-void EnemySpawnerComponent::SpawnBeeEnemy(glm::vec2 )
+void EnemySpawnerComponent::SpawnBeeEnemy(std::queue<EnemySeekInfo> seekInfo)
 {
-	std::cout << "Bee Spawned\n";
+	auto enemy = std::make_shared<AE::GameObject>();
+	enemy->SetLocalTransform(GetWorldTransform());
+	enemy->AddTag("Enemy");
+
+	// Image Component
+	auto imageComp{ std::make_shared<MovementImageComponent>(enemy.get(), "Galaga.png", glm::vec2{2.f, 0.f}, 16, glm::vec2{0.f, 1.f}) };
+	imageComp->SetDestRect({ 0, 0, 40, 40 });
+	imageComp->SetSourceRect({ 1, 19, 16, 16 });
+	enemy->AddComponent(imageComp);
+
+	// Shoot Component
+	auto shootComp{ std::make_shared<ShootComponent>(enemy.get()) };
+	shootComp->SetBulletDirection(glm::vec2{ 0.f, 1.f });
+	shootComp->SetBulletSpeed(200.f);
+	shootComp->SetSeekTarget(m_Galaga);
+	shootComp->AddIgnoreTag("Enemy");
+	shootComp->SetBulletSpawnOffset(glm::vec2{ 2.5f, 30.f });
+
+	enemy->AddComponent(shootComp);
+
+	// Other Components
+	enemy->AddComponent(std::make_shared<HealthComponent>(enemy.get(), 1));
+	auto hitboxComp{ std::make_shared<HitboxComponent>(enemy.get(), 30.f, 30.f) };
+	hitboxComp->AddLocalPosition(5.f, 5.f);
+	enemy->AddComponent(hitboxComp);
+
+	// Observers
+	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>(m_Galaga, 150)));
+
+	// FSM Seek Infos
+	auto spawningState{ std::make_unique<StatesEnemy::Spawning>(std::move(std::make_unique<StatesEnemyBoss::Idle>()), seekInfo) };
+	enemy->AddComponent(std::make_shared<FSMComponent>(enemy.get(), std::move(spawningState)));
+
+
+	AE::SceneManager::GetInstance().GetCurrentScene()->Add(enemy);
 }
 
-void EnemySpawnerComponent::SpawnButterflyEnemy(glm::vec2 )
+void EnemySpawnerComponent::SpawnButterflyEnemy(std::queue<EnemySeekInfo> seekInfo)
 {
-	std::cout << "Butterfly Spawned\n";
+	auto enemy = std::make_shared<AE::GameObject>();
+	enemy->SetLocalTransform(GetWorldTransform());
+	enemy->AddTag("Enemy");
+
+	// Image Component
+	auto imageComp{ std::make_shared<MovementImageComponent>(enemy.get(), "Galaga.png", glm::vec2{2.f, 0.f}, 16, glm::vec2{0.f, 1.f}) };
+	imageComp->SetDestRect({ 0, 0, 40, 40 });
+	imageComp->SetSourceRect({ 1, 55, 16, 16 });
+	enemy->AddComponent(imageComp);
+
+	// Shoot Component
+	auto shootComp{ std::make_shared<ShootComponent>(enemy.get()) };
+	shootComp->SetBulletDirection(glm::vec2{ 0.f, 1.f });
+	shootComp->SetBulletSpeed(200.f);
+	shootComp->SetSeekTarget(m_Galaga);
+	shootComp->AddIgnoreTag("Enemy");
+	shootComp->SetBulletSpawnOffset(glm::vec2{ 2.5f, 30.f });
+
+	enemy->AddComponent(shootComp);
+
+	// Other Components
+	enemy->AddComponent(std::make_shared<HealthComponent>(enemy.get(), 1));
+	auto hitboxComp{ std::make_shared<HitboxComponent>(enemy.get(), 30.f, 30.f) };
+	hitboxComp->AddLocalPosition(5.f, 5.f);
+	enemy->AddComponent(hitboxComp);
+
+	// Observers
+	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>(m_Galaga, 150)));
+
+	// FSM Seek Infos
+	auto spawningState{ std::make_unique<StatesEnemy::Spawning>(std::move(std::make_unique<StatesEnemyBoss::Idle>()), seekInfo) };
+	enemy->AddComponent(std::make_shared<FSMComponent>(enemy.get(), std::move(spawningState)));
+
+
+	AE::SceneManager::GetInstance().GetCurrentScene()->Add(enemy);
 }
 
 void EnemySpawnerComponent::SpawnBossEnemy(std::queue<EnemySeekInfo> seekInfo)
@@ -30,7 +99,7 @@ void EnemySpawnerComponent::SpawnBossEnemy(std::queue<EnemySeekInfo> seekInfo)
 	enemy->AddTag("Enemy");
 
 	// Image Component
-	auto imageComp{ std::make_shared<ImageComponent>(enemy.get(), "Galaga.png") };
+	auto imageComp{ std::make_shared<MovementImageComponent>(enemy.get(), "Galaga.png", glm::vec2{2.f, 0.f}, 16, glm::vec2{0.f, 1.f}) };
 	imageComp->SetDestRect({ 0, 0, 40, 40 });
 	imageComp->SetSourceRect({ 1, 91, 16, 16 });
 	enemy->AddComponent(imageComp);

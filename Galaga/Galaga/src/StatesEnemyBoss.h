@@ -7,6 +7,7 @@
 #include "HealthComponent.h"
 #include "HitboxComponent.h"
 #include "EnemySpawningStructs.h"
+#include "MovementImageComponent.h"
 
 #include <queue>
 

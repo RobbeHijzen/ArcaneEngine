@@ -16,7 +16,7 @@ std::unique_ptr<AE::FSMState> StatesEnemyBoss::Idle::Update(AE::GameObject* )
 	auto randomnum{ (float) rand() / RAND_MAX};
 	if (randomnum <= m_BombingRunChance * dt)
 	{
-		return std::move(std::make_unique<BombingRun>());
+		//return std::move(std::make_unique<BombingRun>());
 	}
 	randomnum = (float)rand() / RAND_MAX;
 	if (randomnum <= m_TractorBeamChance * dt)
@@ -27,7 +27,7 @@ std::unique_ptr<AE::FSMState> StatesEnemyBoss::Idle::Update(AE::GameObject* )
 		float seekXValue{ float(rand() % (WINDOW_WIDTH - 2 * xOffsetFromSides) + xOffsetFromSides) };
 		auto seekPos = glm::vec2{ seekXValue, 300.f };
 
-		return std::move(std::make_unique<AE::States::Seek>(std::move(nextState), seekPos));
+		//return std::move(std::make_unique<AE::States::Seek>(std::move(nextState), seekPos));
 	}
 	return nullptr;
 }
@@ -122,7 +122,7 @@ void StatesEnemyBoss::TractorBeam::SpawnBeam(AE::GameObject* go)
 //****
 void StatesEnemyBoss::FullHealth::OnEnter(AE::GameObject* gameObject)
 {
-	if (auto imageComp = gameObject->GetComponent<ImageComponent>())
+	if (auto imageComp = gameObject->GetComponent<MovementImageComponent>())
 	{
 		imageComp->SetSourcePos(glm::vec2{ 1.f, 91.f });
 	}
@@ -146,7 +146,7 @@ std::unique_ptr<AE::FSMState> StatesEnemyBoss::FullHealth::Update(AE::GameObject
 //****
 void StatesEnemyBoss::HalfHealth::OnEnter(AE::GameObject* gameObject)
 {
-	if (auto imageComp = gameObject->GetComponent<ImageComponent>())
+	if (auto imageComp = gameObject->GetComponent<MovementImageComponent>())
 	{
 		imageComp->SetSourcePos(glm::vec2{ 1.f, 127.f });
 	}

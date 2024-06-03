@@ -9,7 +9,7 @@ namespace AE
 	{
 	public:
 
-		Timer(std::function<void(int)> itFunc, float itTime, int itNum);
+		Timer(std::function<void(int)> itFunc, float itTime, int itNum, bool activateNow = false);
 		bool Update();
 
 	private:

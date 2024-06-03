@@ -1,8 +1,8 @@
 #include "TimeManager.h"
 
-int AE::TimeManager::SetTimer(std::function<void(int)> itFunc, float itTime, int itNum, std::function<void()> endFunc)
+int AE::TimeManager::SetTimer(std::function<void(int)> itFunc, float itTime, int itNum, bool activateNow, std::function<void()> endFunc)
 {
-	m_Timers.emplace_back(std::move(std::make_unique<Timer>(itFunc, itTime, itNum)), endFunc);
+	m_Timers.emplace_back(std::move(std::make_unique<Timer>(itFunc, itTime, itNum, activateNow)), endFunc);
 	return static_cast<int>(m_Timers.size()) - 1;
 }
 
