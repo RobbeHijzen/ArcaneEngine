@@ -46,6 +46,8 @@ void MovementImageComponent::LateUpdate()
 	if (pos == m_LastFramePos)
 	{
 		m_ImageComp->SetSourceRect(m_OriginalSourceRect);
+		m_ImageComp->SetSourcePos({ m_OriginalSourceRect.x, m_OriginalSourceRect.y - 18});
+
 		return;
 	}
 

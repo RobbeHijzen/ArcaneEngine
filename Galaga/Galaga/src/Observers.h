@@ -3,6 +3,7 @@
 
 #include "TextComponent.h"
 #include "ImageComponent.h"
+#include "SpawnerManagerComponent.h"
 
 class HealthDisplayObserver : public AE::Observer
 {
@@ -80,13 +81,16 @@ class EnemyObserver : public AE::Observer
 {
 public:
 
-	EnemyObserver(AE::GameObject* galaga, int scoreOnDeath);
+	EnemyObserver(AE::GameObject* galaga, int scoreOnDeath, int divingScoreOnDeath);
 	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
 
 private:
 
 	AE::GameObject* m_GalagaObject;
 	int m_ScoreOnDeath{};
+	int m_DivingScoreOnDeath{};
+
+	
 
 };
 
@@ -98,6 +102,18 @@ public:
 
 private:
 
+};
+
+class SpawnedObjectObserver : public AE::Observer
+{
+public:
+
+	SpawnedObjectObserver(SpawnerManagerComponent* spawnerComp) : m_SpawnerManagerComp{ spawnerComp } {}
+	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
+
+private:
+
+	SpawnerManagerComponent* m_SpawnerManagerComp{};
 };
 
 

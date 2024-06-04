@@ -32,12 +32,12 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="OverlapHandler.cpp" />
-    <ClCompile Include="EngineStates.cpp" />
     <ClCompile Include="ServiceLocator.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="StateHelpers.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="MyTime.cpp" />
     <ClCompile Include="TimeManager.cpp" />
@@ -63,7 +63,6 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="OverlapHandler.h" />
     <ClInclude Include="SceneInfo.h" />
-    <ClInclude Include="EngineStates.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="ObserverEvents.h" />
@@ -72,6 +71,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="StateHelpers.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="MyTime.h" />

@@ -10,11 +10,13 @@
 
 #include "FSMComponent.h"
 #include "StatesEnemyBoss.h"
+#include "StatesEnemyBee.h"
+#include "StatesEnemyButterfly.h"
 #include "StatesEnemy.h"
 
 #include <queue>
 
-void EnemySpawnerComponent::SpawnBeeEnemy(std::queue<EnemySeekInfo> seekInfo)
+AE::GameObject* EnemySpawnerComponent::SpawnBeeEnemy(std::list<EnemySeekInfo> seekInfo)
 {
 	auto enemy = std::make_shared<AE::GameObject>();
 	enemy->SetLocalTransform(GetWorldTransform());
@@ -22,8 +24,8 @@ void EnemySpawnerComponent::SpawnBeeEnemy(std::queue<EnemySeekInfo> seekInfo)
 
 	// Image Component
 	auto imageComp{ std::make_shared<MovementImageComponent>(enemy.get(), "Galaga.png", glm::vec2{2.f, 0.f}, 16, glm::vec2{0.f, 1.f}) };
-	imageComp->SetDestRect({ 0, 0, 40, 40 });
-	imageComp->SetSourceRect({ 1, 19, 16, 16 });
+	imageComp->SetDestRect({ 0, 0, 34, 34 });
+	imageComp->SetSourceRect({ 1, 19 + 18, 16, 16 });
 	enemy->AddComponent(imageComp);
 
 	// Shoot Component
@@ -38,22 +40,23 @@ void EnemySpawnerComponent::SpawnBeeEnemy(std::queue<EnemySeekInfo> seekInfo)
 
 	// Other Components
 	enemy->AddComponent(std::make_shared<HealthComponent>(enemy.get(), 1));
-	auto hitboxComp{ std::make_shared<HitboxComponent>(enemy.get(), 30.f, 30.f) };
+	auto hitboxComp{ std::make_shared<HitboxComponent>(enemy.get(), 24.f, 24.f) };
 	hitboxComp->AddLocalPosition(5.f, 5.f);
 	enemy->AddComponent(hitboxComp);
 
 	// Observers
-	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>(m_Galaga, 150)));
+	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>(m_Galaga, 50, 100)));
 
 	// FSM Seek Infos
-	auto spawningState{ std::make_unique<StatesEnemy::Spawning>(std::move(std::make_unique<StatesEnemyBoss::Idle>()), seekInfo) };
+	auto spawningState{ std::make_unique<StatesEnemy::Moving>(std::move(std::make_unique<StatesEnemyBee::Idle>(seekInfo.back().seekPos)), seekInfo) };
 	enemy->AddComponent(std::make_shared<FSMComponent>(enemy.get(), std::move(spawningState)));
 
 
 	AE::SceneManager::GetInstance().GetCurrentScene()->Add(enemy);
+	return enemy.get();
 }
 
-void EnemySpawnerComponent::SpawnButterflyEnemy(std::queue<EnemySeekInfo> seekInfo)
+AE::GameObject* EnemySpawnerComponent::SpawnButterflyEnemy(std::list<EnemySeekInfo> seekInfo)
 {
 	auto enemy = std::make_shared<AE::GameObject>();
 	enemy->SetLocalTransform(GetWorldTransform());
@@ -61,8 +64,8 @@ void EnemySpawnerComponent::SpawnButterflyEnemy(std::queue<EnemySeekInfo> seekIn
 
 	// Image Component
 	auto imageComp{ std::make_shared<MovementImageComponent>(enemy.get(), "Galaga.png", glm::vec2{2.f, 0.f}, 16, glm::vec2{0.f, 1.f}) };
-	imageComp->SetDestRect({ 0, 0, 40, 40 });
-	imageComp->SetSourceRect({ 1, 55, 16, 16 });
+	imageComp->SetDestRect({ 0, 0, 34, 34 });
+	imageComp->SetSourceRect({ 1, 55 + 18, 16, 16 });
 	enemy->AddComponent(imageComp);
 
 	// Shoot Component
@@ -77,22 +80,23 @@ void EnemySpawnerComponent::SpawnButterflyEnemy(std::queue<EnemySeekInfo> seekIn
 
 	// Other Components
 	enemy->AddComponent(std::make_shared<HealthComponent>(enemy.get(), 1));
-	auto hitboxComp{ std::make_shared<HitboxComponent>(enemy.get(), 30.f, 30.f) };
+	auto hitboxComp{ std::make_shared<HitboxComponent>(enemy.get(), 24.f, 24.f) };
 	hitboxComp->AddLocalPosition(5.f, 5.f);
 	enemy->AddComponent(hitboxComp);
 
 	// Observers
-	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>(m_Galaga, 150)));
+	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>(m_Galaga, 80, 160)));
 
 	// FSM Seek Infos
-	auto spawningState{ std::make_unique<StatesEnemy::Spawning>(std::move(std::make_unique<StatesEnemyBoss::Idle>()), seekInfo) };
+	auto spawningState{ std::make_unique<StatesEnemy::Moving>(std::move(std::make_unique<StatesEnemyButterfly::Idle>(seekInfo.back().seekPos)), seekInfo) };
 	enemy->AddComponent(std::make_shared<FSMComponent>(enemy.get(), std::move(spawningState)));
 
 
 	AE::SceneManager::GetInstance().GetCurrentScene()->Add(enemy);
+	return enemy.get();
 }
 
-void EnemySpawnerComponent::SpawnBossEnemy(std::queue<EnemySeekInfo> seekInfo)
+AE::GameObject* EnemySpawnerComponent::SpawnBossEnemy(std::list<EnemySeekInfo> seekInfo)
 {
 	auto enemy = std::make_shared<AE::GameObject>();
 	enemy->SetLocalTransform(GetWorldTransform());
@@ -100,8 +104,8 @@ void EnemySpawnerComponent::SpawnBossEnemy(std::queue<EnemySeekInfo> seekInfo)
 
 	// Image Component
 	auto imageComp{ std::make_shared<MovementImageComponent>(enemy.get(), "Galaga.png", glm::vec2{2.f, 0.f}, 16, glm::vec2{0.f, 1.f}) };
-	imageComp->SetDestRect({ 0, 0, 40, 40 });
-	imageComp->SetSourceRect({ 1, 91, 16, 16 });
+	imageComp->SetDestRect({ 0, 0, 34, 34 });
+	imageComp->SetSourceRect({ 1, 109, 16, 16 });
 	enemy->AddComponent(imageComp);
 
 	// Shoot Component
@@ -116,20 +120,23 @@ void EnemySpawnerComponent::SpawnBossEnemy(std::queue<EnemySeekInfo> seekInfo)
 
 	// Other Components
 	enemy->AddComponent(std::make_shared<HealthComponent>(enemy.get(), 2));
-	enemy->AddComponent(std::make_shared<HitboxComponent>(enemy.get(), 40.f, 40.f));
+	auto hitboxComp{ std::make_shared<HitboxComponent>(enemy.get(), 29.f, 29.f) };
+	hitboxComp->AddLocalPosition(2.5f, 2.5f);
+	enemy->AddComponent(hitboxComp);
 
 	// Observers
-	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>(m_Galaga, 150)));
+	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>(m_Galaga, 150, 400)));
 
 	// FSM
 
 	// Seek Infos
-	auto spawningState{ std::make_unique<StatesEnemy::Spawning>(std::move(std::make_unique<StatesEnemyBoss::Idle>()), seekInfo) };
+	auto spawningState{ std::make_unique<StatesEnemy::Moving>(std::move(std::make_unique<StatesEnemyBoss::Idle>(seekInfo.back().seekPos)), seekInfo) };
 	enemy->AddComponent(std::make_shared<FSMComponent>(enemy.get(), std::move(spawningState)));
 
 	// Texture FSM
-	auto fullHealthState{ std::make_unique<StatesEnemyBoss::FullHealth>() };
+	auto fullHealthState{ std::make_unique<StatesEnemyBoss::FullHealth>(glm::vec2{1, 109}) };
 	enemy->AddComponent(std::make_shared<FSMComponent>(enemy.get(), std::move(fullHealthState)));
 
 	AE::SceneManager::GetInstance().GetCurrentScene()->Add(enemy);
+	return enemy.get();
 }

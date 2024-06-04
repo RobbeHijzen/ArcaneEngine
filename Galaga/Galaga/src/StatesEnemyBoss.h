@@ -1,6 +1,6 @@
 #pragma once
 
-#include "EngineStates.h"
+#include "FSMState.h"
 
 #include "ImageComponent.h"
 #include "AnimationComponent.h"
@@ -20,19 +20,27 @@ namespace StatesEnemyBoss
 	class Idle : public AE::FSMState
 	{
 	public:
+		Idle(glm::vec2 startingPos) : m_StartingPos{ startingPos } {}
+
 		virtual void OnEnter(AE::GameObject* ) override {};
 		virtual void OnExit(AE::GameObject* ) override {};
 		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject) override;
 
-	private:
+		void ChangeToBombingRun() { m_ChangeToBombingRun = true; }
+		void ChangeToTractorBeam() { m_ChangeToTractorBeam = true; }
 
-		float m_BombingRunChance{ 0.1f };  // chance to be chosen per second (1.f = 100%)
-		float m_TractorBeamChance{ 0.2f }; // chance to be chosen per second (1.f = 100%)
+	private:
+		bool m_ChangeToBombingRun{ false };
+		bool m_ChangeToTractorBeam{ false };
+
+		glm::vec2 m_StartingPos{};
 
 	};
 	class BombingRun : public AE::FSMState
 	{
 	public:
+		BombingRun(glm::vec2 idlePos) : m_IdlePos{ idlePos } {}
+
 		virtual void OnEnter(AE::GameObject* gameObject) override;
 		virtual void OnExit(AE::GameObject* ) override {};
 		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject) override;
@@ -42,15 +50,19 @@ namespace StatesEnemyBoss
 		bool m_CanShoot{ true };
 		float m_ShootHeight{ 125.f };
 
-		float m_MoveSpeed{ 130.f };
+		float m_MoveSpeed{ 90.f };
 
 		glm::vec2 m_SeekDir{};
 		glm::vec2 m_SeekPos{ 0.f, 480.f };
+
+		glm::vec2 m_IdlePos{};
 
 	};
 	class TractorBeam : public AE::FSMState
 	{
 	public:
+		TractorBeam(glm::vec2 idlePos) : m_IdlePos{ idlePos } {}
+
 		virtual void OnEnter(AE::GameObject* gameObject) override;
 		virtual void OnExit(AE::GameObject* gameObject) override;
 		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject) override;
@@ -65,6 +77,7 @@ namespace StatesEnemyBoss
 
 		void SpawnBeam(AE::GameObject* go);
 
+		glm::vec2 m_IdlePos{};
 	};
 
 	//---------------
@@ -73,20 +86,26 @@ namespace StatesEnemyBoss
 	class FullHealth : public AE::FSMState
 	{
 	public:
+		FullHealth(glm::vec2 sourcePos) : m_SourcePos{ sourcePos } {}
+
 		virtual void OnEnter(AE::GameObject* gameObject) override;
 		virtual void OnExit(AE::GameObject* ) override {};
 		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject) override;
 
 	private:
 		std::shared_ptr<HealthComponent> m_HealthComp{};
+		glm::vec2 m_SourcePos{};
 	};
 	class HalfHealth : public AE::FSMState
 	{
 	public:
+		HalfHealth(glm::vec2 sourcePos) : m_SourcePos{ sourcePos } {}
+
 		virtual void OnEnter(AE::GameObject* gameObject) override;
 		virtual void OnExit(AE::GameObject* ) override {};
 		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject) override;
 
 	private:
+		glm::vec2 m_SourcePos{};
 	};
 }

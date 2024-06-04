@@ -9,6 +9,11 @@
 #include "ServiceLocator.h"
 #include "GalagaGameInstance.h"
 
+#include "StatesEnemyBee.h"
+#include "StatesEnemyButterfly.h"
+#include "StatesEnemyBoss.h"
+#include "FSMComponent.h"
+
 
 void HealthDisplayObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 {
@@ -130,12 +135,12 @@ void BeamObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 	}
 }
 
-EnemyObserver::EnemyObserver(AE::GameObject* galaga, int scoreOnDeath)
-	: m_GalagaObject{galaga}
-	, m_ScoreOnDeath{scoreOnDeath}
+EnemyObserver::EnemyObserver(AE::GameObject* galaga, int scoreOnDeath, int divingScoreOnDeath)
+	: m_GalagaObject{ galaga }
+	, m_ScoreOnDeath{ scoreOnDeath }
+	, m_DivingScoreOnDeath{divingScoreOnDeath}
 {
 }
-
 
 void EnemyObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 {
@@ -149,9 +154,22 @@ void EnemyObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 			GalagaGameInstance* gameInstance{ dynamic_cast<GalagaGameInstance*>(AE::SceneManager::GetInstance().GetGameInstance()) };
 			if (!gameInstance) return;
 
-			gameInstance->IncreaseScore(m_ScoreOnDeath, m_GalagaObject);
+			if (auto fsm = gameObject->GetComponent<FSMComponent>())
+			{
+				if(dynamic_cast<StatesEnemyBee::Idle*>(fsm->GetCurrentState()) ||
+				   dynamic_cast<StatesEnemyButterfly::Idle*>(fsm->GetCurrentState()) || 
+				   dynamic_cast<StatesEnemyBoss::Idle*>(fsm->GetCurrentState()) || 
+				   dynamic_cast<StatesEnemyBoss::TractorBeam*>(fsm->GetCurrentState()))
+				{
+					gameInstance->IncreaseScore(m_ScoreOnDeath, m_GalagaObject);
+				}
+				else
+				{
+					gameInstance->IncreaseScore(m_DivingScoreOnDeath, m_GalagaObject);
+				}
+			}
 		}
-
+		
 		break;
 	}
 	case AE::Event::ObjectLostHealth:
@@ -183,5 +201,18 @@ void GalagaObserver::OnNotify(AE::Event event, AE::GameObject* )
 		break;
 	}
 
+	}
+}
+
+void SpawnedObjectObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
+{
+	switch (event)
+	{
+	case AE::Event::ObjectDied:
+	{
+		m_SpawnerManagerComp->RemoveEnemy(gameObject);
+
+		break;
+	}
 	}
 }

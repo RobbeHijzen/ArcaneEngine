@@ -2,10 +2,11 @@
 
 #include "BaseComponent.h"
 #include "GameObject.h"
-#include "EnemySpawnerComponent.h"
 #include "ArcaneEngine.h"
 
 #include <queue>
+
+class EnemySpawnerComponent;
 
 struct WaveInfo
 {
@@ -14,15 +15,27 @@ struct WaveInfo
 	std::queue<glm::vec2> bossEnemies{};
 };
 
-class SpawnerManagercomponent : public AE::BaseComponent
+class SpawnerManagerComponent : public AE::BaseComponent
 {
 public:
 
-	SpawnerManagercomponent(AE::GameObject* pParent, AE::GameObject* galaga);
+	SpawnerManagerComponent(AE::GameObject* pParent, AE::GameObject* galaga);
 
 	virtual void GameStart() override;
 
 	void SpawnWave();
+
+	void RemoveEnemy(AE::GameObject* toRemoveObject)
+	{ 
+		m_Bees.remove(toRemoveObject);
+		m_Butterflies.remove(toRemoveObject);
+		m_Bosses.remove(toRemoveObject);
+
+		if (m_Bees.size() + m_Butterflies.size() + m_Bosses.size() <= 0)
+		{
+			SpawnWave();
+		}
+	}
 
 private:
 
@@ -53,23 +66,20 @@ private:
 	float m_CurrentSectionSpawnTimer{0.f};
 	float m_SectionSpawnInterval{0.5f};
 
-	// Seek Positions
 
-	// Middle Points
-	glm::vec2 m_MiddlePointLeft{150.f, 300.f};
-	glm::vec2 m_MiddlePointRight{WINDOW_WIDTH - 150.f, 300.f};
-	glm::vec2 m_MiddlePoint{ 300.f, 220.f};
-
-	
 	std::vector<std::pair<int, std::pair<SpawningTypes, SpawningTypes>>> m_SpawningOrder 
 		// one spawning phase has an int(spawner index) and two types of enemies (std::pair), can be the same
 	{
-		{ 0, {SpawningTypes::Bees, SpawningTypes::Butterflies}},
-		{ 0, {SpawningTypes::Butterflies, SpawningTypes::Bosses}},
+		{ 1, {SpawningTypes::Bees, SpawningTypes::Butterflies}},
+		{ 2, {SpawningTypes::Butterflies, SpawningTypes::Bosses}},
 		{ 0, {SpawningTypes::Butterflies, SpawningTypes::Butterflies}},
-		{ 0, {SpawningTypes::Bees, SpawningTypes::Bees}},
-		{ 0, {SpawningTypes::Bees, SpawningTypes::Bees}}
+		{ 1, {SpawningTypes::Bees, SpawningTypes::Bees}},
+		{ 2, {SpawningTypes::Bees, SpawningTypes::Bees}}
 	};
+
+	std::list<AE::GameObject*> m_Bees{};
+	std::list<AE::GameObject*> m_Butterflies{};
+	std::list<AE::GameObject*> m_Bosses{};
 
 
 };

@@ -42,25 +42,25 @@ AE::GameObject* SoloLevel::AddGalaga(Scene& scene)
 {
 	auto galaga = std::make_shared<AE::GameObject>();
 	auto imageComp{ std::make_shared<ImageComponent>(galaga.get(), "Galaga.png") };
-	imageComp->SetDestRect({0, 0, 50, 50 });
+	imageComp->SetDestRect({0, 0, 40, 40 });
 	imageComp->SetSourceRect({ 109, 1, 16, 16 });
 	galaga->AddComponent(imageComp);
 	galaga->AddComponent(std::make_shared<HealthComponent>(galaga.get(), 4));
 
 	// Shoot component
 	auto shootComp{ std::make_shared<ShootComponent>(galaga.get())};
-	shootComp->SetBulletSpawnOffset({ 7.5f, -17.f });
+	shootComp->SetBulletSpawnOffset({ 5.f, -17.f });
 	shootComp->AddIgnoreTag("Friendly");
 
 	galaga->AddComponent(shootComp);
 	
 	// Hitbox
-	galaga->AddComponent(std::make_shared<HitboxComponent>(galaga.get(), 50.f, 50.f));
+	galaga->AddComponent(std::make_shared<HitboxComponent>(galaga.get(), 40.f, 40.f));
 
 	galaga->SetLocalTransform({ WINDOW_WIDTH / 2.f - 25.f, WINDOW_HEIGHT - 100.f });
 	galaga->AddTag("Friendly");
 
-	constexpr float galagaMoveSpeed{ 130.f };
+	constexpr float galagaMoveSpeed{ 90.f };
 	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_A, InputType::IsPressed, std::move(std::make_unique<MoveCommand>(galaga.get(), glm::vec2{ -1.f, 0.f }, galagaMoveSpeed)));
 	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_D, InputType::IsPressed, std::move(std::make_unique<MoveCommand>(galaga.get(), glm::vec2{ 1.f, 0.f }, galagaMoveSpeed)));
 
@@ -90,7 +90,7 @@ AE::GameObject* SoloLevel::AddGalaga(Scene& scene)
 void SoloLevel::AddSpawnerManager(AE::Scene& scene, AE::GameObject* galaga)
 {
 	auto go = std::make_shared<AE::GameObject>();
-	auto spawnerManagerComp{ std::make_shared<SpawnerManagercomponent>(go.get(), galaga) };
+	auto spawnerManagerComp{ std::make_shared<SpawnerManagerComponent>(go.get(), galaga) };
 	go->AddComponent(spawnerManagerComp);
 	scene.Add(go);
 }
