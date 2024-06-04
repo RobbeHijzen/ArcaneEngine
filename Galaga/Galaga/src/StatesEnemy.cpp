@@ -7,20 +7,25 @@ constexpr auto F_PI = 3.1415f;
 //****
 // Spawning
 //****
-void StatesEnemy::Moving::OnEnter(AE::GameObject*)
+void StatesEnemy::Moving::OnEnter(AE::GameObject* go)
 {
 	std::list<EnemySeekInfo> newSeekInfo{};
+
 	for (const auto& seekInfo : m_SeekInfo)
 	{
 		if (seekInfo.seekType == EnemySeekTypes::Circle)
 		{
+			glm::vec2 dir{ glm::vec2{go->GetWorldTransform().GetPosition()} - seekInfo.seekPos};
+			float startingAngle{ glm::atan(dir.y / dir.x)};
+			if (dir.x < 0.f) startingAngle += F_PI;
+
 			for (int index{}; index < m_CircleSeekAmount; ++index)
 			{
 				EnemySeekInfo info{};
 				info.seekType = EnemySeekTypes::Straight;
 
-				float xPos{ seekInfo.seekPos.x + m_CircleRadius * glm::cos(2 * F_PI * (float(index) / m_CircleSeekAmount))};
-				float yPos{ seekInfo.seekPos.y + m_CircleRadius * glm::sin(2 * F_PI * (float(index) / m_CircleSeekAmount))};
+				float xPos{ seekInfo.seekPos.x + m_CircleRadius * glm::cos(startingAngle + 2 * F_PI * (float(index) / m_CircleSeekAmount))};
+				float yPos{ seekInfo.seekPos.y + m_CircleRadius * glm::sin(startingAngle + 2 * F_PI * (float(index) / m_CircleSeekAmount))};
 
 				info.seekPos = { xPos, yPos };
 
