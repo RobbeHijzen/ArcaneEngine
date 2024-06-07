@@ -104,9 +104,13 @@ namespace AE
 			return it != m_Tags.end();
 		}
 
+		bool IsVisible() const { return m_IsVisible; }
+		void SetVisible(bool isVisible) { m_IsVisible = isVisible; }
+
 	private:
 
 		bool m_IsDeleted{ false };
+		bool m_IsVisible{ true };
 
 		Transform m_SpawnTransform{};
 

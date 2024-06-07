@@ -16,7 +16,7 @@
 
 #include <queue>
 
-AE::GameObject* EnemySpawnerComponent::SpawnBeeEnemy(std::list<EnemySeekInfo> seekInfo)
+AE::GameObject* EnemySpawnerComponent::SpawnBeeEnemy(std::list<EnemySeekInfo> seekInfo, SpawnerManagerComponent* spawnerManagerComp)
 {
 	auto enemy = std::make_shared<AE::GameObject>();
 	enemy->SetLocalTransform(GetWorldTransform());
@@ -32,8 +32,12 @@ AE::GameObject* EnemySpawnerComponent::SpawnBeeEnemy(std::list<EnemySeekInfo> se
 	auto shootComp{ std::make_shared<ShootComponent>(enemy.get()) };
 	shootComp->SetBulletDirection(glm::vec2{ 0.f, 1.f });
 	shootComp->SetBulletSpeed(200.f);
-	shootComp->SetSeekTarget(m_Galaga);
+	for (const auto& galaga : m_Galagas)
+	{
+		shootComp->AddSeekTarget(galaga);
+	}
 	shootComp->AddIgnoreTag("Enemy");
+	shootComp->AddIgnoreTag("Bullet");
 	shootComp->SetBulletSpawnOffset(glm::vec2{ 2.5f, 30.f });
 
 	enemy->AddComponent(shootComp);
@@ -45,7 +49,8 @@ AE::GameObject* EnemySpawnerComponent::SpawnBeeEnemy(std::list<EnemySeekInfo> se
 	enemy->AddComponent(hitboxComp);
 
 	// Observers
-	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>(m_Galaga, 50, 100)));
+	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>(m_Galagas.front(), 50, 100)));
+	enemy->AddObserver(std::move(std::make_unique<StateMachineObserver>(spawnerManagerComp)));
 
 	// FSM Seek Infos
 	auto spawningState{ std::make_unique<StatesEnemy::Moving>(std::move(std::make_unique<StatesEnemyBee::Idle>(seekInfo.back().seekPos)), seekInfo) };
@@ -56,7 +61,7 @@ AE::GameObject* EnemySpawnerComponent::SpawnBeeEnemy(std::list<EnemySeekInfo> se
 	return enemy.get();
 }
 
-AE::GameObject* EnemySpawnerComponent::SpawnButterflyEnemy(std::list<EnemySeekInfo> seekInfo)
+AE::GameObject* EnemySpawnerComponent::SpawnButterflyEnemy(std::list<EnemySeekInfo> seekInfo, SpawnerManagerComponent* spawnerManagerComp)
 {
 	auto enemy = std::make_shared<AE::GameObject>();
 	enemy->SetLocalTransform(GetWorldTransform());
@@ -72,8 +77,12 @@ AE::GameObject* EnemySpawnerComponent::SpawnButterflyEnemy(std::list<EnemySeekIn
 	auto shootComp{ std::make_shared<ShootComponent>(enemy.get()) };
 	shootComp->SetBulletDirection(glm::vec2{ 0.f, 1.f });
 	shootComp->SetBulletSpeed(200.f);
-	shootComp->SetSeekTarget(m_Galaga);
+	for (const auto& galaga : m_Galagas)
+	{
+		shootComp->AddSeekTarget(galaga);
+	}
 	shootComp->AddIgnoreTag("Enemy");
+	shootComp->AddIgnoreTag("Bullet");
 	shootComp->SetBulletSpawnOffset(glm::vec2{ 2.5f, 30.f });
 
 	enemy->AddComponent(shootComp);
@@ -85,7 +94,8 @@ AE::GameObject* EnemySpawnerComponent::SpawnButterflyEnemy(std::list<EnemySeekIn
 	enemy->AddComponent(hitboxComp);
 
 	// Observers
-	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>(m_Galaga, 80, 160)));
+	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>(m_Galagas.front(), 80, 160)));
+	enemy->AddObserver(std::move(std::make_unique<StateMachineObserver>(spawnerManagerComp)));
 
 	// FSM Seek Infos
 	auto spawningState{ std::make_unique<StatesEnemy::Moving>(std::move(std::make_unique<StatesEnemyButterfly::Idle>(seekInfo.back().seekPos)), seekInfo) };
@@ -96,7 +106,7 @@ AE::GameObject* EnemySpawnerComponent::SpawnButterflyEnemy(std::list<EnemySeekIn
 	return enemy.get();
 }
 
-AE::GameObject* EnemySpawnerComponent::SpawnBossEnemy(std::list<EnemySeekInfo> seekInfo)
+AE::GameObject* EnemySpawnerComponent::SpawnBossEnemy(std::list<EnemySeekInfo> seekInfo, SpawnerManagerComponent* spawnerManagerComp)
 {
 	auto enemy = std::make_shared<AE::GameObject>();
 	enemy->SetLocalTransform(GetWorldTransform());
@@ -112,8 +122,12 @@ AE::GameObject* EnemySpawnerComponent::SpawnBossEnemy(std::list<EnemySeekInfo> s
 	auto shootComp{ std::make_shared<ShootComponent>(enemy.get()) };
 	shootComp->SetBulletDirection(glm::vec2{ 0.f, 1.f });
 	shootComp->SetBulletSpeed(200.f);
-	shootComp->SetSeekTarget(m_Galaga);
+	for (const auto& galaga : m_Galagas)
+	{
+		shootComp->AddSeekTarget(galaga);
+	}
 	shootComp->AddIgnoreTag("Enemy");
+	shootComp->AddIgnoreTag("Bullet");
 	shootComp->SetBulletSpawnOffset(glm::vec2{ 2.5f, 30.f });
 
 	enemy->AddComponent(shootComp);
@@ -125,7 +139,8 @@ AE::GameObject* EnemySpawnerComponent::SpawnBossEnemy(std::list<EnemySeekInfo> s
 	enemy->AddComponent(hitboxComp);
 
 	// Observers
-	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>(m_Galaga, 150, 400)));
+	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>(m_Galagas.front(), 150, 400)));
+	enemy->AddObserver(std::move(std::make_unique<StateMachineObserver>(spawnerManagerComp)));
 
 	// FSM
 

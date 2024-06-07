@@ -44,16 +44,16 @@ namespace StatesEnemyButterfly
 		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject) override;
 
 	private:
-
-		bool m_CanShoot{ true };
-		float m_ShootHeight{ 125.f };
-
-		float m_MoveSpeed{ 90.f };
-
-		glm::vec2 m_SeekDir{};
-		glm::vec2 m_SeekPos{ 0.f, 480.f };
-
+		float m_MaxShootHeight{300.f};
+		int m_BombingChance{50};
+		
 		glm::vec2 m_IdlePos{};
+
+		float m_VerticalDistance{70.f};
+		float m_HorizontalDistance{100.f};
+
+		float m_ShootDelay{ 0.5f };
+		int m_ShootAmount{ 2 };
 
 	};
 }

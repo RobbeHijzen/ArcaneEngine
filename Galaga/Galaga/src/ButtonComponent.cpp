@@ -18,8 +18,10 @@ void ButtonComponent::Press()
 
 void ButtonComponent::OnSelect()
 {
+	m_OnSelectFunction();
 }
 
 void ButtonComponent::OnDeselect()
 {
+	m_OnDeselectFunction();
 }

@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "InputManager.h"
+#include "TimeManager.h"
 
 #include <cassert>
 
@@ -15,9 +16,11 @@ namespace AE
 			{
 				m_Scenes[m_CurrentSceneIndex]->DeleteAll();
 				InputManager::GetInstance().RemoveAllBindings();
+				TimeManager::GetInstance().ClearAllTimers();
 
 				m_CurrentSceneIndex = index;
 				m_Scenes[m_CurrentSceneIndex]->Load();
+
 
 				GameStart();
 				break;

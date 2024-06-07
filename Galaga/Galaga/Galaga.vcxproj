@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\MovementComponent.h" />
+    <ClInclude Include="src\NoOffScreenComponent.h" />
     <ClInclude Include="src\MovementImageComponent.h" />
     <ClInclude Include="src\SaveLevel.h" />
     <ClInclude Include="src\HighscoreLevel.h" />
@@ -48,6 +50,8 @@
     <ClInclude Include="src\StatesEnemyButterfly.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\MovementComponent.cpp" />
+    <ClCompile Include="src\NoOffScreenComponent.cpp" />
     <ClCompile Include="src\MovementImageComponent.cpp" />
     <ClCompile Include="src\EnemySpawningStructs.h" />
     <ClCompile Include="src\SaveLevel.cpp" />

@@ -42,18 +42,18 @@ namespace StatesEnemyBee
 		virtual void OnEnter(AE::GameObject* gameObject) override;
 		virtual void OnExit(AE::GameObject*) override {};
 		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject) override;
-
+		
 	private:
-
-		bool m_CanShoot{ true };
-		float m_ShootHeight{ 125.f };
-
-		float m_MoveSpeed{ 90.f };
-
-		glm::vec2 m_SeekDir{};
-		glm::vec2 m_SeekPos{ 0.f, 480.f };
+		// Stages
+		glm::vec2 m_Stage1Offset{300.f, 15.f};
+		float m_Stage2Height{430.f};
+		float m_Stage3Height{465.f};
+		float m_Stage4Height{430.f};
 
 		glm::vec2 m_IdlePos{};
+		
+		float m_ShootDelay{ 0.5f };
+		int m_ShootAmount{ 2 };
 
 	};
 }

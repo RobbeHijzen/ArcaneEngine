@@ -26,10 +26,10 @@ namespace StatesEnemy
 		std::list<EnemySeekInfo> m_SeekInfo{};
 		EnemySeekInfo m_CurrentSeekInfo{};
 
-		const float m_CircleRadius{45.f};
+		const float m_CircleRadius{60.f};
 		const int m_CircleSeekAmount{16};
 
-		float m_MoveSpeed{ 90.f };
+		float m_MoveSpeed{ 130.f };
 		void MoveAccordingToSeekInfo(EnemySeekInfo seekInfo, AE::GameObject* gameObject);
 	};
 

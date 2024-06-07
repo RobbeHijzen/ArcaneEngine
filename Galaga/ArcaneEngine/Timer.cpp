@@ -1,8 +1,9 @@
 #include "Timer.h"
 #include "MyTime.h"
 
-AE::Timer::Timer(std::function<void(int)> itFunc, float itTime, int itNum, bool activateNow)
+AE::Timer::Timer(std::function<void(int)> itFunc, std::function<void()> destructionFunc, float itTime, int itNum, bool activateNow)
 	: m_ItFunc{itFunc}
+	, m_DestructionFunc{destructionFunc}
 	, m_ItTime{itTime}
 	, m_ItNum{itNum}
 {

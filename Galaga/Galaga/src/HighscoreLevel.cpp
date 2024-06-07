@@ -143,6 +143,18 @@ void HighscoreLevel::AddButtons(AE::Scene& scene)
 	InputManager::GetInstance().BindActionGP(0, INPUT_GAMEPAD_DPAD_UP, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonMoveSelectionCommand>(buttonBox.get(), glm::i32vec2{ 0, -1 })));
 	InputManager::GetInstance().BindActionGP(0, INPUT_GAMEPAD_DPAD_DOWN, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonMoveSelectionCommand>(buttonBox.get(), glm::i32vec2{ 0, 1 })));
 
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_SPACE, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonPressCommand>(buttonBox.get())));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_A, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonMoveSelectionCommand>(buttonBox.get(), glm::i32vec2{ -1, 0 })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_D, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonMoveSelectionCommand>(buttonBox.get(), glm::i32vec2{ 1, 0 })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_W, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonMoveSelectionCommand>(buttonBox.get(), glm::i32vec2{ 0, -1 })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_S, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonMoveSelectionCommand>(buttonBox.get(), glm::i32vec2{ 0, 1 })));
+
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_RETURN, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonPressCommand>(buttonBox.get())));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_LEFT, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonMoveSelectionCommand>(buttonBox.get(), glm::i32vec2{ -1, 0 })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_RIGHT, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonMoveSelectionCommand>(buttonBox.get(), glm::i32vec2{ 1, 0 })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_UP, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonMoveSelectionCommand>(buttonBox.get(), glm::i32vec2{ 0, -1 })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_DOWN, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonMoveSelectionCommand>(buttonBox.get(), glm::i32vec2{ 0, 1 })));
+
 	scene.Add(buttonBox);
 
 	// Return to MainMenu Button

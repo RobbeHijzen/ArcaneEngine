@@ -100,15 +100,17 @@ void BulletObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 	{
 	case AE::Event::OnOverlap:
 	{
+		if (gameObject->IsDeleted()) break;
 		if (auto hitbox = gameObject->GetComponent<HitboxComponent>())
 		{
 			auto overlappedGO{ hitbox->GetLatestOverlapGO()};
 			if (auto healthComp = overlappedGO->GetComponent<HealthComponent>())
 			{
 				healthComp->KillObject();
-				gameObject->Delete();
 			}
 		}
+		gameObject->Delete();
+
 		break;
 	}
 	}
@@ -121,16 +123,32 @@ void BeamObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 	{
 	case AE::Event::OnOverlap:
 	{
-		if (auto hitbox = gameObject->GetComponent<HitboxComponent>())
+		if (!m_IsInSuckState)
 		{
-			auto overlappedGO{ hitbox->GetLatestOverlapGO() };
-			if (auto healthComp = overlappedGO->GetComponent<HealthComponent>())
+			if (auto hitbox = gameObject->GetComponent<HitboxComponent>())
 			{
-				healthComp->KillObject();
-				hitbox->SetActive(false);
+				auto overlappedGO{ hitbox->GetLatestOverlapGO() };
+				if (overlappedGO->HasTag("Friendly"))
+				{
+					m_CurrentInBeamTime += AE::Time::GetInstance().GetDeltaTime();
+					if (m_CurrentInBeamTime >= m_MaxInBeamTime)
+					{
+						if (auto fsm = gameObject->GetParent()->GetComponent<FSMComponent>())
+						{
+							if (auto beam = dynamic_cast<StatesEnemyBoss::TractorBeam*>(fsm->GetCurrentState()))
+							{
+								beam->SwitchToBeamSuck(overlappedGO);
+								m_CurrentInBeamTime = 0.f;
+								m_IsInSuckState = true;
+							}
+						}
+					}
+				}
 			}
 		}
 		break;
+
+		
 	}
 	}
 }
@@ -183,7 +201,7 @@ void EnemyObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 	}
 }
 
-void GalagaObserver::OnNotify(AE::Event event, AE::GameObject* )
+void GalagaObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 {
 	switch (event)
 	{
@@ -200,17 +218,92 @@ void GalagaObserver::OnNotify(AE::Event event, AE::GameObject* )
 		gameInstance->IncrementShotsFired();
 		break;
 	}
+	case AE::Event::OnOverlap:
+	{
+		if (auto hitbox = gameObject->GetComponent<HitboxComponent>())
+		{
+			auto overlappedGO{ hitbox->GetLatestOverlapGO() };
+			if (overlappedGO->HasTag("Enemy"))
+			{
+				bool hitBeamSuck{ false };
+				if (auto fsm = overlappedGO->GetComponent<FSMComponent>())
+				{
+					if (auto beamSuck = dynamic_cast<StatesEnemyBoss::BeamSuck*>(fsm->GetCurrentState()))
+					{
+						hitBeamSuck = true;
+						beamSuck->SpawnRedGalaga(overlappedGO);
+					}
+				}
+				if (!hitBeamSuck)
+				{
+					if (auto healthCompEnemy = overlappedGO->GetComponent<HealthComponent>())
+					{
+						healthCompEnemy->KillObject();
+					}
+				}
+
+				if (auto healthCompPlayer = gameObject->GetComponent<HealthComponent>())
+				{
+					healthCompPlayer->KillObject();
+				}
+				gameObject->SetLocalTransform(gameObject->GetSpawnTransform());
+			}
+			
+		}
+		break;
+	}
 
 	}
 }
 
-void SpawnedObjectObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
+void SpawnedEnemyObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 {
 	switch (event)
 	{
 	case AE::Event::ObjectDied:
 	{
 		m_SpawnerManagerComp->RemoveEnemy(gameObject);
+
+		break;
+	}
+	}
+}
+
+
+void SpawnedBulletObserver::OnNotify(AE::Event event, AE::GameObject* )
+{
+	switch (event)
+	{
+	case AE::Event::ObjectDestroyed:
+	{
+		m_ShootComp->RemoveBullet();
+
+		break;
+	}
+	}
+}
+
+
+void StateMachineObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
+{
+	switch (event)
+	{
+	case AE::Event::StateChanged:
+	{
+		if (auto stateComp = gameObject->GetComponent<FSMComponent>())
+		{
+			auto currentState{ stateComp->GetCurrentState() };
+			if (dynamic_cast<StatesEnemyBee::Idle*>(currentState) ||
+				dynamic_cast<StatesEnemyButterfly::Idle*>(currentState) ||
+				dynamic_cast<StatesEnemyBoss::Idle*>(currentState))
+			{
+				m_SpawnerManagerComp->ChangeStateToIdle(gameObject);
+			}
+			else
+			{
+				m_SpawnerManagerComp->ChangeStateToNotIdle(gameObject);
+			}
+		}
 
 		break;
 	}

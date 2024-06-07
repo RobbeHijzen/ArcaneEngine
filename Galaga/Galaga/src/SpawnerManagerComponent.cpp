@@ -6,15 +6,21 @@
 #include "Observers.h"
 #include "FSMComponent.h"
 #include "StatesEnemyBoss.h"
+#include "StatesEnemyBee.h"
+#include "StatesEnemyButterfly.h"
 
 #include <fstream>
 #include <algorithm>
 
-SpawnerManagerComponent::SpawnerManagerComponent(AE::GameObject* pParent, AE::GameObject* galaga)
+SpawnerManagerComponent::SpawnerManagerComponent(AE::GameObject* pParent, std::vector<AE::GameObject*> galagas)
 	: BaseComponent(pParent)
 {
-	CreateSpawners(pParent, galaga);
-	FillWaveInfos();
+	CreateSpawners(pParent, galagas);
+	FillWaveInfos("Formations/Wave1.txt");
+	FillWaveInfos("Formations/Wave2.txt");
+	FillWaveInfos("Formations/Wave3.txt");
+	SetupAIMoveSets();
+
 }
 
 void SpawnerManagerComponent::GameStart()
@@ -24,34 +30,78 @@ void SpawnerManagerComponent::GameStart()
 
 void SpawnerManagerComponent::SpawnWave()
 {
-	if (!m_CurrentlySpawningWave)
+	if (!AE::TimeManager::GetInstance().DoesTimerExist(m_WaveTimerHandle))
 	{
 		m_CurrentWaveInfo = m_WaveInfos[m_CurrentWaveInfoIndex];
-		m_CurrentWaveInfoIndex = m_CurrentWaveInfoIndex % m_WaveInfos.size();
+		m_CurrentWaveInfoIndex = (m_CurrentWaveInfoIndex + 1) % m_WaveInfos.size();
 
-		m_CurrentlySpawningWave = true;
-		AE::TimeManager::GetInstance().SetTimer([&](int itNum) 
+		m_WaveTimerHandle = AE::TimeManager::GetInstance().SetTimer([&](int itNum)
 			{
 				SpawnPhase(itNum % int(m_SpawningOrder.size()));
 
-			}, 10.f, 5, true,
-			[&]() 
-				{
-					m_CurrentlySpawningWave = false; 
-					AE::TimeManager::GetInstance().SetTimer([&](int )
-						{
-							if (auto fsmComp = m_Bosses.front()->GetComponent<FSMComponent>())
-							{
-								if (auto idle = dynamic_cast<StatesEnemyBoss::Idle*>(fsmComp->GetCurrentState()))
-								{
-									idle->ChangeToTractorBeam();
-								}
-							}
-						}, 10.f, 1);
-				});
+			}, m_PhaseSpawnTime, m_PhaseCount, true);
 
 	}
 }
+
+void SpawnerManagerComponent::ChangeStateToIdle(AE::GameObject* toChangeObject)
+{
+	for (auto& bee : m_Bees)
+	{
+		if (bee.first == toChangeObject)
+		{
+			bee.second = true;
+			CheckForAllIdleEnemies();
+			return;
+		}
+	}
+	for (auto& butterfly : m_Butterflies)
+	{
+		if (butterfly.first == toChangeObject)
+		{
+			butterfly.second = true;
+			CheckForAllIdleEnemies();
+			return;
+		}
+	}
+	for (auto& boss : m_Bosses)
+	{
+		if (boss.first == toChangeObject)
+		{
+			boss.second = true;
+			CheckForAllIdleEnemies();
+			return;
+		}
+	}
+}
+void SpawnerManagerComponent::ChangeStateToNotIdle(AE::GameObject* toChangeObject)
+{
+	for (auto& bee : m_Bees)
+	{
+		if (bee.first == toChangeObject)
+		{
+			bee.second = false;
+			return;
+		}
+	}
+	for (auto& butterfly : m_Butterflies)
+	{
+		if (butterfly.first == toChangeObject)
+		{
+			butterfly.second = false;
+			return;
+		}
+	}
+	for (auto& boss : m_Bosses)
+	{
+		if (boss.first == toChangeObject)
+		{
+			boss.second = false;
+			return;
+		}
+	}
+}
+
 void SpawnerManagerComponent::SpawnPhase(int spawningOrderIndex)
 {
 	AE::TimeManager::GetInstance().SetTimer([&, spawningOrderIndex](int itNum)
@@ -69,7 +119,7 @@ void SpawnerManagerComponent::SpawnPhase(int spawningOrderIndex)
 			{
 				SpawnNextEnemy(m_SpawningOrder[spawningOrderIndex].second.second, m_SpawningOrder[spawningOrderIndex].first);
 			}
-		}, 0.4f, 8);
+		}, m_EnemySpawnTimeDifference, m_EnemySpawnCountPerPhase);
 }
 void SpawnerManagerComponent::SpawnNextEnemy(SpawningTypes spawningType, int spawnerIndex)
 {
@@ -84,8 +134,8 @@ void SpawnerManagerComponent::SpawnNextEnemy(SpawningTypes spawningType, int spa
 			seekInfo.emplace_back(EnemySeekInfo{ EnemySeekTypes::Circle, firstSeekPos });
 			seekInfo.emplace_back(EnemySeekInfo{ EnemySeekTypes::Straight, m_CurrentWaveInfo.beeEnemies.front() });
 
-			m_Bees.emplace_back(m_EnemySpawners[spawnerIndex]->SpawnBeeEnemy(seekInfo));
-			m_Bees.back()->AddObserver(std::move(std::make_unique<SpawnedObjectObserver>(this)));
+			m_Bees.emplace_back(m_EnemySpawners[spawnerIndex]->SpawnBeeEnemy(seekInfo, this), false);
+			m_Bees.back().first->AddObserver(std::move(std::make_unique<SpawnedEnemyObserver>(this)));
 
 			m_CurrentWaveInfo.beeEnemies.pop();
 		}
@@ -100,8 +150,8 @@ void SpawnerManagerComponent::SpawnNextEnemy(SpawningTypes spawningType, int spa
 			seekInfo.emplace_back(EnemySeekInfo{ EnemySeekTypes::Circle, firstSeekPos });
 			seekInfo.emplace_back(EnemySeekInfo{ EnemySeekTypes::Straight, m_CurrentWaveInfo.butterflyEnemies.front() });
 
-			m_Butterflies.emplace_back(m_EnemySpawners[spawnerIndex]->SpawnButterflyEnemy(seekInfo));
-			m_Butterflies.back()->AddObserver(std::move(std::make_unique<SpawnedObjectObserver>(this)));
+			m_Butterflies.emplace_back(m_EnemySpawners[spawnerIndex]->SpawnButterflyEnemy(seekInfo, this), false);
+			m_Butterflies.back().first->AddObserver(std::move(std::make_unique<SpawnedEnemyObserver>(this)));
 
 			m_CurrentWaveInfo.butterflyEnemies.pop();
 		}
@@ -116,8 +166,8 @@ void SpawnerManagerComponent::SpawnNextEnemy(SpawningTypes spawningType, int spa
 			seekInfo.emplace_back(EnemySeekInfo{ EnemySeekTypes::Circle, firstSeekPos });
 			seekInfo.emplace_back(EnemySeekInfo{ EnemySeekTypes::Straight, m_CurrentWaveInfo.bossEnemies.front() });
 
-			m_Bosses.emplace_back(m_EnemySpawners[spawnerIndex]->SpawnBossEnemy(seekInfo));
-			m_Bosses.back()->AddObserver(std::move(std::make_unique<SpawnedObjectObserver>(this)));
+			m_Bosses.emplace_back(m_EnemySpawners[spawnerIndex]->SpawnBossEnemy(seekInfo, this), false);
+			m_Bosses.back().first->AddObserver(std::move(std::make_unique<SpawnedEnemyObserver>(this)));
 
 			m_CurrentWaveInfo.bossEnemies.pop();
 		}
@@ -127,18 +177,18 @@ void SpawnerManagerComponent::SpawnNextEnemy(SpawningTypes spawningType, int spa
 	}
 }
 
-void SpawnerManagerComponent::CreateSpawners(AE::GameObject* pParent, AE::GameObject* galaga)
+void SpawnerManagerComponent::CreateSpawners(AE::GameObject* pParent, std::vector<AE::GameObject*> galagas)
 {
-	auto spawnerComp_01{ std::make_shared<EnemySpawnerComponent>(pParent, galaga, glm::vec2{300.f, 220.f}) };
-	spawnerComp_01->AddLocalPosition(320.f, -30.f);
+	auto spawnerComp_01{ std::make_shared<EnemySpawnerComponent>(pParent, galagas, glm::vec2{300.f, 220.f}) };
+	spawnerComp_01->AddLocalPosition(WINDOW_WIDTH / 2.f, -30.f);
 	m_EnemySpawners.emplace_back(spawnerComp_01.get());
 
-	auto spawnerComp_02{ std::make_shared<EnemySpawnerComponent>(pParent, galaga, glm::vec2{150.f, 300.f}) };
-	spawnerComp_02->AddLocalPosition(-30.f, 480.f);
+	auto spawnerComp_02{ std::make_shared<EnemySpawnerComponent>(pParent, galagas, glm::vec2{150.f, 250.f}) };
+	spawnerComp_02->AddLocalPosition(-30.f, WINDOW_HEIGHT);
 	m_EnemySpawners.emplace_back(spawnerComp_02.get());
 
-	auto spawnerComp_03{ std::make_shared<EnemySpawnerComponent>(pParent, galaga, glm::vec2{WINDOW_WIDTH - 150.f, 300.f}) };
-	spawnerComp_03->AddLocalPosition(670.f, 480.f);
+	auto spawnerComp_03{ std::make_shared<EnemySpawnerComponent>(pParent, galagas, glm::vec2{WINDOW_WIDTH - 150.f, 250.f}) };
+	spawnerComp_03->AddLocalPosition(WINDOW_WIDTH + 30.f, WINDOW_HEIGHT);
 	m_EnemySpawners.emplace_back(spawnerComp_03.get());
 
 	GetOwner()->AddComponent(spawnerComp_01);
@@ -146,9 +196,9 @@ void SpawnerManagerComponent::CreateSpawners(AE::GameObject* pParent, AE::GameOb
 	GetOwner()->AddComponent(spawnerComp_03);
 }
 
-void SpawnerManagerComponent::FillWaveInfos()
+void SpawnerManagerComponent::FillWaveInfos(const std::string& file)
 {
-	if (std::ifstream input{ "../Resources/Formations/Wave1.txt" }; input.is_open())
+	if (std::ifstream input{ AE::ResourceManager::GetInstance().GetFileFromPath(file)}; input.is_open())
 	{
 		WaveInfo waveInfo{};
 
@@ -203,4 +253,140 @@ std::string SpawnerManagerComponent::RemoveUntilChar(std::string& input, char st
 	}
 	return result;
 }
+
+void SpawnerManagerComponent::CheckForAllIdleEnemies()
+{
+	for (auto& bee : m_Bees)
+	{
+		if (!bee.second)
+		{
+			return;
+		}
+	}
+	for (auto& butterfly : m_Butterflies)
+	{
+		if (!butterfly.second)
+		{
+			return;
+		}
+	}
+	for (auto& boss : m_Bosses)
+	{
+		if (!boss.second)
+		{
+			return;
+		}
+	}
+
+	if (!AE::TimeManager::GetInstance().DoesTimerExist(m_WaveTimerHandle))
+	{
+		SendAIWave();
+	}
+}
+void SpawnerManagerComponent::SendAIWave()
+{
+	int idx{rand() % static_cast<int>(m_EnemyAIMoveSets.size())};
+	int originalIndex{ idx };
+
+	while (!m_EnemyAIMoveSets[idx]())
+	{
+		idx = (idx + 1) % static_cast<int>(m_EnemyAIMoveSets.size());
+		if (idx == originalIndex)
+		{
+			return;
+		}
+	}
+}
+
+void SpawnerManagerComponent::SetupAIMoveSets()
+{
+	m_EnemyAIMoveSets.emplace_back([&]()
+		{
+			if (m_Bees.size() == 0 && m_Butterflies.size() == 0) return false;
+
+			if (m_Bees.size() != 0)
+			{
+				int randomBee{ rand() % static_cast<int>(m_Bees.size()) };
+				SendEnemyOnIndexOnBombingRun(m_Bees, randomBee);
+			}
+			if (m_Butterflies.size() != 0)
+			{
+				int randomButterfly{ rand() % static_cast<int>(m_Butterflies.size()) };
+				SendEnemyOnIndexOnBombingRun(m_Butterflies, randomButterfly);
+			}
+
+			return true;
+		});
+
+	m_EnemyAIMoveSets.emplace_back([&]()
+		{
+			if (m_Bosses.size() == 0 && m_Butterflies.size() == 0) return false;
+
+			if (m_Bosses.size() != 0)
+			{
+				int randomBoss{ rand() % static_cast<int>(m_Bosses.size()) };
+				SendEnemyOnIndexOnBombingRun(m_Bosses, randomBoss);
+			}
+			if (m_Butterflies.size() > 1)
+			{
+				int randomButterfly1{ rand() % static_cast<int>(m_Butterflies.size()) };
+				int randomButterfly2{ rand() % static_cast<int>(m_Butterflies.size()) };
+
+				SendEnemyOnIndexOnBombingRun(m_Butterflies, randomButterfly1);
+				SendEnemyOnIndexOnBombingRun(m_Butterflies, randomButterfly2);
+			}
+			else if (m_Butterflies.size() != 0)
+			{
+				int randomButterfly{ rand() % static_cast<int>(m_Butterflies.size()) };
+				SendEnemyOnIndexOnBombingRun(m_Butterflies, randomButterfly);
+			}
+			
+			return true;
+		});
+
+	m_EnemyAIMoveSets.emplace_back([&]()
+		{
+			if (m_Bosses.size() == 0) return false;
+
+			int randomBoss{ rand() % static_cast<int>(m_Bosses.size()) };
+			SendEnemyOnIndexOnTractorBeam(m_Bosses, randomBoss);
+
+			return true;
+		});
+}
+
+void SpawnerManagerComponent::SendEnemyOnIndexOnBombingRun(const std::list<std::pair<AE::GameObject*, bool>>& enemies, int index)
+{
+	auto enemyIt{ enemies.begin() };
+	std::advance(enemyIt, index);
+	if (auto fsmComp = (*enemyIt).first->GetComponent<FSMComponent>())
+	{
+		if (auto idle_01 = dynamic_cast<StatesEnemyBee::Idle*>(fsmComp->GetCurrentState()))
+		{
+			idle_01->ChangeToBombingRun();
+		}
+		else if (auto idle_02 = dynamic_cast<StatesEnemyButterfly::Idle*>(fsmComp->GetCurrentState()))
+		{
+			idle_02->ChangeToBombingRun();
+		}
+		else if (auto idle_03 = dynamic_cast<StatesEnemyBoss::Idle*>(fsmComp->GetCurrentState()))
+		{
+			idle_03->ChangeToBombingRun();
+		}
+	}
+}
+
+void SpawnerManagerComponent::SendEnemyOnIndexOnTractorBeam(const std::list<std::pair<AE::GameObject*, bool>>& enemies, int index)
+{
+	auto enemyIt{ enemies.begin() };
+	std::advance(enemyIt, index);
+	if (auto fsmComp = (*enemyIt).first->GetComponent<FSMComponent>())
+	{
+		if (auto idle = dynamic_cast<StatesEnemyBoss::Idle*>(fsmComp->GetCurrentState()))
+		{
+			idle->ChangeToTractorBeam();
+		}
+	}
+}
+
 

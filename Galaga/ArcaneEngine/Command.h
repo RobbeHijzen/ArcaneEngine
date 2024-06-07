@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include <functional>
 
 namespace AE
 {
@@ -22,6 +23,19 @@ namespace AE
 
 	private:
 		GameObject* m_pGameObject{};
+	};
+	class LambdaCommand final : public Command
+	{
+	public:
+		LambdaCommand(std::function<void()> func) : m_Func{ func } {}
+		virtual ~LambdaCommand() {}
+
+		virtual void Execute() override 
+		{
+			m_Func();
+		}
+	private:
+		std::function<void()> m_Func{};
 	};
 
 

@@ -161,12 +161,56 @@ void SaveLevel::AddButtons(AE::Scene& scene, const std::vector<ScoreInfo>& highs
 	auto buttonBoxComp{ std::make_shared<ButtonBoxComponent>(buttonBox.get(), imageComp.get(), glm::vec2{-1.f, -1.f}) };
 	buttonBox->AddComponent(buttonBoxComp);
 
+	InputManager::GetInstance().RemoveAllBindings();
+
 	InputManager::GetInstance().BindActionGP(0, INPUT_GAMEPAD_A, AE::InputType::IsUpThisFrame, std::move(std::make_unique<ButtonPressCommand>(buttonBox.get())));
 	InputManager::GetInstance().BindActionGP(0, INPUT_GAMEPAD_DPAD_LEFT, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonMoveSelectionCommand>(buttonBox.get(), glm::i32vec2{ -1, 0 })));
 	InputManager::GetInstance().BindActionGP(0, INPUT_GAMEPAD_DPAD_RIGHT, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonMoveSelectionCommand>(buttonBox.get(), glm::i32vec2{ 1, 0 })));
 	InputManager::GetInstance().BindActionGP(0, INPUT_GAMEPAD_DPAD_UP, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonMoveSelectionCommand>(buttonBox.get(), glm::i32vec2{ 0, -1 })));
 	InputManager::GetInstance().BindActionGP(0, INPUT_GAMEPAD_DPAD_DOWN, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonMoveSelectionCommand>(buttonBox.get(), glm::i32vec2{ 0, 1 })));
+	
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_Q, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("q"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_W, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("w"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_E, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("e"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_R, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("r"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_T, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("t"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_Y, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("y"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_U, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("u"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_I, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("i"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_O, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("o"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_P, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("p"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_A, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("a"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_S, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("s"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_D, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("d"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_F, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("f"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_G, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("g"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_H, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("h"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_J, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("j"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_K, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("k"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_L, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("l"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_Z, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("z"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_X, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("x"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_C, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("c"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_V, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("v"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_B, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("b"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_N, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("n"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_M, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName("m"); })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_SPACE, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AppendName(" "); })));
+	
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_BACKSPACE, InputType::IsDownThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {if (!m_PlayerName.empty())
+					{
+						m_PlayerName.pop_back();
+						m_PlayerTextComp->SetText(m_PlayerName);
+					}  })));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_RETURN, InputType::IsUpThisFrame, std::move(std::make_unique<LambdaCommand>([&, highscores]() {if (m_PlayerName.empty()) return;
+					WriteHighscores(highscores, m_PlayerName);
+					m_PlayerName = "";
 
+					GalagaGameInstance* gameInstance{ dynamic_cast<GalagaGameInstance*>(AE::SceneManager::GetInstance().GetGameInstance()) };
+					gameInstance->ResetStats();
+
+					AE::SceneManager::GetInstance().SetScene("StartScreen");  })));
+	
 	scene.Add(buttonBox);
 
 

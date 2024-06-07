@@ -6,15 +6,18 @@
 #include "HealthComponent.h"
 #include "ShootComponent.h"
 #include "ButtonBoxComponent.h"
+#include "Movementcomponent.h"
 
 #include "SceneManager.h"
+
 
 class MoveCommand : public AE::GameObjectCommand
 {
 public:
-	MoveCommand(AE::GameObject* gameObject, glm::vec2 direction, float movementSpeed)
+	MoveCommand(AE::GameObject* gameObject, glm::vec2 direction, float movementSpeed, MovementComponent* moveComp)
 		: GameObjectCommand(gameObject)
 		, m_MovementSpeed{ movementSpeed }
+		, m_MoveComp{moveComp}
 	{
 		assert(std::abs(direction.x) > 0 || std::abs(direction.y) > 0);
 		m_Direction = glm::normalize(direction);
@@ -23,12 +26,13 @@ public:
 	virtual void Execute() override
 	{
 		glm::vec2 addedPosition{ m_Direction * m_MovementSpeed * AE::Time::GetInstance().GetDeltaTime() };
-		GetGameObject()->AddLocalTransform(AE::Transform{ addedPosition });
+		m_MoveComp->Move(addedPosition);
 	}
 
 private:
 	glm::vec2 m_Direction;
 	float m_MovementSpeed;
+	MovementComponent* m_MoveComp{};
 };
 
 

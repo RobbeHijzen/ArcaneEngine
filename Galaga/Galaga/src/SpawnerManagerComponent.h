@@ -19,7 +19,7 @@ class SpawnerManagerComponent : public AE::BaseComponent
 {
 public:
 
-	SpawnerManagerComponent(AE::GameObject* pParent, AE::GameObject* galaga);
+	SpawnerManagerComponent(AE::GameObject* pParent, std::vector<AE::GameObject*> galagas);
 
 	virtual void GameStart() override;
 
@@ -27,15 +27,22 @@ public:
 
 	void RemoveEnemy(AE::GameObject* toRemoveObject)
 	{ 
-		m_Bees.remove(toRemoveObject);
-		m_Butterflies.remove(toRemoveObject);
-		m_Bosses.remove(toRemoveObject);
+		m_Bees.remove_if([&](const std::pair<AE::GameObject*, bool>& obj) { return obj.first == toRemoveObject; });
+		m_Butterflies.remove_if([&](const std::pair<AE::GameObject*, bool>& obj) { return obj.first == toRemoveObject; });
+		m_Bosses.remove_if([&](const std::pair<AE::GameObject*, bool>& obj) { return obj.first == toRemoveObject; });
 
 		if (m_Bees.size() + m_Butterflies.size() + m_Bosses.size() <= 0)
 		{
 			SpawnWave();
 		}
+		else
+		{
+			CheckForAllIdleEnemies();
+		}
 	}
+
+	void ChangeStateToIdle(AE::GameObject* toChangeObject);
+	void ChangeStateToNotIdle(AE::GameObject* toChangeObject);
 
 private:
 
@@ -50,9 +57,9 @@ private:
 	std::vector<EnemySpawnerComponent*> m_EnemySpawners{};
 	std::vector<WaveInfo> m_WaveInfos{};
 
-	void CreateSpawners(AE::GameObject* pParent, AE::GameObject* galaga);
+	void CreateSpawners(AE::GameObject* pParent, std::vector<AE::GameObject*> galagas);
 
-	void FillWaveInfos();
+	void FillWaveInfos(const std::string& file);
 	std::string RemoveUntilChar(std::string& input, char stopChar);
 
 	// Wave Info stuff
@@ -60,12 +67,15 @@ private:
 	void SpawnNextEnemy(SpawningTypes spawningType, int spawnerIndex);
 
 	WaveInfo m_CurrentWaveInfo{};
-	bool m_CurrentlySpawningWave{};
+	int m_WaveTimerHandle{};
 	int m_CurrentWaveInfoIndex{};
 
-	float m_CurrentSectionSpawnTimer{0.f};
-	float m_SectionSpawnInterval{0.5f};
+	// Spawning Info
+	float m_PhaseSpawnTime{ 7.f };
+	int m_PhaseCount{5};
 
+	float m_EnemySpawnTimeDifference{ 0.3f };
+	int m_EnemySpawnCountPerPhase{8};
 
 	std::vector<std::pair<int, std::pair<SpawningTypes, SpawningTypes>>> m_SpawningOrder 
 		// one spawning phase has an int(spawner index) and two types of enemies (std::pair), can be the same
@@ -77,11 +87,19 @@ private:
 		{ 2, {SpawningTypes::Bees, SpawningTypes::Bees}}
 	};
 
-	std::list<AE::GameObject*> m_Bees{};
-	std::list<AE::GameObject*> m_Butterflies{};
-	std::list<AE::GameObject*> m_Bosses{};
+	std::list<std::pair<AE::GameObject*, bool>> m_Bees{};
+	std::list<std::pair<AE::GameObject*, bool>> m_Butterflies{};
+	std::list<std::pair<AE::GameObject*, bool>> m_Bosses{};
 
 
+	// enemy AI handling
+	void CheckForAllIdleEnemies();
+	void SendAIWave();
+	void SetupAIMoveSets();
+	void SendEnemyOnIndexOnBombingRun(const std::list<std::pair<AE::GameObject*, bool>>& enemies, int index);
+	void SendEnemyOnIndexOnTractorBeam(const std::list<std::pair<AE::GameObject*, bool>>& enemies, int index);
+
+	std::vector<std::function<bool()>> m_EnemyAIMoveSets{};
 };
 
 

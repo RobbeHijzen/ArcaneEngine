@@ -2,35 +2,71 @@
 
 int AE::TimeManager::SetTimer(std::function<void(int)> itFunc, float itTime, int itNum, bool activateNow, std::function<void()> endFunc)
 {
-	m_Timers.emplace_back(std::move(std::make_unique<Timer>(itFunc, itTime, itNum, activateNow)), endFunc);
-	return static_cast<int>(m_Timers.size()) - 1;
+	int randomHandle{ GetRandomValue() };
+	m_Timers.emplace_back(std::move(std::make_unique<Timer>(itFunc, endFunc, itTime, itNum, activateNow)),
+						  randomHandle);
+	return randomHandle;
 }
 
-void AE::TimeManager::ClearTimer(int index)
-{
-	if (index < 0 || index >= m_Timers.size()) return;
-
-	m_Timers[index].second();
-
+void AE::TimeManager::ClearTimer(int handle)
+{	
 	auto it{ m_Timers.begin() };
-	std::advance(it, index);
-	m_Timers.erase(it);
+	while(it != m_Timers.end())
+	{
+		if ((*it).second == handle)
+		{
+			(*it).first->CallDestructionFunc();
+			it = m_Timers.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
 }
 
 void AE::TimeManager::Update()
 {
-	for (int index{}; index < m_Timers.size(); ++index)
+	std::vector<int> toClearTimers{};
+	for (auto& timer : m_Timers)
 	{
-		auto timer{m_Timers[index].first.get()};
-
-		if (!timer->Update())
+		if (!timer.first->Update())
 		{
-			m_Timers[index].second();
-
-			auto it{ m_Timers.begin() };
-			std::advance(it, index);
-			m_Timers.erase(it);
-			--index;
+			toClearTimers.emplace_back(timer.second);
 		}
 	}
+	for(int handle : toClearTimers)
+		ClearTimer(handle);
+}
+
+bool AE::TimeManager::DoesTimerExist(int handle)
+{
+	for (const auto& timer : m_Timers)
+	{
+		if (timer.second == handle)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+int AE::TimeManager::GetRandomValue()
+{
+	int randomValue{ rand() };
+	while (HasValueExisted(randomValue) || randomValue == 0)
+	{
+		randomValue = rand();
+	}
+	m_AllExistedValues.emplace_back(randomValue);
+	return randomValue;
+}
+
+bool AE::TimeManager::HasValueExisted(int value)
+{
+	for (int i : m_AllExistedValues)
+	{
+		if (i == value) return true;
+	}
+	return false;
 }

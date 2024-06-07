@@ -15,9 +15,12 @@ ShootComponent::ShootComponent(AE::GameObject* pParent)
 
 void ShootComponent::FireBullet()
 {
+	if (m_AmountOfLiveBullets >= m_MaxAmountOfBullets) return;
+
 	auto bullet = std::make_shared<AE::GameObject>();
 	bullet->SetLocalTransform(GetOwner()->GetWorldTransform());
 	bullet->AddLocalTransform(AE::Transform{ m_BulletOffset });
+	bullet->AddTag("Bullet");
 
 	// Image Component
 	auto imageComp{ std::make_shared<ImageComponent>(bullet.get(), "Galaga.png")};
@@ -29,12 +32,14 @@ void ShootComponent::FireBullet()
 	std::shared_ptr<ProjectileMovementComponent> projComp{};
 	if (m_UseSeekTarget)
 	{
-		glm::vec2 dir{m_SeekTarget->GetWorldTransform().GetPosition() - bullet->GetWorldTransform().GetPosition()};
-		projComp = std::make_shared<ProjectileMovementComponent>(bullet.get(), dir, m_BulletSpeed);
+		int randomIndex{rand() % int(m_SeekTargets.size())};
+
+		glm::vec2 dir{m_SeekTargets[randomIndex]->GetWorldTransform().GetPosition() - bullet->GetWorldTransform().GetPosition()};
+		projComp = std::make_shared<ProjectileMovementComponent>(bullet.get(), dir, m_BulletSpeed, m_BulletLifetime);
 	}
 	else
 	{
-		projComp = std::make_shared<ProjectileMovementComponent>(bullet.get(), m_BulletDirection, m_BulletSpeed);
+		projComp = std::make_shared<ProjectileMovementComponent>(bullet.get(), m_BulletDirection, m_BulletSpeed, m_BulletLifetime);
 	}
 
 	bullet->AddComponent(projComp);
@@ -51,6 +56,7 @@ void ShootComponent::FireBullet()
 
 	// Observers
 	bullet->AddObserver(std::move(std::make_unique<BulletObserver>()));
+	bullet->AddObserver(std::move(std::make_unique<SpawnedBulletObserver>(this)));
 
 	// Spawn into Scene
 	auto& scene{ AE::SceneManager::GetInstance()};
@@ -58,4 +64,5 @@ void ShootComponent::FireBullet()
 
 	// Notify observers
 	GetOwner()->NotifyAll(AE::Event::FireBullet);
+	++m_AmountOfLiveBullets;
 }

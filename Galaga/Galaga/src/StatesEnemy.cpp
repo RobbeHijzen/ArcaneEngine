@@ -16,8 +16,14 @@ void StatesEnemy::Moving::OnEnter(AE::GameObject* go)
 		if (seekInfo.seekType == EnemySeekTypes::Circle)
 		{
 			glm::vec2 dir{ glm::vec2{go->GetWorldTransform().GetPosition()} - seekInfo.seekPos};
-			float startingAngle{ glm::atan(dir.y / dir.x)};
-			if (dir.x < 0.f) startingAngle += F_PI;
+			float startingAngle{0.f};
+
+			if (dir.x != 0.f)
+			{
+				startingAngle = glm::atan(dir.y / dir.x);
+				if (dir.x < 0.f) startingAngle += F_PI;
+			}
+			
 
 			for (int index{}; index < m_CircleSeekAmount; ++index)
 			{

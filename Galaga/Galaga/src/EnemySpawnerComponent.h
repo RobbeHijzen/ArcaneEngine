@@ -10,21 +10,21 @@ class EnemySpawnerComponent : public AE::BaseComponent
 {
 public:
 
-	EnemySpawnerComponent(AE::GameObject* pParent, AE::GameObject* galaga, glm::vec2 firstSeekPoint)
+	EnemySpawnerComponent(AE::GameObject* pParent, std::vector<AE::GameObject*> galagas, glm::vec2 firstSeekPoint)
 		: BaseComponent(pParent)
-		, m_Galaga{galaga}
+		, m_Galagas{galagas}
 		, m_FirstSeekPoint{firstSeekPoint}
 	{
 	}
 
-	AE::GameObject* SpawnBeeEnemy(std::list<EnemySeekInfo> seekInfo);
-	AE::GameObject* SpawnButterflyEnemy(std::list<EnemySeekInfo> seekInfo);
-	AE::GameObject* SpawnBossEnemy(std::list<EnemySeekInfo> seekInfo);
+	AE::GameObject* SpawnBeeEnemy(std::list<EnemySeekInfo> seekInfo, SpawnerManagerComponent* spawnerManagerComp);
+	AE::GameObject* SpawnButterflyEnemy(std::list<EnemySeekInfo> seekInfo, SpawnerManagerComponent* spawnerManagerComp);
+	AE::GameObject* SpawnBossEnemy(std::list<EnemySeekInfo> seekInfo, SpawnerManagerComponent* spawnerManagerComp);
 
 	glm::vec2 GetFirstSeekPoint() const { return m_FirstSeekPoint; }
 
 private:
-	AE::GameObject* m_Galaga{};
+	std::vector<AE::GameObject*> m_Galagas{};
 	glm::vec2 m_FirstSeekPoint{};
 };
 

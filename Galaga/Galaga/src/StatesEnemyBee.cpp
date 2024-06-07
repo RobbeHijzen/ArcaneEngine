@@ -32,38 +32,44 @@ std::unique_ptr<AE::FSMState> StatesEnemyBee::Idle::Update(AE::GameObject* gameO
 //****
 void StatesEnemyBee::BombingRun::OnEnter(AE::GameObject* gameObject)
 {
-	m_SeekPos.x = rand() % 2 ? 0.f : WINDOW_WIDTH;
-	m_SeekDir = glm::normalize(m_SeekPos - glm::vec2{ gameObject->GetLocalTransform().GetPosition() });
+	AE::TimeManager::GetInstance().SetTimer([gameObject](int)
+		{
+			if (auto shootComp = gameObject->GetComponent<ShootComponent>())
+			{
+				shootComp->FireBullet();
+			}
+		}, m_ShootDelay, m_ShootAmount, true);
 
 }
 std::unique_ptr<AE::FSMState> StatesEnemyBee::BombingRun::Update(AE::GameObject* gameObject)
 {
-	glm::vec2 addedPosition{ m_SeekDir * m_MoveSpeed * AE::Time::GetInstance().GetDeltaTime() };
-	gameObject->AddLocalTransform(AE::Transform{ addedPosition });
+	std::list<EnemySeekInfo> seekInfo{};
 
-	float yHeight{ gameObject->GetWorldTransform().GetPosition().y };
-	if (m_CanShoot && yHeight >= m_ShootHeight)
-	{
-		m_CanShoot = false;
+	// Fill the seekInfo
 
-		AE::TimeManager::GetInstance().SetTimer([gameObject](int)
-			{
-				if (auto shootComp = gameObject->GetComponent<ShootComponent>())
-				{
-					shootComp->FireBullet();
-				}
-			}, 0.5f, 2, true);
-	}
+	// Stage 1
+	glm::vec2 pos{ gameObject->GetWorldTransform().GetPosition() };
+	bool leftHalf{ pos.x < WINDOW_WIDTH / 2.f };
+	glm::vec2 stage1Pos{ pos.x + (leftHalf ? m_Stage1Offset.x : -m_Stage1Offset.x), pos.y + m_Stage1Offset.y };
+	seekInfo.emplace_back(EnemySeekInfo{ EnemySeekTypes::Straight, stage1Pos });
 
-	if (yHeight > WINDOW_HEIGHT)
-	{
-		gameObject->AddLocalTransform(AE::Transform{ 0.f, -(WINDOW_HEIGHT + 100.f) });
+	// Stage 2
+	glm::vec2 stage2Pos{stage1Pos.x, m_Stage2Height };
+	seekInfo.emplace_back(EnemySeekInfo{ EnemySeekTypes::Straight, stage2Pos });
 
-		auto nextState{ std::make_unique<Idle>(m_IdlePos) };
+	// Stage 3
+	glm::vec2 stage3Pos{ stage2Pos.x + (leftHalf ? -WINDOW_WIDTH / 4.f : WINDOW_WIDTH / 4.f), m_Stage3Height };
+	seekInfo.emplace_back(EnemySeekInfo{ EnemySeekTypes::Straight, stage3Pos });
 
-		std::list<EnemySeekInfo> seekInfos{};
-		seekInfos.emplace_back(EnemySeekInfo{ EnemySeekTypes::Straight, m_IdlePos });
-		return std::move(std::make_unique<StatesEnemy::Moving>(std::move(nextState), seekInfos));
-	}
-	return nullptr;
+	// Stage 4
+	glm::vec2 stage4Pos{ stage3Pos.x + (leftHalf ? -WINDOW_WIDTH / 4.f : WINDOW_WIDTH / 4.f), m_Stage4Height };
+	seekInfo.emplace_back(EnemySeekInfo{ EnemySeekTypes::Straight, stage4Pos });
+
+	// Stage 5
+	glm::vec2 stage5Pos{ m_IdlePos };
+	seekInfo.emplace_back(EnemySeekInfo{ EnemySeekTypes::Straight, stage5Pos });
+
+
+	auto nextState{ std::make_unique<Idle>(m_IdlePos) };
+	return std::move(std::make_unique<StatesEnemy::Moving>(std::move(nextState), seekInfo));
 }

@@ -23,5 +23,7 @@ void FSMComponent::Update()
 		m_CurrentState = std::move(newState);
 
 		m_CurrentState->OnEnter(owner);
+
+		GetOwner()->NotifyAll(AE::Event::StateChanged);
 	}
 }

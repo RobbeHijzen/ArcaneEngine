@@ -8,34 +8,62 @@ using namespace AE;
 void OverlapHandler::CheckOverlapping()
 {
 	auto gameObjects{SceneManager::GetInstance().GetCurrentScene()->GetGameObjects()};
+	if (gameObjects.size() < 2) return;
 
 	for (int i{}; i < gameObjects.size(); ++i)
 	{
-		auto go1{gameObjects[i]};
-
-		if (auto hitboxComp1 = go1->GetComponent<HitboxComponent>())
+		auto gos1{GetAllChildrenOf(gameObjects[i])};
+		while (!gos1.empty())
 		{
-			if (!hitboxComp1->IsActive()) continue;
+			auto go1 = gos1.front();
+			gos1.pop();
 
-			for (int j{ i + 1 }; j < gameObjects.size(); ++j)
+			if (auto hitboxComp1 = go1->GetComponent<HitboxComponent>())
 			{
-				auto go2{ gameObjects[j] };
+				if (!hitboxComp1->IsActive()) continue;
 
-				if (auto hitboxComp2 = go2->GetComponent<HitboxComponent>())
+				for (int j{ i + 1 }; j < gameObjects.size(); ++j)
 				{
-					if (!hitboxComp2->IsActive()) continue;
-
-					// If here then both GameObjects have a HitboxComponent
-
-					if (AreOverlapping(hitboxComp1.get(), hitboxComp2.get()))
+					auto gos2{ GetAllChildrenOf(gameObjects[j]) };
+					while (!gos2.empty())
 					{
-						hitboxComp1->OnOverlap(hitboxComp2.get());
-						hitboxComp2->OnOverlap(hitboxComp1.get());
+						auto go2 = gos2.front();
+						gos2.pop();
+
+						if (auto hitboxComp2 = go2->GetComponent<HitboxComponent>())
+						{
+							if (!hitboxComp2->IsActive()) continue;
+
+							// If here then both GameObjects have a HitboxComponent
+
+							if (AreOverlapping(hitboxComp1.get(), hitboxComp2.get()))
+							{
+								hitboxComp1->OnOverlap(hitboxComp2.get());
+								hitboxComp2->OnOverlap(hitboxComp1.get());
+							}
+						}
 					}
 				}
 			}
 		}
 	}
+}
+
+std::queue<std::shared_ptr<AE::GameObject>> OverlapHandler::GetAllChildrenOf(std::shared_ptr<AE::GameObject> go)
+{
+	std::queue<std::shared_ptr<AE::GameObject>> queue{};
+	queue.push(go);
+	for (const auto& child : go->GetChildren())
+	{
+		auto otherQueue{ GetAllChildrenOf(child) };
+		while (!otherQueue.empty())
+		{
+			queue.push(otherQueue.front());
+			otherQueue.pop();
+		}
+	}
+
+	return queue;
 }
 
 bool AE::OverlapHandler::AreOverlapping(HitboxComponent* hitbox1, HitboxComponent* hitbox2)

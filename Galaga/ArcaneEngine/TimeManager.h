@@ -12,12 +12,22 @@ namespace AE
 	public:
 
 		int SetTimer(std::function<void(int)> itFunc, float itTime, int itNum, bool activateNow = false, std::function<void()> endFunc = []() {});
-		void ClearTimer(int index);
+		void ClearTimer(int handle);
 		void Update();
 
-	private:
-		std::vector<std::pair<std::unique_ptr<Timer>, std::function<void()>>> m_Timers{};
+		void ClearAllTimers()
+		{
+			m_Timers.clear();
+			m_AllExistedValues.clear();
+		}
+		bool DoesTimerExist(int handle);
 
+	private:
+		std::list<std::pair<std::unique_ptr<Timer>, int>> m_Timers{};
+
+		int GetRandomValue();
+		bool HasValueExisted(int value);
+		std::list<int> m_AllExistedValues{};
 	};
 }
 

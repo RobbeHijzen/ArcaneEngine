@@ -32,38 +32,39 @@ std::unique_ptr<AE::FSMState> StatesEnemyButterfly::Idle::Update(AE::GameObject*
 //****
 void StatesEnemyButterfly::BombingRun::OnEnter(AE::GameObject* gameObject)
 {
-	m_SeekPos.x = rand() % 2 ? 0.f : WINDOW_WIDTH;
-	m_SeekDir = glm::normalize(m_SeekPos - glm::vec2{ gameObject->GetLocalTransform().GetPosition() });
-
+	if (gameObject->GetWorldTransform().GetPosition().y < m_MaxShootHeight)
+	{
+		if (rand() % 100 <= m_BombingChance)
+		{
+			AE::TimeManager::GetInstance().SetTimer([gameObject](int)
+				{
+					if (auto shootComp = gameObject->GetComponent<ShootComponent>())
+					{
+						shootComp->FireBullet();
+					}
+				}, m_ShootDelay, m_ShootAmount, true);
+		}
+	}
 }
 std::unique_ptr<AE::FSMState> StatesEnemyButterfly::BombingRun::Update(AE::GameObject* gameObject)
 {
-	glm::vec2 addedPosition{ m_SeekDir * m_MoveSpeed * AE::Time::GetInstance().GetDeltaTime() };
-	gameObject->AddLocalTransform(AE::Transform{ addedPosition });
+	std::list<EnemySeekInfo> seekInfo{};
+	glm::vec2 pos{ gameObject->GetWorldTransform().GetPosition() };
 
-	float yHeight{ gameObject->GetWorldTransform().GetPosition().y };
-	if (m_CanShoot && yHeight >= m_ShootHeight)
+	if (pos.y > WINDOW_HEIGHT)
 	{
-		m_CanShoot = false;
-
-		AE::TimeManager::GetInstance().SetTimer([gameObject](int)
-			{
-				if (auto shootComp = gameObject->GetComponent<ShootComponent>())
-				{
-					shootComp->FireBullet();
-				}
-			}, 0.5f, 2, true);
-	}
-
-	if (yHeight > WINDOW_HEIGHT)
-	{
-		gameObject->AddLocalTransform(AE::Transform{ 0.f, -(WINDOW_HEIGHT + 100.f) });
+		gameObject->AddLocalTransform({ 0.f, -(WINDOW_HEIGHT + 100.f) });
+		seekInfo.emplace_back(EnemySeekInfo{ EnemySeekTypes::Straight, m_IdlePos });
 
 		auto nextState{ std::make_unique<Idle>(m_IdlePos) };
-
-		std::list<EnemySeekInfo> seekInfos{};
-		seekInfos.emplace_back(EnemySeekInfo{ EnemySeekTypes::Straight, m_IdlePos });
-		return std::move(std::make_unique<StatesEnemy::Moving>(std::move(nextState), seekInfos));
+		return std::move(std::make_unique<StatesEnemy::Moving>(std::move(nextState), seekInfo));
 	}
-	return nullptr;
+
+	glm::vec2 pos_01{ pos.x, pos.y + m_VerticalDistance };
+	glm::vec2 pos_02{ pos.x + (rand() % 2 ? m_HorizontalDistance : -m_HorizontalDistance), pos.y + m_VerticalDistance};
+	seekInfo.emplace_back(EnemySeekInfo{ EnemySeekTypes::Straight, pos_01 });
+	seekInfo.emplace_back(EnemySeekInfo{ EnemySeekTypes::Straight, pos_02 });
+
+	auto nextState{ std::make_unique<BombingRun>(m_IdlePos) };
+	return std::move(std::make_unique<StatesEnemy::Moving>(std::move(nextState), seekInfo));
 }

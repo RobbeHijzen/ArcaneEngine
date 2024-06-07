@@ -38,6 +38,7 @@ namespace AE
 			auto& child = *it;
 			if (child->IsDeleted())
 			{
+				child->NotifyAll(Event::ObjectDestroyed);
 				it = m_GameObjects.erase(it);
 			}
 			else
@@ -89,7 +90,10 @@ namespace AE
 		for (int index{}; index < m_GameObjects.size(); ++index)
 		{
 			auto gameObject{ m_GameObjects[index] };
-			gameObject->Render();
+			if (gameObject->IsVisible())
+			{
+				gameObject->Render();
+			}
 		}
 	}
 

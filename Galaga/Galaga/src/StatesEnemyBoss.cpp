@@ -48,6 +48,8 @@ void StatesEnemyBoss::BombingRun::OnEnter(AE::GameObject* gameObject)
 	m_SeekPos.x = rand() % 2 ? 0.f : WINDOW_WIDTH;
 	m_SeekDir = glm::normalize(m_SeekPos - glm::vec2{gameObject->GetLocalTransform().GetPosition()});
 
+	float randomHeightDif{rand() / RAND_MAX * 2 * m_RandomHeightOffset - m_RandomHeightOffset };
+	m_ShootHeight += randomHeightDif;
 }
 std::unique_ptr<AE::FSMState> StatesEnemyBoss::BombingRun::Update(AE::GameObject* gameObject)
 {
@@ -61,11 +63,18 @@ std::unique_ptr<AE::FSMState> StatesEnemyBoss::BombingRun::Update(AE::GameObject
 
 		AE::TimeManager::GetInstance().SetTimer([gameObject](int )
 			{
-				if (auto shootComp = gameObject->GetComponent<ShootComponent>())
+				if (auto shootCompBase = gameObject->GetComponent<ShootComponent>())
 				{
-					shootComp->FireBullet();
+					shootCompBase->FireBullet();
 				}
-			}, 0.5f, 2, true);
+				for (const auto& child : gameObject->GetChildren())
+				{
+					if (auto shootComp = child->GetComponent<ShootComponent>())
+					{
+						shootComp->FireBullet();
+					}
+				}
+			}, m_ShootDelay, m_ShootAmount, true);
 	}
 
 	if (yHeight > WINDOW_HEIGHT)
@@ -88,26 +97,24 @@ void StatesEnemyBoss::TractorBeam::OnEnter(AE::GameObject* gameObject)
 {
 	SpawnBeam(gameObject);
 }
-void StatesEnemyBoss::TractorBeam::OnExit(AE::GameObject* )
-{
-	m_BeamGO->Delete();
-}
 std::unique_ptr<AE::FSMState> StatesEnemyBoss::TractorBeam::Update(AE::GameObject* )
 {
+	if (m_SwitchToBeamSuck)
+	{
+		return std::move(std::make_unique<StatesEnemyBoss::BeamSuck>(m_IdlePos, m_PlayerGO, m_BeamGO));
+	}
+
 	m_CurrentDuration += AE::Time::GetInstance().GetDeltaTime();
 
 	if (m_CurrentDuration >= m_BeamDuration)
 	{
-		if (m_BeamHitbox)
-		{
-			m_BeamHitbox->SetActive(true);
+		m_BeamGO->Delete();
 
-			auto nextState{ std::make_unique<Idle>(m_IdlePos) };
+		auto nextState{ std::make_unique<Idle>(m_IdlePos) };
 
-			std::list<EnemySeekInfo> seekInfos{};
-			seekInfos.emplace_back(EnemySeekInfo{ EnemySeekTypes::Straight, m_IdlePos });
-			return std::move(std::make_unique<StatesEnemy::Moving>(std::move(nextState), seekInfos));
-		}
+		std::list<EnemySeekInfo> seekInfos{};
+		seekInfos.emplace_back(EnemySeekInfo{ EnemySeekTypes::Straight, m_IdlePos });
+		return std::move(std::make_unique<StatesEnemy::Moving>(std::move(nextState), seekInfos));
 	}
 
 	return nullptr;
@@ -116,13 +123,12 @@ void StatesEnemyBoss::TractorBeam::SpawnBeam(AE::GameObject* go)
 {
 	m_BeamGO = std::make_shared<AE::GameObject>();
 	m_BeamGO->SetLocalTransform(go->GetWorldTransform());
-	m_BeamGO->AddLocalTransform(AE::Transform{ -20.f, 40.f });
+	m_BeamGO->AddLocalTransform(AE::Transform{ -21.3f, 40.f });
 	m_BeamGO->AddObserver(std::move(std::make_unique<BeamObserver>()));
+	m_BeamGO->AddTag("Beam");
 
 	auto beamHitbox{ std::make_shared<HitboxComponent>(m_BeamGO.get(), 80.f, 140.f) };
-	beamHitbox->SetActive(false);
 	beamHitbox->AddIgnoreTag("Enemy");
-	m_BeamHitbox = beamHitbox;
 
 	m_BeamGO->AddComponent(beamHitbox);
 
@@ -135,6 +141,64 @@ void StatesEnemyBoss::TractorBeam::SpawnBeam(AE::GameObject* go)
 	AE::SceneManager::GetInstance().GetCurrentScene()->Add(m_BeamGO);
 	m_BeamGO->SetParent(go);
 }
+
+//****
+// BeamSuck
+//****
+std::unique_ptr<AE::FSMState> StatesEnemyBoss::BeamSuck::Update(AE::GameObject* gameObject)
+{
+	if (m_MovePlayer)
+	{
+		glm::vec2 enemyPos{ glm::vec2{ gameObject->GetWorldTransform().GetPosition() } };
+		glm::vec2 dir{ AE::StateHelpers::GetDirection({enemyPos.x + 10.f, enemyPos.y}, m_PlayerGO) };
+		dir = glm::normalize(dir);
+
+		dir *= m_SuckSpeed * AE::Time::GetInstance().GetDeltaTime();
+
+		m_PlayerGO->AddLocalTransform({ dir.x, dir.y });
+	}
+	else if (m_ChangeState)
+	{
+		auto nextState{ std::make_unique<Idle>(m_IdlePos) };
+
+		std::list<EnemySeekInfo> seekInfos{};
+		seekInfos.emplace_back(EnemySeekInfo{ EnemySeekTypes::Straight, m_IdlePos });
+		return std::move(std::make_unique<StatesEnemy::Moving>(std::move(nextState), seekInfos));
+	}
+
+	return nullptr;
+}
+void StatesEnemyBoss::BeamSuck::SpawnRedGalaga(AE::GameObject* enemyGO)
+{
+	m_MovePlayer = false;
+	m_BeamGO->Delete();
+	AE::TimeManager::GetInstance().SetTimer([&](int){ m_ChangeState = true; }, m_AFKTimeAfterKill, 1);
+
+	auto galaga = std::make_shared<AE::GameObject>();
+	galaga->SetLocalTransform({ 0.f, -40.f });
+	galaga->AddTag("Enemy");
+
+	// Image Component
+	auto imageComp{ std::make_shared<MovementImageComponent>(galaga.get(), "Galaga.png", glm::vec2{2.f, 0.f}, 16, glm::vec2{0.f, 1.f}) };
+	imageComp->SetDestRect({ 0, 0, 34, 34 });
+	imageComp->SetSourceRect({ 1, 181, 16, 16 });
+	galaga->AddComponent(imageComp);
+
+	// Shoot Component
+	auto shootComp{ std::make_shared<ShootComponent>(galaga.get()) };
+	shootComp->SetBulletDirection(glm::vec2{ 0.f, 1.f });
+	shootComp->SetBulletSpeed(200.f);
+	shootComp->AddSeekTarget(m_PlayerGO);
+	shootComp->AddIgnoreTag("Enemy");
+	shootComp->AddIgnoreTag("Bullet");
+	shootComp->SetBulletSpawnOffset(glm::vec2{ 2.5f, 30.f });
+	galaga->AddComponent(shootComp);
+
+
+	AE::SceneManager::GetInstance().GetCurrentScene()->Add(galaga);
+	galaga->SetParent(enemyGO, false);
+}
+
 
 //****
 // TwoHealth

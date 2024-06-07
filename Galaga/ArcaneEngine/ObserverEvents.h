@@ -6,6 +6,7 @@ namespace AE
 	{
 		GameStart,
 		ScoreChanged,
+		ObjectDestroyed,
 
 		ObjectLostHealth,
 		ObjectDied,
@@ -14,7 +15,11 @@ namespace AE
 		GoldPickup,
 
 		FireBullet,
-		OnOverlap
+		OnOverlap,
+
+		StateChanged,
+
+		LevelChanged
 	};
 
 }

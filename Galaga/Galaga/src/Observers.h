@@ -4,6 +4,7 @@
 #include "TextComponent.h"
 #include "ImageComponent.h"
 #include "SpawnerManagerComponent.h"
+#include "ShootComponent.h"
 
 class HealthDisplayObserver : public AE::Observer
 {
@@ -74,7 +75,9 @@ public:
 	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
 
 private:
-
+	float m_MaxInBeamTime{ 1.f };
+	float m_CurrentInBeamTime{};
+	bool m_IsInSuckState{false};
 };
 
 class EnemyObserver : public AE::Observer
@@ -104,15 +107,42 @@ private:
 
 };
 
-class SpawnedObjectObserver : public AE::Observer
+class SpawnedEnemyObserver : public AE::Observer
 {
 public:
 
-	SpawnedObjectObserver(SpawnerManagerComponent* spawnerComp) : m_SpawnerManagerComp{ spawnerComp } {}
+	SpawnedEnemyObserver(SpawnerManagerComponent* spawnerComp) : m_SpawnerManagerComp{ spawnerComp } {}
 	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
 
 private:
 
+	SpawnerManagerComponent* m_SpawnerManagerComp{};
+};
+
+class SpawnedBulletObserver : public AE::Observer
+{
+public:
+
+	SpawnedBulletObserver(ShootComponent* shootComp) : m_ShootComp{ shootComp } {}
+	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
+
+private:
+
+	ShootComponent* m_ShootComp{};
+};
+
+
+
+
+class StateMachineObserver : public AE::Observer
+{
+public:
+
+	StateMachineObserver(SpawnerManagerComponent* spawnerComp) : m_SpawnerManagerComp{ spawnerComp } {}
+	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
+
+private:
+	
 	SpawnerManagerComponent* m_SpawnerManagerComp{};
 };
 

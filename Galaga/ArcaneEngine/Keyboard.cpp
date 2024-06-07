@@ -35,9 +35,11 @@ bool Keyboard::ProcessInput()
             break;
         }
     }
-
-    for (auto& inputBinding : m_InputBindings)
+ 
+    for (size_t index{}; index < m_InputBindings.size(); ++index)
     {
+        InputBindingKB* inputBinding{m_InputBindings[index].get()};
+
         if (!inputBinding->command)
             continue;
 

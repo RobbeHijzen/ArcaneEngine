@@ -33,3 +33,8 @@ std::shared_ptr<Font> ResourceManager::LoadFont(const std::string& file, unsigne
 {
 	return std::make_shared<Font>(m_dataPath + file, size);
 }
+
+std::ifstream AE::ResourceManager::GetFileFromPath(const std::string& file)
+{
+	return std::ifstream{ m_dataPath + file };
+}

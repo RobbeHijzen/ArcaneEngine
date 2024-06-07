@@ -20,6 +20,8 @@ namespace AE
 		void RemoveAllBindings() 
 		{ 
 			m_InputBindings.clear();
+			std::fill_n(m_CurrentKeyStates.begin(), m_CurrentKeyStates.size(), false);
+			std::fill_n(m_PreviousKeyStates.begin(), m_PreviousKeyStates.size(), false);
 		}
 
 	private:
