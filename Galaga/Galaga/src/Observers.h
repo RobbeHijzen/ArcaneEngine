@@ -1,8 +1,8 @@
 #pragma once
 #include "ArcaneEngine.h"
+#include "ServiceLocator.h"
 
 #include "TextComponent.h"
-#include "ImageComponent.h"
 #include "SpawnerManagerComponent.h"
 #include "ShootComponent.h"
 
@@ -54,7 +54,6 @@ public:
 	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
 
 private:
-
 	unsigned short m_ShotSoundID{};
 
 };
@@ -66,18 +65,21 @@ public:
 	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
 
 private:
-
+	void SpawnExplosionVFX(AE::GameObject* bulletGO);
 };
 
 class BeamObserver : public AE::Observer
 {
 public:
+	BeamObserver();
 	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
 
 private:
 	float m_MaxInBeamTime{ 1.f };
 	float m_CurrentInBeamTime{};
 	bool m_IsInSuckState{false};
+
+	unsigned short m_BeamSoundID{};
 };
 
 class EnemyObserver : public AE::Observer
@@ -93,45 +95,70 @@ private:
 	int m_ScoreOnDeath{};
 	int m_DivingScoreOnDeath{};
 
-	
+	unsigned short m_EnemyDeathSoundID{};
 
 };
 
 class GalagaObserver : public AE::Observer
 {
 public:
+	GalagaObserver(SpawnerManagerComponent* spawnerComp)
+		: m_SpawnerComp{spawnerComp}
+	{
+		m_CapturedShipSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Audio/CapturedShip.mp3", 10);
+		m_PlayerDeathSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Audio/PlayerDies.mp3", 10);
 
+	}
 	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
 
 private:
-
+	unsigned short m_CapturedShipSoundID{};
+	unsigned short m_PlayerDeathSoundID{};
+	SpawnerManagerComponent* m_SpawnerComp{};
 };
 
 class SpawnedEnemyObserver : public AE::Observer
 {
 public:
 
-	SpawnedEnemyObserver(SpawnerManagerComponent* spawnerComp) : m_SpawnerManagerComp{ spawnerComp } {}
+	SpawnedEnemyObserver(SpawnerManagerComponent* spawnerComp)
+		: m_SpawnerManagerComp{ spawnerComp } 
+	{
+	}
 	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
 
 private:
 
 	SpawnerManagerComponent* m_SpawnerManagerComp{};
+
+};
+
+class EnemyBossObserver : public AE::Observer
+{
+public:
+
+	EnemyBossObserver()
+	{
+		m_BossDeathSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Audio/BossDeath.mp3", 10);
+	}
+	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
+
+private:
+
+	unsigned short m_BossDeathSoundID{};
 };
 
 class SpawnedBulletObserver : public AE::Observer
 {
 public:
 
-	SpawnedBulletObserver(ShootComponent* shootComp) : m_ShootComp{ shootComp } {}
+	SpawnedBulletObserver(std::shared_ptr<ShootComponent> shootComp) : m_ShootComp{ shootComp } {}
 	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
 
 private:
 
-	ShootComponent* m_ShootComp{};
+	std::shared_ptr<ShootComponent> m_ShootComp{};
 };
-
-
 
 
 class StateMachineObserver : public AE::Observer
@@ -144,6 +171,38 @@ public:
 private:
 	
 	SpawnerManagerComponent* m_SpawnerManagerComp{};
+};
+
+class SpawnerManagerObserver : public AE::Observer
+{
+public:
+
+	SpawnerManagerObserver()
+	{
+		m_WaveStartSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Audio/Start.mp3", 10);
+	}
+	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
+
+private:
+	unsigned short m_WaveStartSoundID{};
+
+};
+
+class ButtonBoxObserver : public AE::Observer
+{
+public:
+
+	ButtonBoxObserver()
+	{
+		m_ButtonPressSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Audio/ButtonPress.mp3", 10);
+		m_ButtonSelectSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Audio/ButtonSelect.mp3", 10);
+	}
+	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
+
+private:
+	unsigned short m_ButtonPressSoundID{};
+	unsigned short m_ButtonSelectSoundID{};
+
 };
 
 

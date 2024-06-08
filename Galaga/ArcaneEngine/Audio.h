@@ -13,6 +13,7 @@ namespace AE
 
 		virtual void StartSoundQueue() = 0;
 		virtual void Stop() = 0;
+		virtual void ToggleMute() {}
 	};
 
 	class NullAudio : public AudioSystem

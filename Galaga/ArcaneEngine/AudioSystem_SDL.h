@@ -18,6 +18,7 @@ namespace AE
         virtual void StartSoundQueue() override;
 
         virtual void Stop() override;
+        virtual void ToggleMute() override;
 
     private:
 

@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "GalagaGameInstance.h"
 #include "Commands.h"
+#include "Observers.h"
 
 #include "TextComponent.h"
 #include "ImageComponent.h"
@@ -21,6 +22,9 @@ void HighscoreLevel::Load(AE::Scene& scene)
 
 	AddScoreInfos(scene);
 	AddButtons(scene);
+
+	// Mute command
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_M, InputType::IsUpThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AE::ServiceLocator::GetAudio()->ToggleMute(); })));
 }
 
 void HighscoreLevel::DrawBackground(AE::Scene& scene)
@@ -136,6 +140,8 @@ void HighscoreLevel::AddButtons(AE::Scene& scene)
 
 	auto buttonBoxComp{ std::make_shared<ButtonBoxComponent>(buttonBox.get(), imageComp.get(), glm::vec2{-30.f, 3.f}) };
 	buttonBox->AddComponent(buttonBoxComp);
+
+	buttonBox->AddObserver(std::move(std::make_unique<ButtonBoxObserver>()));
 
 	InputManager::GetInstance().BindActionGP(0, INPUT_GAMEPAD_A, AE::InputType::IsUpThisFrame, std::move(std::make_unique<ButtonPressCommand>(buttonBox.get())));
 	InputManager::GetInstance().BindActionGP(0, INPUT_GAMEPAD_DPAD_LEFT, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonMoveSelectionCommand>(buttonBox.get(), glm::i32vec2{ -1, 0 })));

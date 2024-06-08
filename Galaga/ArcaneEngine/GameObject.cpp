@@ -227,7 +227,7 @@ namespace AE
 	void GameObject::Delete()
 	{
 		m_IsDeleted = true;
-		SetParent(nullptr);
+		SetParent(nullptr, false);
 	}
 
 	bool GameObject::IsChild(GameObject* gameObject)

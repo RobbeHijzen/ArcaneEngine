@@ -40,9 +40,12 @@ public:
 			CheckForAllIdleEnemies();
 		}
 	}
+	void SkipToNextWave();
 
 	void ChangeStateToIdle(AE::GameObject* toChangeObject);
 	void ChangeStateToNotIdle(AE::GameObject* toChangeObject);
+
+	void DeleteAllBullets();
 
 private:
 
@@ -68,13 +71,14 @@ private:
 
 	WaveInfo m_CurrentWaveInfo{};
 	int m_WaveTimerHandle{};
+	int m_PhaseTimerHandle{};
 	int m_CurrentWaveInfoIndex{};
 
 	// Spawning Info
-	float m_PhaseSpawnTime{ 7.f };
+	float m_PhaseSpawnTime{ 6.f };
 	int m_PhaseCount{5};
 
-	float m_EnemySpawnTimeDifference{ 0.3f };
+	float m_EnemySpawnTimeDifference{ 0.22f };
 	int m_EnemySpawnCountPerPhase{8};
 
 	std::vector<std::pair<int, std::pair<SpawningTypes, SpawningTypes>>> m_SpawningOrder 
@@ -100,6 +104,9 @@ private:
 	void SendEnemyOnIndexOnTractorBeam(const std::list<std::pair<AE::GameObject*, bool>>& enemies, int index);
 
 	std::vector<std::function<bool()>> m_EnemyAIMoveSets{};
+
+	int m_TimesLevelSkipped{};
+	int m_MaxLevelSkipTimes{3};
 };
 
 

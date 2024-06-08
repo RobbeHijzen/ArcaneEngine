@@ -73,14 +73,21 @@ void StatesEnemy::Moving::MoveAccordingToSeekInfo(EnemySeekInfo seekInfo, AE::Ga
 	{
 		case EnemySeekTypes::Straight:
 		{
-			glm::vec2 dir = AE::StateHelpers::GetDirection(seekInfo.seekPos, gameObject);
-			glm::vec2 addedPosition{ dir * m_MoveSpeed * AE::Time::GetInstance().GetDeltaTime() };
-			gameObject->AddLocalTransform(AE::Transform{ addedPosition });
+			glm::vec2 dir = seekInfo.seekPos - glm::vec2{ gameObject->GetLocalTransform().GetPosition() };
+			glm::vec2 addedPosition{ glm::normalize(dir) * m_MoveSpeed * AE::Time::GetInstance().GetDeltaTime() };
+			
+			if ( addedPosition.length() > dir.length())
+			{
+				gameObject->AddLocalTransform(AE::Transform{ dir });
+			}
+			else
+			{
+				gameObject->AddLocalTransform(AE::Transform{ addedPosition });
+			}
 			break;
 		}
 		case EnemySeekTypes::Circle:
 		{
-
 			break;
 		}
 

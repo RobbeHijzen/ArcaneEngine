@@ -24,6 +24,9 @@ void SoloLevel::Load(Scene& scene)
 	auto galaga{ AddGalaga(scene) };
 	AddSpawnerManager(scene, galaga);
 	CreateSurroundingHitBoxes(scene);
+
+	// Mute command
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_M, InputType::IsUpThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AE::ServiceLocator::GetAudio()->ToggleMute(); })));
 }
 
 void SoloLevel::AddBackgroundImage(Scene& scene)
@@ -52,7 +55,7 @@ AE::GameObject* SoloLevel::AddGalaga(Scene& scene)
 	// Shoot component
 	auto shootComp{ std::make_shared<ShootComponent>(galaga.get())};
 	shootComp->SetBulletSpawnOffset({ 3.f, -17.f });
-	shootComp->SetBulletSpeed(125.f);
+	shootComp->SetBulletSpeed(140.f);
 	shootComp->AddIgnoreTag("Friendly");
 	shootComp->AddIgnoreTag("Bullet");
 
@@ -88,7 +91,6 @@ AE::GameObject* SoloLevel::AddGalaga(Scene& scene)
 
 	galaga->AddObserver(std::move(std::make_unique<HealthDisplayObserver>("Galaga.png", AE::Rect{ 109, 1, 16, 16 }, AE::Rect{ 20, 440, 35, 35 })));
 	galaga->AddObserver(std::move(std::make_unique<ScoreDisplayObserver>(scoreTextComp)));
-	galaga->AddObserver(std::move(std::make_unique<GalagaObserver>()));
 
 	return galaga.get();
 }
@@ -97,7 +99,14 @@ void SoloLevel::AddSpawnerManager(AE::Scene& scene, AE::GameObject* galaga)
 	auto go = std::make_shared<AE::GameObject>();
 	auto spawnerManagerComp{ std::make_shared<SpawnerManagerComponent>(go.get(), std::vector<AE::GameObject*>{galaga}) };
 	go->AddComponent(spawnerManagerComp);
+
+	go->AddObserver(std::move(std::make_unique<SpawnerManagerObserver>()));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_F1, InputType::IsUpThisFrame, std::move(std::make_unique<LambdaCommand>([spawnerManagerComp]()
+		{spawnerManagerComp->SkipToNextWave(); })));
+
 	scene.Add(go);
+
+	galaga->AddObserver(std::move(std::make_unique<GalagaObserver>(spawnerManagerComp.get())));
 }
 
 void SoloLevel::CreateSurroundingHitBoxes(AE::Scene& scene)

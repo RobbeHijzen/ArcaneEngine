@@ -1,6 +1,7 @@
 #include "StartScreenLevel.h"
 
 #include "Commands.h"
+#include "Observers.h"
 #include "ImageComponent.h"
 #include "ButtonBoxComponent.h"
 #include "TextComponent.h"
@@ -15,6 +16,9 @@ void StartScreenLevel::Load(AE::Scene& scene)
 	AddRegularControls(scene);
 	auto birdControls = AddBirdControls(scene);
 	AddButtons(scene, birdControls);
+
+	// Mute command
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_M, InputType::IsUpThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AE::ServiceLocator::GetAudio()->ToggleMute(); })));
 }
 
 void StartScreenLevel::AddBackgroundImage(AE::Scene& scene)
@@ -48,6 +52,8 @@ void StartScreenLevel::AddButtons(AE::Scene& scene, AE::GameObject* birdControls
 
 	auto buttonBoxComp{ std::make_shared<ButtonBoxComponent>(buttonBox.get(), imageComp.get(), glm::vec2{-30.f, 3.f}) };
 	buttonBox->AddComponent(buttonBoxComp);
+
+	buttonBox->AddObserver(std::move(std::make_unique<ButtonBoxObserver>()));
 
 	InputManager::GetInstance().BindActionGP(0, INPUT_GAMEPAD_A, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonPressCommand>(buttonBox.get())));
 	InputManager::GetInstance().BindActionGP(0, INPUT_GAMEPAD_DPAD_LEFT, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonMoveSelectionCommand>(buttonBox.get(), glm::i32vec2{-1, 0})));
@@ -247,7 +253,9 @@ AE::GameObject* StartScreenLevel::AddBirdControls(AE::Scene& scene)
 	go->AddComponent(text_09);
 	go->AddComponent(text_10);
 
-	go->SetLocalTransform({ 360.f, 380.f });
-	//scene.Add(go);
+	go->SetLocalTransform({ 15.f, 380.f });
+	scene.Add(go);
+
+	go->SetVisible(false);
 	return go.get();
 }

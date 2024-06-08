@@ -32,16 +32,45 @@ void SpawnerManagerComponent::SpawnWave()
 {
 	if (!AE::TimeManager::GetInstance().DoesTimerExist(m_WaveTimerHandle))
 	{
+		GetOwner()->NotifyAll(AE::Event::WaveStarted);
+
 		m_CurrentWaveInfo = m_WaveInfos[m_CurrentWaveInfoIndex];
 		m_CurrentWaveInfoIndex = (m_CurrentWaveInfoIndex + 1) % m_WaveInfos.size();
 
 		m_WaveTimerHandle = AE::TimeManager::GetInstance().SetTimer([&](int itNum)
 			{
+				if (itNum == m_PhaseCount) return;
 				SpawnPhase(itNum % int(m_SpawningOrder.size()));
 
-			}, m_PhaseSpawnTime, m_PhaseCount, true);
+			}, m_PhaseSpawnTime, m_PhaseCount + 1, true);
 
 	}
+}
+
+void SpawnerManagerComponent::SkipToNextWave()
+{
+	++m_TimesLevelSkipped;
+	if (m_TimesLevelSkipped >= m_MaxLevelSkipTimes)
+	{
+		AE::SceneManager::GetInstance().SetScene("DeathScreen");
+		return;
+	}
+
+	AE::TimeManager::GetInstance().ClearTimer(m_WaveTimerHandle);
+	AE::TimeManager::GetInstance().ClearTimer(m_PhaseTimerHandle);
+
+	for (auto& bee : m_Bees)
+		bee.first->Delete();
+	for (auto& butterfly : m_Butterflies)
+		butterfly.first->Delete();
+	for (auto& boss : m_Bosses)
+		boss.first->Delete();
+
+	m_Bees.clear();
+	m_Butterflies.clear();
+	m_Bosses.clear();
+
+	SpawnWave();
 }
 
 void SpawnerManagerComponent::ChangeStateToIdle(AE::GameObject* toChangeObject)
@@ -102,9 +131,34 @@ void SpawnerManagerComponent::ChangeStateToNotIdle(AE::GameObject* toChangeObjec
 	}
 }
 
+void SpawnerManagerComponent::DeleteAllBullets()
+{
+	for (auto& bee : m_Bees)
+	{
+		if (auto shootComp = bee.first->GetComponent<ShootComponent>())
+		{
+			shootComp->DeleteAllBullets();
+		}
+	}
+	for (auto& butterfly : m_Butterflies)
+	{
+		if (auto shootComp = butterfly.first->GetComponent<ShootComponent>())
+		{
+			shootComp->DeleteAllBullets();
+		}
+	}
+	for (auto& boss : m_Bosses)
+	{
+		if (auto shootComp = boss.first->GetComponent<ShootComponent>())
+		{
+			shootComp->DeleteAllBullets();
+		}
+	}
+}
+
 void SpawnerManagerComponent::SpawnPhase(int spawningOrderIndex)
 {
-	AE::TimeManager::GetInstance().SetTimer([&, spawningOrderIndex](int itNum)
+	m_PhaseTimerHandle = AE::TimeManager::GetInstance().SetTimer([&, spawningOrderIndex](int itNum)
 		{
 			if (m_CurrentWaveInfo.beeEnemies.empty() && m_CurrentWaveInfo.butterflyEnemies.empty() && m_CurrentWaveInfo.bossEnemies.empty())
 			{
@@ -256,6 +310,8 @@ std::string SpawnerManagerComponent::RemoveUntilChar(std::string& input, char st
 
 void SpawnerManagerComponent::CheckForAllIdleEnemies()
 {
+	if (AE::TimeManager::GetInstance().DoesTimerExist(m_WaveTimerHandle)) return;
+
 	for (auto& bee : m_Bees)
 	{
 		if (!bee.second)
@@ -278,10 +334,7 @@ void SpawnerManagerComponent::CheckForAllIdleEnemies()
 		}
 	}
 
-	if (!AE::TimeManager::GetInstance().DoesTimerExist(m_WaveTimerHandle))
-	{
-		SendAIWave();
-	}
+	SendAIWave();
 }
 void SpawnerManagerComponent::SendAIWave()
 {

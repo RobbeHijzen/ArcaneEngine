@@ -2,6 +2,7 @@
 #include "ArcaneEngine.h"
 #include "Commands.h"
 #include "GalagaGameInstance.h"
+#include "Observers.h"
 
 #include "ImageComponent.h"
 #include "TextComponent.h"
@@ -14,6 +15,9 @@ void DeathScreenLevel::Load(AE::Scene& scene)
 	DrawBackground(scene);
 	AddResults(scene);
 	AddContinueButton(scene);
+
+	// Mute command
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_M, InputType::IsUpThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AE::ServiceLocator::GetAudio()->ToggleMute(); })));
 }
 
 void DeathScreenLevel::DrawBackground(AE::Scene& scene)
@@ -131,6 +135,8 @@ void DeathScreenLevel::AddContinueButton(AE::Scene& scene)
 
 	auto buttonBoxComp{ std::make_shared<ButtonBoxComponent>(buttonBox.get(), imageComp.get(), glm::vec2{-30.f, 3.f}) };
 	buttonBox->AddComponent(buttonBoxComp);
+
+	buttonBox->AddObserver(std::move(std::make_unique<ButtonBoxObserver>()));
 
 	InputManager::GetInstance().BindActionGP(0, INPUT_GAMEPAD_A, AE::InputType::IsUpThisFrame, std::move(std::make_unique<ButtonPressCommand>(buttonBox.get())));
 	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_SPACE, InputType::IsUpThisFrame, std::move(std::make_unique<ButtonPressCommand>(buttonBox.get())));

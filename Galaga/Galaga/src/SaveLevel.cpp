@@ -3,6 +3,7 @@
 #include "ArcaneEngine.h"
 #include "GameObject.h"
 #include "Commands.h"
+#include "Observers.h"
 
 #include "ImageComponent.h"
 #include "ButtonBoxComponent.h"

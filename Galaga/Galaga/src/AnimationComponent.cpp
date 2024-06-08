@@ -20,7 +20,8 @@ void AnimationComponent::Update()
 		m_ColIndex = (m_ColIndex + 1) % m_AmountCols;
 
 		glm::vec2 newSourcePos{};
-		newSourcePos.x = m_ColIndex * m_OriginalSourceRect.w;
+		newSourcePos.x = m_ColIndex * m_OriginalSourceRect.w + m_OriginalSourceRect.x;
+		newSourcePos.y = m_OriginalSourceRect.y;
 
 		m_ImageComp->SetSourcePos(newSourcePos);
 	}

@@ -27,6 +27,9 @@ void CoopLevel::Load(Scene& scene)
 
 	AddSpawnerManager(scene, galagas);
 	CreateSurroundingHitBoxes(scene);
+
+	// Mute command
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_M, InputType::IsUpThisFrame, std::move(std::make_unique<LambdaCommand>([&]() {AE::ServiceLocator::GetAudio()->ToggleMute(); })));
 }
 
 void CoopLevel::AddBackgroundImage(Scene& scene)
@@ -55,7 +58,7 @@ AE::GameObject* CoopLevel::AddGalaga1(Scene& scene)
 	// Shoot component
 	auto shootComp{ std::make_shared<ShootComponent>(galaga.get()) };
 	shootComp->SetBulletSpawnOffset({ 3.f, -17.f });
-	shootComp->SetBulletSpeed(125.f);
+	shootComp->SetBulletSpeed(140.f);
 	shootComp->AddIgnoreTag("Friendly");
 	shootComp->AddIgnoreTag("Bullet");
 
@@ -91,7 +94,6 @@ AE::GameObject* CoopLevel::AddGalaga1(Scene& scene)
 
 	galaga->AddObserver(std::move(std::make_unique<HealthDisplayObserver>("Galaga.png", AE::Rect{ 109, 1, 16, 16 }, AE::Rect{ 20, 440, 35, 35 })));
 	galaga->AddObserver(std::move(std::make_unique<ScoreDisplayObserver>(scoreTextComp)));
-	galaga->AddObserver(std::move(std::make_unique<GalagaObserver>()));
 
 	return galaga.get();
 }
@@ -112,7 +114,7 @@ AE::GameObject* CoopLevel::AddGalaga2(Scene& scene)
 	// Shoot component
 	auto shootComp{ std::make_shared<ShootComponent>(galaga.get()) };
 	shootComp->SetBulletSpawnOffset({ 3.f, -17.f });
-	shootComp->SetBulletSpeed(125.f);
+	shootComp->SetBulletSpeed(140.f);
 	shootComp->AddIgnoreTag("Friendly");
 	shootComp->AddIgnoreTag("Bullet");
 
@@ -134,7 +136,6 @@ AE::GameObject* CoopLevel::AddGalaga2(Scene& scene)
 	scene.Add(galaga);
 
 	galaga->AddObserver(std::move(std::make_unique<HealthDisplayObserver>("Galaga.png", AE::Rect{ 127, 1, 16, 16 }, AE::Rect{ 519, 440, 35, 35 })));
-	galaga->AddObserver(std::move(std::make_unique<GalagaObserver>()));
 
 	return galaga.get();
 }
@@ -144,7 +145,17 @@ void CoopLevel::AddSpawnerManager(AE::Scene& scene, std::vector<AE::GameObject*>
 	auto go = std::make_shared<AE::GameObject>();
 	auto spawnerManagerComp{ std::make_shared<SpawnerManagerComponent>(go.get(), galagas) };
 	go->AddComponent(spawnerManagerComp);
+
+	go->AddObserver(std::move(std::make_unique<SpawnerManagerObserver>()));
+	InputManager::GetInstance().BindActionKB(SDL_SCANCODE_F1, InputType::IsUpThisFrame, std::move(std::make_unique<LambdaCommand>([spawnerManagerComp]()
+		{spawnerManagerComp->SkipToNextWave(); })));
+
 	scene.Add(go);
+
+	for (const auto galaga : galagas)
+	{
+		galaga->AddObserver(std::move(std::make_unique<GalagaObserver>(spawnerManagerComp.get())));
+	}
 }
 void CoopLevel::CreateSurroundingHitBoxes(AE::Scene& scene)
 {

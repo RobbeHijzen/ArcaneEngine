@@ -7,6 +7,7 @@ void ButtonBoxComponent::GameStart()
 
 void ButtonBoxComponent::PressCurrentButton()
 {
+	GetOwner()->NotifyAll(AE::Event::ButtonPressed);
 	m_Buttons[m_CurrentlySelectedRow][m_CurrentlySelectedCol]->Press();
 }
 
@@ -25,6 +26,8 @@ void ButtonBoxComponent::MoveSelection(glm::i32vec2 dir)
 			m_CurrentlySelectedCol = std::min(m_CurrentlySelectedCol, int(m_Buttons[m_CurrentlySelectedRow].size() - 1));
 			
 			m_Buttons[m_CurrentlySelectedRow][m_CurrentlySelectedCol]->OnSelect();
+			GetOwner()->NotifyAll(AE::Event::ButtonSelected);
+
 			MoveImageToSelection();
 		}
 	}
@@ -39,6 +42,8 @@ void ButtonBoxComponent::MoveSelection(glm::i32vec2 dir)
 			if (m_CurrentlySelectedCol < 0) m_CurrentlySelectedCol += colSize;
 
 			m_Buttons[m_CurrentlySelectedRow][m_CurrentlySelectedCol]->OnSelect();
+			GetOwner()->NotifyAll(AE::Event::ButtonSelected);
+
 			MoveImageToSelection();
 		}
 	}

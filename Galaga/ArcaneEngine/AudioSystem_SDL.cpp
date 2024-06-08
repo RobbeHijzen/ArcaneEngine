@@ -82,7 +82,7 @@ public:
 				}
 
 				auto soundChunk{ m_SoundChunks[audioClip->GetSoundID()] };
-				Mix_VolumeChunk(soundChunk, static_cast<int>(audioClip->GetVolume()));
+				Mix_VolumeChunk(soundChunk, static_cast<int>(audioClip->GetVolume()) * int(m_NotMuted));
 				Mix_PlayChannel(-1, soundChunk, 0);
 			}
 
@@ -95,13 +95,18 @@ public:
 		m_Cv.notify_one();
 	}
 
+	void ToggleMute()
+	{ 
+		m_NotMuted = !m_NotMuted;
+	}
+
 private:
 
 	std::vector<std::unique_ptr<AudioClip>> m_AudioClips{};
 	std::vector<Mix_Chunk*> m_SoundChunks{};
 	std::queue<AudioClip*> m_ClipQueue{};
 
-
+	bool m_NotMuted{ true };
 	bool m_Run{ true };
 
 	std::mutex m_Mutex{};
@@ -133,4 +138,9 @@ void AudioSystem_SDL::StartSoundQueue()
 void AE::AudioSystem_SDL::Stop()
 {
 	m_pImpl->Stop();
+}
+
+void AE::AudioSystem_SDL::ToggleMute()
+{
+	m_pImpl->ToggleMute();
 }

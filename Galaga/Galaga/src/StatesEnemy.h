@@ -29,7 +29,7 @@ namespace StatesEnemy
 		const float m_CircleRadius{60.f};
 		const int m_CircleSeekAmount{16};
 
-		float m_MoveSpeed{ 130.f };
+		float m_MoveSpeed{ 180.f };
 		void MoveAccordingToSeekInfo(EnemySeekInfo seekInfo, AE::GameObject* gameObject);
 	};
 

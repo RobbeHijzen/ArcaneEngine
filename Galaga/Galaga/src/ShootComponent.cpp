@@ -15,7 +15,8 @@ ShootComponent::ShootComponent(AE::GameObject* pParent)
 
 void ShootComponent::FireBullet()
 {
-	if (m_AmountOfLiveBullets >= m_MaxAmountOfBullets) return;
+	if (!m_ShootingEnabled) return;
+	if (m_Bullets.size() >= m_MaxAmountOfBullets) return;
 
 	auto bullet = std::make_shared<AE::GameObject>();
 	bullet->SetLocalTransform(GetOwner()->GetWorldTransform());
@@ -56,7 +57,7 @@ void ShootComponent::FireBullet()
 
 	// Observers
 	bullet->AddObserver(std::move(std::make_unique<BulletObserver>()));
-	bullet->AddObserver(std::move(std::make_unique<SpawnedBulletObserver>(this)));
+	bullet->AddObserver(std::move(std::make_unique<SpawnedBulletObserver>(GetOwner()->GetComponent<ShootComponent>())));
 
 	// Spawn into Scene
 	auto& scene{ AE::SceneManager::GetInstance()};
@@ -64,5 +65,5 @@ void ShootComponent::FireBullet()
 
 	// Notify observers
 	GetOwner()->NotifyAll(AE::Event::FireBullet);
-	++m_AmountOfLiveBullets;
+	m_Bullets.emplace_back(bullet.get());
 }

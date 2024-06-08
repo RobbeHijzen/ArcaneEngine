@@ -6,7 +6,6 @@
 #include "HealthComponent.h"
 #include "ShootComponent.h"
 
-#include "ServiceLocator.h"
 #include "GalagaGameInstance.h"
 
 #include "StatesEnemyBee.h"
@@ -107,6 +106,7 @@ void BulletObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 			if (auto healthComp = overlappedGO->GetComponent<HealthComponent>())
 			{
 				healthComp->KillObject();
+				SpawnExplosionVFX(gameObject);
 			}
 		}
 		gameObject->Delete();
@@ -115,6 +115,35 @@ void BulletObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 	}
 	}
 	
+}
+
+void BulletObserver::SpawnExplosionVFX(AE::GameObject* bulletGO)
+{
+	constexpr int explosionSize{46};
+	constexpr int animationCols{ 5 };
+	constexpr float explosionTime{ 0.7f };
+
+	auto go{std::make_shared<AE::GameObject>()};
+
+	glm::vec2 bulletPos{ glm::vec2{bulletGO->GetWorldTransform().GetPosition()} };
+	go->SetLocalTransform({ bulletPos.x - explosionSize / 4, bulletPos.y - explosionSize / 2 });
+
+	
+	auto animComp{ std::make_shared<AnimationComponent>(go.get(), "Galaga.png", animationCols, explosionTime / animationCols)};
+	animComp->SetDestRect({ 0, 0, explosionSize, explosionSize });
+	animComp->SetSourceRect({ 289, 1, 32, 32 });
+	
+	go->AddComponent(animComp);
+	
+	AE::SceneManager::GetInstance().GetCurrentScene()->Add(go);
+	AE::TimeManager::GetInstance().SetTimer([go](int) { go->Delete(); }, explosionTime, 1);
+}
+
+
+BeamObserver::BeamObserver()
+{
+	m_BeamSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Audio/TractorBeam.mp3", 10);
+	AE::ServiceLocator::GetAudio()->PlaySound(m_BeamSoundID);
 }
 
 void BeamObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
@@ -158,6 +187,7 @@ EnemyObserver::EnemyObserver(AE::GameObject* galaga, int scoreOnDeath, int divin
 	, m_ScoreOnDeath{ scoreOnDeath }
 	, m_DivingScoreOnDeath{divingScoreOnDeath}
 {
+	m_EnemyDeathSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Audio/EnemyDies.mp3", 10);
 }
 
 void EnemyObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
@@ -166,6 +196,7 @@ void EnemyObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 	{
 	case AE::Event::ObjectDied:
 	{
+		AE::ServiceLocator::GetAudio()->PlaySound(m_EnemyDeathSoundID);
 		gameObject->Delete();
 		if (m_GalagaObject)
 		{
@@ -205,6 +236,17 @@ void GalagaObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 {
 	switch (event)
 	{
+	case AE::Event::GameStart:
+	{
+		break;
+	}
+	case AE::Event::ObjectLostHealth:
+	{
+		m_SpawnerComp->DeleteAllBullets();
+		gameObject->SetLocalTransform(gameObject->GetSpawnTransform());
+		AE::ServiceLocator::GetAudio()->PlaySound(m_PlayerDeathSoundID);
+		break;
+	}
 	case AE::Event::ObjectDied:
 	{
 		AE::SceneManager::GetInstance().SetScene("DeathScreen");
@@ -232,6 +274,7 @@ void GalagaObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 					{
 						hitBeamSuck = true;
 						beamSuck->SpawnRedGalaga(overlappedGO);
+						AE::ServiceLocator::GetAudio()->PlaySound(m_CapturedShipSoundID);
 					}
 				}
 				if (!hitBeamSuck)
@@ -246,7 +289,6 @@ void GalagaObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 				{
 					healthCompPlayer->KillObject();
 				}
-				gameObject->SetLocalTransform(gameObject->GetSpawnTransform());
 			}
 			
 		}
@@ -269,15 +311,27 @@ void SpawnedEnemyObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 	}
 }
 
+void EnemyBossObserver::OnNotify(AE::Event event, AE::GameObject*)
+{
+	switch (event)
+	{
+	case AE::Event::ObjectDied:
+	{
+		AE::ServiceLocator::GetAudio()->PlaySound(m_BossDeathSoundID);
 
-void SpawnedBulletObserver::OnNotify(AE::Event event, AE::GameObject* )
+		break;
+	}
+	}
+}
+
+
+void SpawnedBulletObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 {
 	switch (event)
 	{
 	case AE::Event::ObjectDestroyed:
 	{
-		m_ShootComp->RemoveBullet();
-
+		m_ShootComp->RemoveBullet(gameObject);
 		break;
 	}
 	}
@@ -309,3 +363,33 @@ void StateMachineObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
 	}
 	}
 }
+
+void SpawnerManagerObserver::OnNotify(AE::Event event, AE::GameObject*)
+{
+	switch (event)
+	{
+	case AE::Event::WaveStarted:
+	{
+		AE::ServiceLocator::GetAudio()->PlaySound(m_WaveStartSoundID);
+		break;
+	}
+	}
+}
+
+void ButtonBoxObserver::OnNotify(AE::Event event, AE::GameObject*)
+{
+	switch (event)
+	{
+	case AE::Event::ButtonSelected:
+	{
+		AE::ServiceLocator::GetAudio()->PlaySound(m_ButtonSelectSoundID);
+		break;
+	}
+	case AE::Event::ButtonPressed:
+	{
+		AE::ServiceLocator::GetAudio()->PlaySound(m_ButtonPressSoundID);
+		break;
+	}
+	}
+}
+

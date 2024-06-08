@@ -9,6 +9,8 @@
 #include "EnemySpawningStructs.h"
 #include "MovementImageComponent.h"
 #include "MovementComponent.h"
+#include "ShootComponent.h"
+
 #include "TimeManager.h"
 
 #include <queue>
@@ -53,7 +55,7 @@ namespace StatesEnemyBoss
 		float m_ShootHeight{ 240.f };
 		float m_RandomHeightOffset{50.f};
 
-		float m_MoveSpeed{ 90.f };
+		float m_MoveSpeed{ 140.f };
 
 		glm::vec2 m_SeekDir{};
 		glm::vec2 m_SeekPos{ 0.f, 480.f };
@@ -82,6 +84,11 @@ namespace StatesEnemyBoss
 			{
 				moveComp->SetCanMove(false);
 				AE::TimeManager::GetInstance().SetTimer([moveComp](int) { moveComp->SetCanMove(true); }, m_PlayerMovementLockoutDuration, 1);
+			}
+			if (auto shootComp = go->GetComponent<ShootComponent>())
+			{
+				shootComp->SetShootingEnabled(false);
+				AE::TimeManager::GetInstance().SetTimer([shootComp](int) { shootComp->SetShootingEnabled(true); }, m_PlayerMovementLockoutDuration, 1);
 			}
 		}
 

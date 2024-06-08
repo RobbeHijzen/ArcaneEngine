@@ -19,7 +19,11 @@ namespace AE
 
 		StateChanged,
 
-		LevelChanged
+		LevelChanged,
+		WaveStarted,
+
+		ButtonPressed,
+		ButtonSelected
 	};
 
 }

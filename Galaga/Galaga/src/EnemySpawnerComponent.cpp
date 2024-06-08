@@ -141,6 +141,7 @@ AE::GameObject* EnemySpawnerComponent::SpawnBossEnemy(std::list<EnemySeekInfo> s
 	// Observers
 	enemy->AddObserver(std::move(std::make_unique<EnemyObserver>(m_Galagas.front(), 150, 400)));
 	enemy->AddObserver(std::move(std::make_unique<StateMachineObserver>(spawnerManagerComp)));
+	enemy->AddObserver(std::move(std::make_unique<EnemyBossObserver>()));
 
 	// FSM
 
