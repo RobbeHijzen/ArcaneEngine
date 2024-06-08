@@ -2,7 +2,7 @@
 
 Arcane Engine is a 2D game engine created for the Programming 4 course in Digital Arts and Entertainment. The engine uses the SDL library to handle the rendering of images and text, and is also used for the input and sound systems.
 
-This repository focusses on the Game Engine itself, however inside the package it includes a remake of the game Galaga to provide en example project.
+This repository focusses on the Game Engine itself, however inside the package it includes a remake of the game Galaga to provide an example project.
 
 ## Features
 
