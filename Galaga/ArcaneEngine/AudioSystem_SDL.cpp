@@ -23,9 +23,9 @@ public:
 		}
 	}
 
-	unsigned short CreateSoundClip(std::string path, unsigned short volume)
+	unsigned short CreateSoundClip(std::string path, unsigned short volume, SoundType type)
 	{
-		m_AudioClips.emplace_back(std::make_unique<AudioClip>(path, volume));
+		m_AudioClips.emplace_back(std::make_unique<AudioClip>(path, volume, type));
 
 		return static_cast<unsigned short>(m_AudioClips.size() - 1);
 	}
@@ -40,17 +40,37 @@ public:
 	
 	bool LoadSound(AudioClip* audioClip)
 	{
-		auto sound{ Mix_LoadWAV(("../Resources/" + audioClip->GetSoundPath()).c_str()) };
-		if (!sound)
+		switch (audioClip->GetSoundType())
 		{
-			std::cout << "Sound could not be loaded at path: " << audioClip->GetSoundPath().c_str() << "\n";
-			return false;
+		case SoundType::Chunk:
+		{
+			auto sound{ Mix_LoadWAV(("../Resources/" + audioClip->GetSoundPath()).c_str()) };
+			if (!sound)
+			{
+				std::cout << "Sound could not be loaded at path: " << audioClip->GetSoundPath().c_str() << "\n";
+				return false;
+			}
+
+			m_SoundChunks.emplace_back(sound);
+			audioClip->SetSoundID(static_cast<unsigned short>(m_SoundChunks.size() - 1));
+			break;
 		}
+		case SoundType::Music:
+		{
+			auto sound{ Mix_LoadMUS(("../Resources/" + audioClip->GetSoundPath()).c_str()) };
+			if (!sound)
+			{
+				std::cout << "Sound could not be loaded at path: " << audioClip->GetSoundPath().c_str() << "\n";
+				return false;
+			}
 
-		m_SoundChunks.emplace_back(sound);
-		audioClip->SetSoundID(static_cast<unsigned short>(m_SoundChunks.size() - 1));
+			m_SoundMusics.emplace_back(sound);
+			audioClip->SetSoundID(static_cast<unsigned short>(m_SoundMusics.size() - 1));
+			break;
+		}
+		}
+		
 		audioClip->SetLoaded();
-
 		return true;
 	}
 
@@ -81,9 +101,25 @@ public:
 					}
 				}
 
-				auto soundChunk{ m_SoundChunks[audioClip->GetSoundID()] };
-				Mix_VolumeChunk(soundChunk, static_cast<int>(audioClip->GetVolume()) * int(m_NotMuted));
-				Mix_PlayChannel(-1, soundChunk, 0);
+				switch (audioClip->GetSoundType())
+				{
+				case SoundType::Chunk:
+				{
+					auto soundChunk{ m_SoundChunks[audioClip->GetSoundID()] };
+					Mix_VolumeChunk(soundChunk, static_cast<int>(audioClip->GetVolume()) * int(!m_IsMuted));
+					Mix_PlayChannel(-1, soundChunk, 0);
+					break;
+				}
+				case SoundType::Music:
+				{
+					auto soundMusic{m_SoundMusics[audioClip->GetSoundID()]};
+					m_CurrentMusicVolume = audioClip->GetVolume();
+					Mix_VolumeMusic(m_CurrentMusicVolume * int(!m_IsMuted));
+					Mix_PlayMusic(soundMusic, 0);
+					break;
+				}
+				}
+				
 			}
 
 		}
@@ -97,16 +133,27 @@ public:
 
 	void ToggleMute()
 	{ 
-		m_NotMuted = !m_NotMuted;
+		m_IsMuted = !m_IsMuted;
+		if (!m_IsMuted)
+		{
+			Mix_VolumeMusic(m_CurrentMusicVolume);
+		}
+		else
+		{
+			Mix_VolumeMusic(0);
+		}
 	}
 
 private:
 
 	std::vector<std::unique_ptr<AudioClip>> m_AudioClips{};
 	std::vector<Mix_Chunk*> m_SoundChunks{};
+	std::vector<Mix_Music*> m_SoundMusics{};
+	int m_CurrentMusicVolume{ 10 };
+
 	std::queue<AudioClip*> m_ClipQueue{};
 
-	bool m_NotMuted{ true };
+	bool m_IsMuted{ false };
 	bool m_Run{ true };
 
 	std::mutex m_Mutex{};
@@ -125,9 +172,9 @@ void AudioSystem_SDL::PlaySound(int audioClipID)
 	m_pImpl->PlaySound(audioClipID);
 }
 
-unsigned short AE::AudioSystem_SDL::CreateSoundClip(std::string path, unsigned short volume)
+unsigned short AE::AudioSystem_SDL::CreateSoundClip(std::string path, unsigned short volume, SoundType type)
 {
-	return m_pImpl->CreateSoundClip(path, volume);
+	return m_pImpl->CreateSoundClip(path, volume, type);
 }
 
 void AudioSystem_SDL::StartSoundQueue()

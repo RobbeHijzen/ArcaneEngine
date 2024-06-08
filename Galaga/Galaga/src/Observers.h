@@ -1,6 +1,7 @@
 #pragma once
 #include "ArcaneEngine.h"
 #include "ServiceLocator.h"
+#include "AudioClip.h"
 
 #include "TextComponent.h"
 #include "SpawnerManagerComponent.h"
@@ -179,7 +180,7 @@ public:
 
 	SpawnerManagerObserver()
 	{
-		m_WaveStartSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Audio/Start.mp3", 10);
+		m_WaveStartSoundID = AE::ServiceLocator::GetAudio()->CreateSoundClip("Audio/Start.mp3", 10, AE::SoundType::Music);
 	}
 	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
 

@@ -13,7 +13,7 @@ namespace AE
         AudioSystem_SDL();
 
         virtual void PlaySound(int audioClipID) override;
-        virtual unsigned short CreateSoundClip(std::string path, unsigned short volume) override;
+        virtual unsigned short CreateSoundClip(std::string path, unsigned short volume, SoundType type = SoundType::Chunk) override;
 
         virtual void StartSoundQueue() override;
 

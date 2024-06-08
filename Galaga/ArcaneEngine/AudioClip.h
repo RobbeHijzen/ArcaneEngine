@@ -1,14 +1,16 @@
 #pragma once
 
 #include <string>
+#include "Audio.h"
 
 class AudioClip
 {
 public:
 
-	AudioClip(std::string soundPath, unsigned short volume = 70)
+	AudioClip(std::string soundPath, unsigned short volume = 10, AE::SoundType soundType = AE::SoundType::Chunk)
 		: m_SoundPath{ soundPath }
 		, m_Volume{ volume }
+		, m_SoundType{soundType}
 	{
 	}
 
@@ -16,6 +18,7 @@ public:
 
 	unsigned short GetVolume() const { return m_Volume; }
 	unsigned short GetSoundID() const { return m_SoundID; }
+	AE::SoundType GetSoundType() const { return m_SoundType; }
 
 	void SetSoundID(unsigned short soundID) { m_SoundID = soundID;}
 	void SetLoaded() { m_IsLoaded = true; }
@@ -30,5 +33,6 @@ private:
 	unsigned short m_SoundID{};
 
 	std::string m_SoundPath;
+	AE::SoundType m_SoundType{AE::SoundType::Chunk};
 };
 
