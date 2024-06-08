@@ -54,7 +54,7 @@ void HighscoreLevel::AddScoreInfos(AE::Scene& scene)
 {
 	std::vector<ScoreInfo> highscores{}; // the bool indicated whether this is the player's score
 
-	if (std::ifstream input{ "Highscores.txt", std::ios::binary }; input.is_open())
+	if (std::ifstream input{ AE::ResourceManager::GetInstance().GetFullPathFromPath("Highscores.txt"), std::ios::binary }; input.is_open())
 	{
 		while (!input.eof())
 		{

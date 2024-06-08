@@ -15,6 +15,8 @@ namespace AE
 		std::shared_ptr<Texture2D> LoadTexture(const std::string& file) const;
 		std::shared_ptr<Font> LoadFont(const std::string& file, unsigned int size) const;
 		std::ifstream GetFileFromPath(const std::string& file);
+		std::string GetFullPathFromPath(const std::string& path);
+
 	private:
 		friend class Singleton<ResourceManager>;
 		ResourceManager() = default;

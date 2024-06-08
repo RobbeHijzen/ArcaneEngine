@@ -60,7 +60,7 @@ void SaveLevel::AddScoreInfos(AE::Scene& scene, std::vector<ScoreInfo>& finalSco
 {
 	std::vector<std::pair<ScoreInfo, bool>> highscores{}; // the bool indicated whether this is the player's score
 
-	if (std::ifstream input{ "Highscores.txt", std::ios::binary }; input.is_open())
+	if (std::ifstream input{ AE::ResourceManager::GetInstance().GetFullPathFromPath("Highscores.txt"), std::ios::binary }; input.is_open())
 	{
 		while (!input.eof())
 		{
@@ -333,7 +333,7 @@ void SaveLevel::WriteHighscores(const std::vector<ScoreInfo>& originalScores, st
 {
 	std::vector<ScoreInfo> highscores{ originalScores };
 
-	if (std::ofstream output{ "Highscores.txt", std::ios::binary }; output.is_open())
+	if (std::ofstream output{ AE::ResourceManager::GetInstance().GetFullPathFromPath("Highscores.txt"), std::ios::binary }; output.is_open())
 	{
 		GalagaGameInstance* gameInstance{ dynamic_cast<GalagaGameInstance*>(AE::SceneManager::GetInstance().GetGameInstance()) };
 		if (!gameInstance) return;

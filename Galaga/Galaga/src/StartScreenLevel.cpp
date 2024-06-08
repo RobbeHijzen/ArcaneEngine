@@ -85,7 +85,7 @@ void StartScreenLevel::AddButtons(AE::Scene& scene, AE::GameObject* birdControls
 
 	// Button 01
 	auto button_01 = std::make_shared<AE::GameObject>();
-	button_01->AddLocalTransform({ 270.f, 170.f });
+	button_01->AddLocalTransform({ 270.f, 150.f });
 
 	auto buttonComp_01{ std::make_shared<ButtonComponent>(button_01.get(), []() 
 											{ AE::SceneManager::GetInstance().SetScene("SoloLevel"); })};
@@ -99,7 +99,7 @@ void StartScreenLevel::AddButtons(AE::Scene& scene, AE::GameObject* birdControls
 
 	// Button 02
 	auto button_02 = std::make_shared<AE::GameObject>();
-	button_02->AddLocalTransform({ 270.f, 220.f });
+	button_02->AddLocalTransform({ 270.f, 200.f });
 
 	auto buttonComp_02{ std::make_shared<ButtonComponent>(button_02.get(), []()
 											{ AE::SceneManager::GetInstance().SetScene("CoopLevel"); }) };
@@ -112,7 +112,7 @@ void StartScreenLevel::AddButtons(AE::Scene& scene, AE::GameObject* birdControls
 
 	// Button 03
 	auto button_03 = std::make_shared<AE::GameObject>();
-	button_03->AddLocalTransform({ 252.f, 270.f });
+	button_03->AddLocalTransform({ 252.f, 250.f });
 
 	auto buttonComp_03{ std::make_shared<ButtonComponent>(button_03.get(), []() 
 											{ AE::SceneManager::GetInstance().SetScene("VersusLevel"); }) };
@@ -127,7 +127,7 @@ void StartScreenLevel::AddButtons(AE::Scene& scene, AE::GameObject* birdControls
 
 	// Button 04
 	auto button_04 = std::make_shared<AE::GameObject>();
-	button_04->AddLocalTransform({ 215.f, 340.f });
+	button_04->AddLocalTransform({ 215.f, 320.f });
 
 	auto buttonComp_04{ std::make_shared<ButtonComponent>(button_04.get(), []()
 											{ AE::SceneManager::GetInstance().SetScene("HighscoreScreen"); }) };
@@ -211,36 +211,33 @@ AE::GameObject* StartScreenLevel::AddBirdControls(AE::Scene& scene)
 	// Controls text
 	auto go = std::make_shared<AE::GameObject>();
 															
-	auto text_01{ std::make_shared<TextComponent>(go.get(), "--Bird Controls--", fontBig, glm::u8vec3{255, 0, 0}) };
-	text_01->AddLocalPosition(20.f, 0.f);
+	auto text_01{ std::make_shared<TextComponent>(go.get(), "-Bird Controls-", fontBig, glm::u8vec3{255, 0, 0}) };
+	text_01->AddLocalPosition(40.f, 0.f);
 
 	auto text_02{ std::make_shared<TextComponent>(go.get(), "Action", fontMedium, glm::u8vec3{255, 255, 255}) };
-	text_02->AddLocalPosition(-10.f, 30.f);
+	text_02->AddLocalPosition(50.f, 30.f);
 
 	auto text_03{ std::make_shared<TextComponent>(go.get(), "Gamepad", fontMedium, glm::u8vec3{255, 255, 255}) };
-	text_03->AddLocalPosition(90.f, 30.f);
-
-	auto text_04{ std::make_shared<TextComponent>(go.get(), "Keyboard", fontMedium, glm::u8vec3{255, 255, 255}) };
-	text_04->AddLocalPosition(185.f, 30.f);
+	text_03->AddLocalPosition(150.f, 30.f);
 
 
-	auto text_05{ std::make_shared<TextComponent>(go.get(), "Dive", fontSmall, glm::u8vec3{0, 255, 255}) };
-	text_05->AddLocalPosition(20.f, 60.f);
+	auto text_04{ std::make_shared<TextComponent>(go.get(), "Dive", fontSmall, glm::u8vec3{0, 255, 255}) };
+	text_04->AddLocalPosition(65.f, 60.f);
 
-	auto text_06{ std::make_shared<TextComponent>(go.get(), "Left/Right", fontSmall, glm::u8vec3{255, 255, 0}) };
-	text_06->AddLocalPosition(85.f, 60.f);
+	auto text_05{ std::make_shared<TextComponent>(go.get(), "X", fontMedium, glm::u8vec3{255, 255, 0}) };
+	text_05->AddLocalPosition(185.f, 60.f);
 
-	auto text_07{ std::make_shared<TextComponent>(go.get(), "A/D", fontSmall, glm::u8vec3{255, 255, 0}) };
-	text_07->AddLocalPosition(215.f, 60.f);
+	auto text_06{ std::make_shared<TextComponent>(go.get(), "Shoot", fontSmall, glm::u8vec3{0, 255, 255}) };
+	text_06->AddLocalPosition(60.f, 100.f);
 
-	auto text_08{ std::make_shared<TextComponent>(go.get(), "Shoot", fontSmall, glm::u8vec3{0, 255, 255}) };
-	text_08->AddLocalPosition(5.f, 80.f);
+	auto text_07{ std::make_shared<TextComponent>(go.get(), "A", fontMedium, glm::u8vec3{255, 255, 0}) };
+	text_07->AddLocalPosition(185.f, 100.f);
 
-	auto text_09{ std::make_shared<TextComponent>(go.get(), "A", fontMedium, glm::u8vec3{255, 255, 0}) };
-	text_09->AddLocalPosition(125.f, 80.f);
+	auto text_08{ std::make_shared<TextComponent>(go.get(), "Beam", fontSmall, glm::u8vec3{0, 255, 255}) };
+	text_08->AddLocalPosition(65.f, 80.f);
 
-	auto text_10{ std::make_shared<TextComponent>(go.get(), "Space", fontMedium, glm::u8vec3{255, 255, 0}) };
-	text_10->AddLocalPosition(200.f, 80.f);
+	auto text_09{ std::make_shared<TextComponent>(go.get(), "B", fontMedium, glm::u8vec3{255, 255, 0}) };
+	text_09->AddLocalPosition(185.f, 80.f);
 
 	go->AddComponent(text_01);
 	go->AddComponent(text_02);
@@ -251,9 +248,8 @@ AE::GameObject* StartScreenLevel::AddBirdControls(AE::Scene& scene)
 	go->AddComponent(text_07);
 	go->AddComponent(text_08);
 	go->AddComponent(text_09);
-	go->AddComponent(text_10);
 
-	go->SetLocalTransform({ 15.f, 380.f });
+	go->SetLocalTransform({ -35.f, 360.f });
 	scene.Add(go);
 
 	go->SetVisible(false);

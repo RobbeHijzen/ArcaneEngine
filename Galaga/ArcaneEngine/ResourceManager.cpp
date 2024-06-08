@@ -38,3 +38,8 @@ std::ifstream AE::ResourceManager::GetFileFromPath(const std::string& file)
 {
 	return std::ifstream{ m_dataPath + file };
 }
+
+std::string AE::ResourceManager::GetFullPathFromPath(const std::string& path)
+{
+	return m_dataPath + path;
+}
