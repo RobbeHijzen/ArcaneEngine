@@ -7,6 +7,8 @@
 #include "ShootComponent.h"
 #include "ButtonBoxComponent.h"
 #include "Movementcomponent.h"
+#include "FSMComponent.h"
+#include "StatesEnemyBoss.h"
 
 #include "SceneManager.h"
 
@@ -112,5 +114,75 @@ public:
 private:
 	glm::i32vec2 m_MoveDir{};
 	
+};
+
+class BossGalagaDiveCommand : public AE::GameObjectCommand
+{
+public:
+
+	BossGalagaDiveCommand(AE::GameObject* gameObject)
+		: GameObjectCommand(gameObject)
+	{
+	}
+
+	virtual void Execute() override
+	{
+		if (auto fsm = GetGameObject()->GetComponent<FSMComponent>().get())
+		{
+			if (auto idleState = dynamic_cast<StatesEnemyBoss::Idle*>(fsm->GetCurrentState()))
+			{
+				idleState->ChangeToBombingRun();
+			}
+		}
+	}
+
+	void SetGameObject(AE::GameObject* go) { ChangeGameObject(go); }
+
+private:
+};
+class BossGalagaBeamCommand : public AE::GameObjectCommand
+{
+public:
+
+	BossGalagaBeamCommand(AE::GameObject* gameObject)
+		: GameObjectCommand(gameObject)
+	{
+	}
+
+	virtual void Execute() override
+	{
+		if (auto fsm = GetGameObject()->GetComponent<FSMComponent>().get())
+		{
+			if (auto idleState = dynamic_cast<StatesEnemyBoss::Idle*>(fsm->GetCurrentState()))
+			{
+				idleState->ChangeToTractorBeam();
+			}
+		}
+	}
+
+	void SetGameObject(AE::GameObject* go) { ChangeGameObject(go); }
+
+private:
+};
+class BossGalagaShootCommand : public AE::GameObjectCommand
+{
+public:
+
+	BossGalagaShootCommand(AE::GameObject* gameObject)
+		: GameObjectCommand(gameObject)
+	{
+	}
+
+	virtual void Execute() override
+	{
+		if (auto shootComp = GetGameObject()->GetComponent<ShootComponent>().get())
+		{
+			shootComp->FireBullet();
+		}
+	}
+
+	void SetGameObject(AE::GameObject* go) { ChangeGameObject(go); }
+
+private:
 };
 

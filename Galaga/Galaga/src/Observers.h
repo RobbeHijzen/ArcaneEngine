@@ -2,6 +2,7 @@
 #include "ArcaneEngine.h"
 #include "ServiceLocator.h"
 #include "AudioClip.h"
+#include "Commands.h"
 
 #include "TextComponent.h"
 #include "SpawnerManagerComponent.h"
@@ -205,5 +206,48 @@ private:
 	unsigned short m_ButtonSelectSoundID{};
 
 };
+
+
+class VersusSpawnerManagerObserver : public AE::Observer
+{
+public:
+
+	VersusSpawnerManagerObserver( SpawnerManagerComponent* spawnerManager,
+		BossGalagaBeamCommand* beamCommand,
+		BossGalagaDiveCommand* diveCommand,
+		BossGalagaShootCommand* shootCommand)
+
+		: m_SpawnerManager{spawnerManager}
+		, m_BeamCommand{beamCommand}
+		, m_DiveCommand{diveCommand}
+		, m_ShootCommand{shootCommand}
+	{
+	}
+	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
+
+private:
+
+	bool m_IsControllingABoss{ false };
+	SpawnerManagerComponent* m_SpawnerManager{};
+
+	BossGalagaBeamCommand* m_BeamCommand{};
+	BossGalagaDiveCommand* m_DiveCommand{};
+	BossGalagaShootCommand* m_ShootCommand{};
+};
+
+class PlayerControlledBossGalagaObserver : public AE::Observer
+{
+public:
+	PlayerControlledBossGalagaObserver(VersusSpawnerManagerObserver* spawnerObs)
+		: m_SpawnerObs{ spawnerObs }
+	{}
+	virtual void OnNotify(AE::Event event, AE::GameObject* gameObject) override;
+
+private:
+	VersusSpawnerManagerObserver* m_SpawnerObs{};
+
+
+};
+
 
 

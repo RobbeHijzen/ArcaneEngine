@@ -156,13 +156,10 @@ namespace StatesEnemyBoss
 	class HalfHealth : public AE::FSMState
 	{
 	public:
-		HalfHealth(glm::vec2 sourcePos) : m_SourcePos{ sourcePos } {}
-
 		virtual void OnEnter(AE::GameObject* gameObject) override;
 		virtual void OnExit(AE::GameObject* ) override {};
 		virtual std::unique_ptr<AE::FSMState> Update(AE::GameObject* gameObject) override;
 
 	private:
-		glm::vec2 m_SourcePos{};
 	};
 }

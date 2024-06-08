@@ -218,7 +218,7 @@ std::unique_ptr<AE::FSMState> StatesEnemyBoss::FullHealth::Update(AE::GameObject
 	{
 		if (m_HealthComp->GetHealth() <= 1)
 		{
-			return std::move(std::make_unique<HalfHealth>(glm::vec2{ m_SourcePos.x, m_SourcePos.y + 36.f}));
+			return std::move(std::make_unique<HalfHealth>());
 		}
 	}
 	return nullptr;
@@ -231,7 +231,7 @@ void StatesEnemyBoss::HalfHealth::OnEnter(AE::GameObject* gameObject)
 {
 	if (auto imageComp = gameObject->GetComponent<MovementImageComponent>())
 	{
-		imageComp->SetSourcePos(m_SourcePos);
+		imageComp->AddSourcePos({0.f, 36.f});
 	}
 }
 std::unique_ptr<AE::FSMState> StatesEnemyBoss::HalfHealth::Update(AE::GameObject* )

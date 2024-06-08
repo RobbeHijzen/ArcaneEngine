@@ -20,6 +20,7 @@ namespace AE
 
 	protected:
 		GameObject* GetGameObject() const { return m_pGameObject; }
+		void ChangeGameObject(GameObject* go) { m_pGameObject = go; }
 
 	private:
 		GameObject* m_pGameObject{};

@@ -14,6 +14,7 @@ public:
 
 	void SetSourceRect(AE::Rect sourceRect);
 	void SetSourcePos(glm::vec2 pos);
+	void AddSourcePos(glm::vec2 pos);
 	void SetDestRect(AE::Rect rect);
 
 	void LateUpdate() override;

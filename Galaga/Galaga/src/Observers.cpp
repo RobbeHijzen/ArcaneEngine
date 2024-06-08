@@ -393,3 +393,52 @@ void ButtonBoxObserver::OnNotify(AE::Event event, AE::GameObject*)
 	}
 }
 
+void VersusSpawnerManagerObserver::OnNotify(AE::Event event, AE::GameObject* )
+{
+	switch (event)
+	{
+	case AE::Event::ControlledBossGalagaDied:
+		m_IsControllingABoss = false;
+	case AE::Event::BossGalagaSpawned:
+	{
+		if (!m_IsControllingABoss)
+		{
+			if (m_SpawnerManager)
+			{
+				if (auto newBossGalaga = m_SpawnerManager->GetFirstBossGalaga())
+				{
+					newBossGalaga->AddObserver(std::make_unique<PlayerControlledBossGalagaObserver>(this));
+					newBossGalaga->GetComponent<MovementImageComponent>()->AddSourcePos({ 0, 108 });
+
+					m_ShootCommand->SetGameObject(newBossGalaga);
+					m_DiveCommand->SetGameObject(newBossGalaga);
+					m_BeamCommand->SetGameObject(newBossGalaga);
+					
+					m_IsControllingABoss = true;
+				}
+			}
+		}
+		break;
+	}
+	case AE::Event::AllBossGalagasDied:
+	{
+		m_IsControllingABoss = false;
+		break;
+	}
+	}
+
+}
+
+void PlayerControlledBossGalagaObserver::OnNotify(AE::Event event, AE::GameObject* gameObject)
+{
+	switch (event)
+	{
+	case AE::Event::ObjectDied:
+	{
+		m_SpawnerObs->OnNotify(AE::Event::ControlledBossGalagaDied, gameObject);
+		break;
+	}
+	}
+}
+
+

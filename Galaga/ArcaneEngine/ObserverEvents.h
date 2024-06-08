@@ -23,7 +23,11 @@ namespace AE
 		WaveStarted,
 
 		ButtonPressed,
-		ButtonSelected
+		ButtonSelected,
+
+		BossGalagaSpawned,
+		AllBossGalagasDied,
+		ControlledBossGalagaDied
 	};
 
 }

@@ -224,6 +224,8 @@ void SpawnerManagerComponent::SpawnNextEnemy(SpawningTypes spawningType, int spa
 			m_Bosses.back().first->AddObserver(std::move(std::make_unique<SpawnedEnemyObserver>(this)));
 
 			m_CurrentWaveInfo.bossEnemies.pop();
+
+			GetOwner()->NotifyAll(AE::Event::BossGalagaSpawned);
 		}
 		break;
 	}

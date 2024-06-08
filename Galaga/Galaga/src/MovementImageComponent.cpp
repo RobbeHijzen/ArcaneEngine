@@ -34,6 +34,13 @@ void MovementImageComponent::SetSourcePos(glm::vec2 pos)
 
 	m_ImageComp->SetSourcePos(pos);
 }
+void MovementImageComponent::AddSourcePos(glm::vec2 pos)
+{
+	m_OriginalSourceRect.x += pos.x;
+	m_OriginalSourceRect.y += pos.y;
+
+	m_ImageComp->SetSourcePos({ m_OriginalSourceRect.x, m_OriginalSourceRect.y});
+}
 
 void MovementImageComponent::SetDestRect(AE::Rect rect)
 {

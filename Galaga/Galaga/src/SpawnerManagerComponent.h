@@ -29,7 +29,12 @@ public:
 	{ 
 		m_Bees.remove_if([&](const std::pair<AE::GameObject*, bool>& obj) { return obj.first == toRemoveObject; });
 		m_Butterflies.remove_if([&](const std::pair<AE::GameObject*, bool>& obj) { return obj.first == toRemoveObject; });
-		m_Bosses.remove_if([&](const std::pair<AE::GameObject*, bool>& obj) { return obj.first == toRemoveObject; });
+		if (m_Bosses.remove_if([&](const std::pair<AE::GameObject*, bool>& obj) { return obj.first == toRemoveObject; }))
+		{
+			if(m_Bosses.size() == 0)
+				GetOwner()->NotifyAll(AE::Event::AllBossGalagasDied);
+		}
+
 
 		if (m_Bees.size() + m_Butterflies.size() + m_Bosses.size() <= 0)
 		{
@@ -47,6 +52,26 @@ public:
 
 	void DeleteAllBullets();
 
+	AE::GameObject* GetFirstBossGalaga() 
+	{ 
+		if (m_Bosses.size() == 0) return nullptr;
+		return m_Bosses.front().first; 
+	}
+	AE::GameObject* GetRandomAliveBossGalaga()
+	{
+		if (m_Bosses.size() == 0) return nullptr;
+
+		int randomIndex{rand() % int(m_Bosses.size())};
+		auto it{ m_Bosses.begin() };
+		int idx{};
+		while (it != m_Bosses.end())
+		{
+			if (idx++ == randomIndex) return (*it).first;
+			++it;
+		}
+	}
+
+	
 private:
 
 	enum class SpawningTypes
